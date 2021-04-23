@@ -30,18 +30,18 @@ with open("taipei-attractions.json","r",encoding="utf-8") as response:
 json_info_list=data["result"]["results"]
 
 #attractions 資料表: 放入圖片網址以外的資訊==========================
-# sql ="insert into attractions (RowNumber, stitle, CAT2, xbody, address, info, MRT, latitude, longitude) values (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+sql ="insert into attractions (RowNumber, stitle, CAT2, xbody, address, info, MRT, latitude, longitude) values (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
-# for info in json_info_list:
-#     args=(info["RowNumber"],info["stitle"],info["CAT2"],info["xbody"],
-#     info["address"],info["info"],info["MRT"],info["latitude"],
-#     info["longitude"])
-#     mycursor.execute(sql, args)
-# mydb.commit()
+for info in json_info_list:
+    args=(info["RowNumber"],info["stitle"],info["CAT2"],info["xbody"],
+    info["address"],info["info"],info["MRT"],info["latitude"],
+    info["longitude"])
+    mycursor.execute(sql, args)
+mydb.commit()
 
  #attractions_url 資料表: 放入所有圖片網址的資訊==========================
 # mycursor.execute("DROP TABLE attractions_url")
-mycursor.execute("CREATE TABLE attractions_url (RowNumber INT, file text, FOREIGN KEY (RowNumber) REFERENCES attractions(RowNumber) )")
+# mycursor.execute("CREATE TABLE attractions_url (RowNumber INT, file text, FOREIGN KEY (RowNumber) REFERENCES attractions(RowNumber) )")
 
 sql ="insert into attractions_url (RowNumber, file) values (%s, %s)"
 for info in json_info_list:
