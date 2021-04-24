@@ -54,26 +54,31 @@ def attractions():
                 record_img=mycursor.fetchall()
                 img_data=[]
                 for row in record_img:
-                    # print((row[0][-3:]).lower())
                     if ((row[0][-3:]).lower())== "jpg" or ((row[0][-3:]).lower())== "png":
                         img_data.append(row[0]) 
                         print((row[0][-3:]).lower())  
                         data_dic["images"]=img_data  
                           
-                    
-                
-                    
+  
                 result.append(data_dic)
-            data={"nextPage": (page+1),"data": result}
+            if len(record)==12:
+                page_data = (page+1)
+            else:
+                page_data = None
+            data={"nextPage":page_data,"data":result}
             response = app.response_class(json.dumps( data, ensure_ascii= False),status=200,mimetype='application/json')
             return response
+        else:
+            data={"nextPage":None,"data":[]}
+            response = app.response_class(json.dumps( data, ensure_ascii= False),status=200,mimetype='application/json')
+            return response           
     except:
-            fail = {
-            "error":True,
-            "message": "自訂的錯誤訊息"
-            }
-            response = app.response_class(json.dumps( fail, ensure_ascii= False),status=500,mimetype='application/json')
-            return response
+        fail = {
+        "error":True,
+        "message": "自訂的錯誤訊息"
+        }
+        response = app.response_class(json.dumps( fail, ensure_ascii= False),status=500,mimetype='application/json')
+        return response
 
 @app.route("/api/attraction/<attractionId>")
 def attractionId(attractionId):
@@ -84,8 +89,6 @@ def attractionId(attractionId):
     RN=(str(attractionId),)
     mycursor.execute(sql, RN)
     record=mycursor.fetchone()
-    print(record[0],record[1],record[2])
-    print(len(record))
     try:
         if len(record)>0:
             data_dic={}
@@ -104,9 +107,11 @@ def attractionId(attractionId):
             record_img=mycursor.fetchall()
             img_data=[]
             for row in record_img:
-                print(row)
-                img_data.append(row[0])
-            data_dic["images"]=img_data
+                # print((row[0][-3:]).lower())
+                if ((row[0][-3:]).lower())== "jpg" or ((row[0][-3:]).lower())== "png":
+                    img_data.append(row[0]) 
+                    print((row[0][-3:]).lower())  
+                    data_dic["images"]=img_data  
             data={"data": data_dic}
             response = app.response_class(json.dumps( data, ensure_ascii= False),status=200,mimetype='application/json')
             return response
@@ -118,12 +123,12 @@ def attractionId(attractionId):
             response = app.response_class(json.dumps( fail, ensure_ascii= False),status=400,mimetype='application/json')
             return response
     except:
-            fail = {
-            "error":True,
-            "message": "自訂的錯誤訊息"
-            }
-            response = app.response_class(json.dumps( fail, ensure_ascii= False),status=500,mimetype='application/json')
-            return response
+        fail = {
+        "error":True,
+        "message": "自訂的錯誤訊息"
+        }
+        response = app.response_class(json.dumps( fail, ensure_ascii= False),status=500,mimetype='application/json')
+        return response
 
     
     
