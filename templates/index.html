@@ -95,7 +95,6 @@
                             }
                         }
                         const pagenum = dataobj.nextPage;
-                        // console.log("下一頁:" + pagenum);
                         return pagenum;
                     })
                     .then(scroll => {
@@ -141,11 +140,6 @@
                 item_group.className = "attractions-group";
                 item_group.id = "attractions-group";
                 parent.appendChild(item_group);
-
-
-
-
-
 
                 const url = `/api/attractions?page=${page}&keyword=${keyword}`;
 
@@ -307,6 +301,7 @@
             top: 10px;
             display: flex;
             align-items: center;
+            margin-right:50px;
         }
 
         .frame1 {
@@ -658,7 +653,7 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                margin: 200px auto 104px;
+                margin: 0px atuo 104px;
 
             }
 
@@ -798,7 +793,7 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                margin: auto 104px;
+
 
             }
 
