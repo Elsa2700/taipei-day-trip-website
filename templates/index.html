@@ -17,7 +17,7 @@
 
             // 定義url
             if (keyword != "") {
-                const url = `http://127.0.0.1:3000/api/attractions?page=${page}&keyword=${keyword}`;
+                const url = `/api/attractions?page=${page}&keyword=${keyword}`;
                 if (page != null) {
                     queryAttraction(page, keyword, url);
                 } else {
@@ -25,7 +25,7 @@
                 }
 
             } else {
-                const url = `http://127.0.0.1:3000/api/attractions?page=${page}`;
+                const url = `/api/attractions?page=${page}`;
                 if (page != null) {
                     queryImg(page, url);
                 } else {
@@ -115,7 +115,7 @@
                                             console.log("stop");
                                         } else {
                                             console.log("頁碼: " + nextpage);
-                                            const url = `http://127.0.0.1:3000/api/attractions?page=${nextpage}`;
+                                            const url = `/api/attractions?page=${nextpage}`;
                                             queryImg(nextpage, url);
                                         }
 
@@ -147,7 +147,7 @@
 
 
 
-                const url = `http://127.0.0.1:3000/api/attractions?page=${page}&keyword=${keyword}`;
+                const url = `/api/attractions?page=${page}&keyword=${keyword}`;
 
                 if (page != null) {
                     queryAttraction(page, keyword, url);
@@ -243,7 +243,7 @@
                                                 // console.log("stop");
                                             } else {
                                                 console.log("頁碼: " + nextpage);
-                                                const url = `http://127.0.0.1:3000/api/attractions?page=${nextpage}&keyword=${keyword}`;
+                                                const url = `/api/attractions?page=${nextpage}&keyword=${keyword}`;
                                                 queryAttraction(page, keyword, url);
                                             }
 
