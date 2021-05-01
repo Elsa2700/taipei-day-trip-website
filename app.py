@@ -10,9 +10,9 @@ app.config["TEMPLATES_AUTO_RELOAD"]=True
 #資料庫連線
 mydb = mysql.connector.connect(
     host="localhost",    #主機名稱
-    user="root",         #帳號
-    password="debian-sys-maint", #密碼
-    database="XI9BNrhAuluqvv1k",     #使用資料庫
+    user="debian-sys-maint",         #帳號
+    password="XI9BNrhAuluqvv1k", #密碼
+    database="travel",     #使用資料庫
 )
 
 mycursor = mydb.cursor()
