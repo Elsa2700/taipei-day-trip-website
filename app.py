@@ -11,8 +11,8 @@ app.config["TEMPLATES_AUTO_RELOAD"]=True
 mydb = mysql.connector.connect(
     host="localhost",    #主機名稱
     user="root",         #帳號
-    password="ELSA2700", #密碼
-    database="travel",     #使用資料庫
+    password="debian-sys-maint", #密碼
+    database="XI9BNrhAuluqvv1k",     #使用資料庫
 )
 
 mycursor = mydb.cursor()
@@ -146,5 +146,5 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
-#host="0.0.0.0",
+
 app.run(host="0.0.0.0",port=3000, debug=True)
