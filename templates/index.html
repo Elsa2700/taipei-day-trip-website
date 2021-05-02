@@ -382,15 +382,7 @@
 
         }
 
-        .welcome1 {
-            /* display: none; */
 
-            width: 340px;
-            position: absolute;
-            right: 3px;
-            top: 113px;
-
-        }
 
         .main {
             height: 100%;
@@ -567,6 +559,7 @@
         /* 圖幅框 */
         .hero-section {
             display: flex;
+            overflow: hidden;
             justify-content: center;
             align-items: center;
             z-index: -1;
@@ -733,12 +726,14 @@
             display: flex;
             justify-content: space-evenly;
             align-items: center;
-            
+
         }
 
 
 
         @media screen and (min-width:1200px) {
+
+
             .main {
                 position: relative;
                 width: 1200px;
@@ -756,22 +751,36 @@
 
             }
 
+            .welcome1 {
+                /* display: none; */
+                width: 550px;
+                position: absolute;
+                right: 3px;
+                top: 9px;
 
-
-
-
+            }
 
         }
 
         /* ===================================== */
         /* 手機裝置尺寸 */
-        @media screen and (min-width:360px) {
+        @media screen and (min-width:360px) and (max-width:1200px){
             .main {
                 position: relative;
                 margin: auto;
                 height: 100%;
                 display: flex;
-                
+
+            }
+
+            .welcome1 {
+                /* display: none; */
+
+                width: 340px;
+                position: absolute;
+                right: -180px;
+                top: 113px;
+
             }
 
 
@@ -779,7 +788,8 @@
                 height: 100px;
 
             }
-            .attraction-desktop img{
+
+            .attraction-desktop img {
                 margin: auto;
 
             }
