@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <!-- <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}"> -->
+    <!-- <script src="../static/js/javascript.js"></script> -->
+    <script>
+        function getData() {
+            //取得關鍵字
+            let keyword = document.getElementById("keyword").value;
+            //預設頁碼
+            let page = 0;
+
+            // 定義url
+            if (keyword != "") {
+                const url = `/api/attractions?page=${page}&keyword=${keyword}`;
+                if (page != null) {
+                    queryAttraction(page, keyword, url);
+                } else {
+                    console.log("無資料");
+                }
+
+            } else {
+                const url = `/api/attractions?page=${page}`;
+                if (page != null) {
+                    queryImg(page, url);
+                } else {
+                    console.log("無資料");
+                }
+            }
+
+            // 有圖片、無關鍵字
+
+            async function queryImg(page, url) {
+                await fetch(url)
+                    .then(res => {
+                        return res.json();
+                    })
+                    .then(content => {
+                        let dataobj = content;
+                        let item_group = document.querySelector("#attractions-group");
+
+                        for (let i = 0; i < dataobj.data.length; i++) {
+                            //框架
+
+                            let item = document.createElement("div");
+                            item.className = "attraction-desktop";
+                            item.id = "attraction-desktop";
+
+                            //圖片
+
+                            let url_img = dataobj.data[i]["images"][0];
+                            let image = new Image();
+                            image.src = url_img
+                            image.className = "img";
+                            let image_tag = document.createElement("div");
+                            item_group.appendChild(item).appendChild(image_tag).appendChild(image);
+
+                            //文字
+                            let text = document.createElement("div");
+                            text.className = "text";
+                            text.id = "text";
+                            let cat_text = dataobj.data[i]["category"];
+                            if (cat_text != null) {
+                                cat_text.className = "cat";
+                                let cat_text_tag = document.createElement("div");
+                                cat_text_tag.className = "cat";
+                                cat_text_tag.textContent = cat_text;
+                                item_group.appendChild(item).appendChild(text).appendChild(cat_text_tag);
+                            }
+
+
+                            let traffic_text = dataobj.data[i]["mrt"];
+                            if (traffic_text != null) {
+                                traffic_text.className = "traffic";
+                                let traffic_text_tag = document.createElement("div");
+                                traffic_text_tag.className = "traffic";
+                                traffic_text_tag.textContent = traffic_text;
+                                item_group.appendChild(item).appendChild(text).appendChild(traffic_text_tag);
+                            }
+
+
+                            let title_text = dataobj.data[i]["name"];
+                            if (title_text != null) {
+                                title_text.className = "title";
+                                let title_text_tag = document.createElement("div");
+                                title_text_tag.className = "title";
+                                title_text_tag.textContent = title_text;
+                                item_group.appendChild(item).appendChild(title_text_tag);
+
+                            }
+                        }
+                        const pagenum = dataobj.nextPage;
+                        return pagenum;
+                    })
+                    .then(scroll => {
+                        nextpage = scroll;
+                        console.log("下一頁:" + nextpage);
+                        // scroll事件
+                        window.onscroll = function () {
+                            const footer = document.querySelector("footer")
+                            // console.log("scroll: " + this.scrollY + " innerHeight: " + this.innerHeight + "頁尾: " + footer.offsetTop);
+                            if (this.scrollY + this.innerHeight > footer.offsetTop) {
+                                // scroll事件
+                                var timeout;
+                                window.onscroll = function () {
+                                    clearTimeout(timeout);
+                                    timeout = setTimeout(function () {
+                                        if (nextpage == null) {
+                                            console.log("stop");
+                                        } else {
+                                            console.log("頁碼: " + nextpage);
+                                            const url = `/api/attractions?page=${nextpage}`;
+                                            queryImg(nextpage, url);
+                                        }
+
+                                    }, 100);
+                                }
+                            }
+                        };
+                    })
+            }
+
+            //關鍵字搜尋==================================================
+            //開啟連線
+            let button = document.getElementById("buttonId");
+            function clickButton(e) {
+                e.preventDefault();
+                keyword = document.getElementById("keyword").value;
+                // 刪除attractions-group舊圖片
+                let parent = document.getElementById("attractions");
+                let child = document.getElementById("attractions-group");
+                parent.removeChild(child);
+                //產生attractions-group新圖片
+                let item_group = document.createElement("div");
+                item_group.className = "attractions-group";
+                item_group.id = "attractions-group";
+                parent.appendChild(item_group);
+
+                const url = `/api/attractions?page=${page}&keyword=${keyword}`;
+
+                if (page != null) {
+                    queryAttraction(page, keyword, url);
+                } else {
+                    console.log("無資料");
+                }
+
+
+                //執行函式
+
+                async function queryAttraction(page, keyword, url) {
+                    await fetch(url)
+                        .then(res => {
+                            return res.json();
+                        })
+                        .then(content => {
+                            let dataobj = content;
+                            console.log(dataobj.data)
+
+                            //查無資料
+                            if (dataobj.data.length === 0) {
+                                console.log("nodata")
+                                document.getElementById("attractions-group").innerHTML = "查無資料"
+
+
+                            } else {
+                                for (let i = 0; i < dataobj.data.length; i++) {
+                                    // 框架
+                                    let item = document.createElement("div");
+                                    item.className = "attraction-desktop";
+                                    item.id = "attraction-desktop";
+                                    //圖片
+                                    let url_img = dataobj.data[i]["images"][0];
+                                    let image = new Image();
+                                    image.src = url_img
+                                    image.className = "img";
+                                    let image_tag = document.createElement("div");
+
+                                    item_group.appendChild(item).appendChild(image_tag).appendChild(image);
+
+
+                                    //文字
+                                    let text = document.createElement("div");
+                                    text.className = "text";
+                                    text.id = "text";
+                                    let cat_text = dataobj.data[i]["category"];
+                                    if (cat_text != null) {
+                                        cat_text.className = "cat";
+                                        let cat_text_tag = document.createElement("div");
+                                        cat_text_tag.className = "cat";
+                                        cat_text_tag.textContent = cat_text;
+                                        item_group.appendChild(item).appendChild(text).appendChild(cat_text_tag);
+                                    }
+
+
+                                    let traffic_text = dataobj.data[i]["mrt"];
+                                    if (traffic_text != null) {
+                                        traffic_text.className = "traffic";
+                                        let traffic_text_tag = document.createElement("div");
+                                        traffic_text_tag.className = "traffic";
+                                        traffic_text_tag.textContent = traffic_text;
+                                        item_group.appendChild(item).appendChild(text).appendChild(traffic_text_tag);
+                                    }
+
+
+                                    let title_text = dataobj.data[i]["name"];
+                                    if (title_text != null) {
+                                        title_text.className = "title";
+                                        let title_text_tag = document.createElement("div");
+                                        title_text_tag.className = "title";
+                                        title_text_tag.textContent = title_text;
+                                        item_group.appendChild(item).appendChild(title_text_tag);
+
+                                    }
+                                }
+                                const pagenum = dataobj.nextPage;
+                                return pagenum;
+                            }
+                        })
+                        .then(scroll => {
+                            nextpage = scroll;
+                            // scroll事件
+                            window.onscroll = function () {
+                                const footer = document.querySelector("footer")
+                                // console.log("scroll: " + this.scrollY + " innerHeight: " + this.innerHeight + "頁尾: " + footer.offsetTop);
+                                if (this.scrollY + this.innerHeight > footer.offsetTop) {
+                                    // scroll事件
+                                    var timeout;
+                                    window.onscroll = function () {
+                                        clearTimeout(timeout);
+                                        timeout = setTimeout(function () {
+                                            if (nextpage == null) {
+                                                // console.log("stop");
+                                            } else {
+                                                console.log("頁碼: " + nextpage);
+                                                const url = `/api/attractions?page=${nextpage}&keyword=${keyword}`;
+                                                queryAttraction(page, keyword, url);
+                                            }
+
+                                        }, 100);
+                                    }
+                                }
+                            };
+                        })
+                        .catch(err => {
+                            console.log(err.response.data);
+                        });
+                }
+
+            }
+            button.addEventListener("click", clickButton);
+
+        }
+
+
+
+    </script>
+
+    <style>
+        .text {
+            display: block;
+            margin-top: 20px;
+
+        }
+
+        body {
+            border: 0px;
+            margin: 0px;
+        }
+
+
+        /* 導覽列 */
+        .nav {
+            display: flex;
+            width: 100%;
+            height: 54px;
+            align-items: center;
+
+            /* White */
+            background: #FFFFFF;
+
+        }
+
+        .nav .div {
+            width: 1200px;
+            margin: auto;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav .text {
+            margin-top: 0px;
+        }
+
+        .frame2 {
+            width: 175px;
+            display: flex;
+            align-items: center;
+            justify-content: end;
+
+        }
+
+        .frame1 {
+            /* Frame 1 */
+
+            /* Auto Layout */
+            flex-wrap: wrap;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0px;
+
+        }
+
+        .frame1 a {
+            /* Body - Reg 16(13.3) */
+            font-family: Noto Sans TC;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 13px;
+            /* identical to box height, or 83% */
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+            padding: 3px;
+            text-decoration: none;
+
+            /* Gray 800 */
+            color: #666666;
+
+        }
+
+        .div .text {
+            /* 台北一日遊 */
+            display: flex;
+            align-items: center;
+            font-family: Noto Sans;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 30px;
+            /* identical to box height, or 113% */
+
+            /* Cyan 800 */
+            color: #448899;
+
+        }
+
+
+
+        /* 標題 */
+        .slogan {
+            width: 320px;
+            height: 100%;
+            z-index: 1;
+            margin-left: -3px;
+
+        }
+
+        .slogan .div {
+            /* div */
+            width: 320px;
+            height: 78px;
+            position: relative;
+            top: 65px;
+
+
+
+            /* Inside Auto Layout */
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+            margin: auto;
+
+
+
+        }
+
+
+
+        .main {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            position: relative;
+            width: 70%;
+            justify-content: space-between;
+        }
+
+
+        .search-desktop {
+            position: relative;
+            top: 25px;
+            width: 300px;
+            height: 46px;
+            border: 2px solid #448899;
+            border-radius: 5px;
+            background-color: white;
+            display: inline-flex;
+
+
+
+        }
+
+        .search-desktop input {
+            /* White */
+            background: #FFFFFF;
+            width: 322px;
+            height: 40px;
+            border: none;
+            outline: none;
+
+
+        }
+
+        button {
+            /* btn */
+            width: 60px;
+            height: 48px;
+            position: absolute;
+            right: -1px;
+            top: 0px;
+            z-index: 0;
+            background: #448899;
+            border: none;
+            border-radius: 0 2px 2px 0;
+        }
+
+        .input:-internal-autofill-selected {
+            background-color: #fff;
+        }
+
+
+
+
+        .input-text {
+            /* 輸入景點名稱查詢 */
+            position: absolute;
+            width: 200px;
+            height: 16px;
+            left: 15px;
+            top: 15px;
+
+            /* Body - Bold 16(13.3) */
+            font-family: Noto Sans TC;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 16px;
+            line-height: 13px;
+            /* or 83% */
+            display: flex;
+            align-items: center;
+
+            /* Gray 700 */
+            color: #757575;
+
+
+        }
+
+
+        button .icon {
+            /* icon / search */
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            top: 6px;
+            left: 13px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3;
+
+
+
+        }
+
+        button .icon img {
+            /* icon_search */
+            z-index: 2;
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            left: 0px;
+            top: 0px;
+            margin: auto;
+
+
+        }
+
+        .div-slogan {
+            /* slogan */
+            position: relative;
+            width: 100%;
+            height: 78px;
+            left: 0px;
+            top: 0px;
+
+
+        }
+
+        .div-slogan .text-1 {
+            /* 輕鬆享受台北一日悠閒 */
+
+            position: absolute;
+            width: 100%;
+            height: 41px;
+            left: 0px;
+            top: 0px;
+
+            /* Header 1 - Bold 28(24) */
+            font-family: Noto Sans TC;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 28px;
+            line-height: 24px;
+            /* or 86% */
+            display: flex;
+            align-items: center;
+
+            /* Gray 50 */
+            color: #F8F8F8;
+
+            /* Text Shadow */
+            text-shadow: 0px 0px 30px #AABBCC;
+
+        }
+
+        .div-slogan .text-2 {
+            /* 探索每個角落，體驗城市的深度旅遊行程 */
+
+            position: absolute;
+            width: 100%;
+            height: 22px;
+            left: 0px;
+            top: 56px;
+
+            /* Body - Reg 16(13.3) */
+            font-family: Noto Sans TC;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 13px;
+            /* or 83% */
+            display: flex;
+            align-items: center;
+
+            /* Gray 50 */
+            color: #F8F8F8;
+
+
+        }
+
+        /* 圖幅框 */
+        .hero-section {
+            display: flex;
+            overflow: hidden;
+            justify-content: center;
+            align-items: center;
+            z-index: -1;
+            width: 100%;
+            height: 280px;
+            /* Light | Cyan Gradient (135deg) */
+            background: linear-gradient(135deg, #AADDEE 0%, #66AABB 100%);
+        }
+
+
+
+        /* 頁尾 */
+        .footer {
+            /* Auto Layout */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 104px;
+            position: relative;
+            width: 100%;
+
+
+
+            /* Gray 700 */
+            background: #757575;
+        }
+
+
+        .footer div .text {
+            /* Body - Bold 16(13.3) */
+            font-family: Noto Sans TC;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 16px;
+            line-height: 13px;
+            /* identical to box height, or 83% */
+            display: flex;
+            align-items: center;
+            /* White */
+            color: #FFFFFF;
+        }
+
+        .title {
+
+            /* 平安鐘 */
+            position: absolute;
+            width: 220px;
+            height: 22px;
+            top: 180px;
+            left: 10px;
+            line-height: 20px;
+
+
+            /* Body - Bold 16(13.3) */
+            font-family: Noto Sans TC;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 16px;
+            /* or 83% */
+
+            /* Gray 700 */
+            color: #757575;
+
+
+        }
+
+        .attraction-desktop .traffic {
+            /* 忠孝復興 */
+            position: absolute;
+            width: 100px;
+            height: 20px;
+            left: 10px;
+            top: 225px;
+
+            /* Body - Reg 16(13.3) */
+            font-family: Noto Sans TC;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 13px;
+            vertical-align: middle;
+            /* or 83% */
+            display: inline-block;
+            align-items: center;
+
+            /* Gray 700 */
+            color: #757575;
+            /* border:1px solid red; */
+
+
+        }
+
+        .attraction-desktop .cat {
+            /* 公共藝術 */
+            position: absolute;
+            width: 100px;
+            height: 20px;
+            left: 120px;
+            top: 225px;
+            text-align: end;
+
+
+
+            /* Body - Reg 16(13.3) */
+            font-family: Noto Sans TC;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 13px;
+            /* or 83% */
+            display: inline-block;
+
+            /* Gray 700 */
+            color: #757575;
+
+
+        }
+
+        .attraction-desktop img {
+            /* img */
+            position: absolute;
+            border-radius: 5px;
+            width: 100%;
+            height: 170px;
+            left: 0px;
+            top: 0px;
+            background: #C4C4C4;
+
+        }
+
+        /* 圖片資料 */
+        .attractions {
+            width: 100%;
+            margin: 100px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+
+        }
+
+        .attraction-desktop {
+
+            flex-wrap: wrap;
+            width: 240px;
+            height: 250px;
+            margin: 15px 10px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            border: 1px solid red;
+
+            /* White */
+            background: #FFFFFF;
+            border-radius: 5px;
+            /* Gray 300 */
+
+            border: 1px solid #E8E8E8;
+
+        }
+
+        .attractions-group {
+            flex-wrap: wrap;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+
+        }
+
+
+
+        @media screen and (min-width:1200px) {
+
+
+            .main {
+                position: relative;
+                width: 1200px;
+                margin: auto;
+                height: 100%;
+                display: flex;
+                justify-content: space-between;
+
+            }
+
+
+            .attractions-group {
+                width: 1300px;
+
+
+            }
+
+            .welcome1 {
+                /* display: none; */
+                width: 550px;
+                position: absolute;
+                right: 3px;
+                top: 9px;
+
+            }
+
+        }
+
+        /* ===================================== */
+        /* 手機裝置尺寸 */
+        @media screen and (min-width:360px) and (max-width:1200px){
+            .main {
+                position: relative;
+                margin: auto;
+                height: 100%;
+                display: flex;
+
+            }
+
+            .welcome1 {
+                /* display: none; */
+
+                width: 340px;
+                position: absolute;
+                right: -180px;
+                top: 113px;
+
+            }
+
+
+            .attraction-desktop.text {
+                height: 100px;
+
+            }
+
+            .attraction-desktop img {
+                margin: auto;
+
+            }
+
+
+
+
+
+
+        }
+    </style>
+</head>
+
+
+<body onload="getData()">
+    <div class="nav">
+        <div class="div">
+            <div class="text">
+                台北一日遊
+            </div>
+
+            <div class="frame2">
+                <div class="frame1">
+                    <div class="btn-nav">
+                        <a href="#">預定行程</a>
+                    </div>
+                    <div class="btn-nav">
+                        <a href="#">登入/註冊</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hero-section">
+        <div class="main">
+            <div class="slogan">
+                <div class="div">
+                    <div class="div-slogan">
+                        <div class="text-1">輕鬆享受台北一日悠閒</div>
+                        <div class="text-2">探索每個角落，體驗城市的深度旅遊行程</div>
+                    </div>
+
+                    <div class="search">
+                        <div class="search-desktop">
+                            <form>
+                                <div class="input-text"><input type="text" id="keyword" placeholder="輸入景點名稱查詢"></div>
+                                <button id="buttonId">
+                                    <div class="icon">
+                                        <img src="{{url_for('static', filename='css/icon_search.png')}}" alt="search">
+                                    </div>
+                                </button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <img class="welcome1" src="{{url_for('static', filename='css/welcome.png')}}" alt="welcome">
+            </div>
+
+        </div>
+    </div>
+
+    <div class="attractions" id="attractions">
+        <div class="attractions-group" id="attractions-group"></div>
+    </div>
+    <footer class="footer">
+        <div>
+            <div class="text">
+                COPYRIGHT © 2021 台北一日遊
+            </div>
+        </div>
+    </footer>
+
+
+</body>
+
+
+
+
+</html>

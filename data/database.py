@@ -45,6 +45,9 @@ json_info_list=data["result"]["results"]
 # mycursor.execute("CREATE TABLE attractions_url (RowNumber INT, file text, FOREIGN KEY (RowNumber) REFERENCES attractions(RowNumber) )")
 
 sql ="insert into attractions_url (RowNumber, file) values (%s, %s)"
+
+#分隔符號join.(資料)
+
 for info in json_info_list:
     for i in range(1,len(info["file"].split("http"))):
         pic_url="http"+info["file"].split("http")[i]

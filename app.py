@@ -2,8 +2,8 @@ from flask import *
 import mysql.connector
 from mysql.connector import Error
 import json
-
 app=Flask(__name__)
+
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 
@@ -25,6 +25,7 @@ def attractions():
     keyword=request.args.get("keyword","")
 
 
+
     #資料庫處理**************************************
     mycursor=mydb.cursor()
     #查詢要查詢的會員帳號
@@ -33,7 +34,6 @@ def attractions():
     mycursor.execute(sql, (("%"+keyword+"%"),(page*12),12))
     #從資料庫搜尋到的查詢結果
     record=mycursor.fetchall()
-    print(record)
     try:
         if len(record)>0:
             result=[]
@@ -56,7 +56,6 @@ def attractions():
                 for row in record_img:
                     if ((row[0][-3:]).lower())== "jpg" or ((row[0][-3:]).lower())== "png":
                         img_data.append(row[0]) 
-                        print((row[0][-3:]).lower())  
                         data_dic["images"]=img_data  
                           
   
@@ -131,7 +130,6 @@ def attractionId(attractionId):
         return response
 
     
-    
 
 
 # Pages
@@ -148,4 +146,5 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
-app.run(host="0.0.0.0",port=3000, debug=True)
+ 
+app.run(host="0.0.0.0", port=3000, debug=True)
