@@ -275,16 +275,23 @@
 
         /* 導覽列 */
         .nav {
-            position: absolute;
             display: flex;
-            left: 0px;
-            top: 0px;
             width: 100%;
             height: 54px;
+            align-items: center;
 
             /* White */
             background: #FFFFFF;
 
+        }
+
+        .nav .div {
+            width: 1200px;
+            margin: auto;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .nav .text {
@@ -292,17 +299,11 @@
         }
 
         .frame2 {
-            /* Frame 2 */
-            /* Auto Layout */
-            flex-wrap: wrap;
-            position: absolute;
             width: 175px;
-            height: 34px;
-            right: 0px;
-            top: 10px;
             display: flex;
             align-items: center;
-            margin-right: 50px;
+            justify-content: end;
+
         }
 
         .frame1 {
@@ -311,16 +312,9 @@
             /* Auto Layout */
             flex-wrap: wrap;
             display: flex;
-            flex-direction: row;
-            justify-content: flex-end;
+            justify-content: center;
             align-items: center;
             padding: 0px;
-
-            position: static;
-            height: 34px;
-            right: 40%;
-            top: 0px;
-
 
         }
 
@@ -345,18 +339,12 @@
 
         .div .text {
             /* 台北一日遊 */
-
-            position: absolute;
-            width: 150px;
-            height: 34px;
-            left: 10px;
-            top: 10px;
-
+            display: flex;
+            align-items: center;
             font-family: Noto Sans;
             font-style: normal;
             font-weight: bold;
             font-size: 30px;
-            line-height: 34px;
             /* identical to box height, or 113% */
 
             /* Cyan 800 */
@@ -365,20 +353,13 @@
         }
 
 
+
         /* 標題 */
         .slogan {
-            /* slogan */
-
-            /* Auto Layout */
-
-            flex-wrap: wrap;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-
             width: 320px;
-            height: 50px;
-            margin: 50px 5% 0px;
+            height: 100%;
+            z-index: 1;
+            margin-left: -3px;
 
         }
 
@@ -401,10 +382,30 @@
 
         }
 
+        .welcome1 {
+            /* display: none; */
+
+            width: 340px;
+            position: absolute;
+            right: 3px;
+            top: 113px;
+
+        }
+
+        .main {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            position: relative;
+            width: 70%;
+            justify-content: space-between;
+        }
+
+
         .search-desktop {
             position: relative;
             top: 25px;
-            width: 322px;
+            width: 300px;
             height: 46px;
             border: 2px solid #448899;
             border-radius: 5px;
@@ -565,17 +566,10 @@
 
         /* 圖幅框 */
         .hero-section {
-            /* Hero section | Desktop */
-            /* Auto Layout */
-
-            position: absolute;
-            top: 54px;
             display: flex;
-            flex-direction: row;
-            justify-content: flex-end;
-            align-items: flex-start;
+            justify-content: center;
+            align-items: center;
             z-index: -1;
-
             width: 100%;
             height: 280px;
             /* Light | Cyan Gradient (135deg) */
@@ -703,61 +697,63 @@
 
         }
 
+        /* 圖片資料 */
+        .attractions {
+            width: 100%;
+            margin: 100px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+
+        }
+
+        .attraction-desktop {
+
+            flex-wrap: wrap;
+            width: 240px;
+            height: 250px;
+            margin: 15px 10px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            border: 1px solid red;
+
+            /* White */
+            background: #FFFFFF;
+            border-radius: 5px;
+            /* Gray 300 */
+
+            border: 1px solid #E8E8E8;
+
+        }
+
+        .attractions-group {
+            flex-wrap: wrap;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            
+        }
 
 
 
         @media screen and (min-width:1200px) {
-            .welcome1 {
-                /* welcome 1 */
+            .main {
                 position: relative;
-                width: 550px;
-                right: 5%;
-                top: 10px;
-
-            }
-
-            /* 圖片資料 */
-            .attractions {
-                height: 100%;
                 width: 1200px;
+                margin: auto;
+                height: 100%;
                 display: flex;
-                align-items: center;
-                justify-content: center;
-                margin-top: 400px;
-                /* padding-left: 200px;
-                padding-right: 200px; */
-                font-size: 40px;
-                line-height: 40px;
-
+                justify-content: space-between;
 
             }
+
 
             .attractions-group {
-                width: 1200px;
-                flex-wrap: wrap;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin: auto;
+                width: 1300px;
 
-            }
 
-            .attraction-desktop {
-
-                flex-wrap: wrap;
-                width: 240px;
-                height: 250px;
-                margin: 15px;
-                position: relative;
-
-                /* White */
-                background: #FFFFFF;
-                border-radius: 5px;
-                /* Gray 300 */
-
-                border: 1px solid #E8E8E8;
-                box-sizing: border-box;
-                border: 1px solid red;
             }
 
 
@@ -770,72 +766,26 @@
         /* ===================================== */
         /* 手機裝置尺寸 */
         @media screen and (min-width:360px) {
-
-
-
-            /* 圖片資料 */
-            .attractions {
-                width: 100%;
-                margin: 300px auto;
-                /* height: 100%; */
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 40px;
-                line-height: 40px;
-
-
-            }
-
-            .attractions-group {
-                width: 1200px;
-                margin: auto;
-                flex-wrap: wrap;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-
-
-            }
-
-
-            .attraction-desktop {
-
-                flex-wrap: wrap;
-                width: 240px;
-                height: 250px;
-                margin: 15px;
+            .main {
                 position: relative;
-
-
-                /* White */
-                background: #FFFFFF;
-                border-radius: 5px;
-                /* Gray 300 */
-
-                border: 1px solid #E8E8E8;
-                box-sizing: border-box;
-                border-radius: 5px;
+                margin: auto;
+                height: 100%;
+                display: flex;
+                
             }
+
 
             .attraction-desktop.text {
-                border: 1px solid red;
                 height: 100px;
 
             }
-
-
-
-
-
-            .welcome1 {
-                /* welcome 1 */
-                position: relative;
-                width: 550px;
-                right: 5%;
-                top: 10px;
+            .attraction-desktop img{
+                margin: auto;
 
             }
+
+
+
 
 
 
@@ -863,32 +813,37 @@
             </div>
         </div>
     </div>
-    <div class="slogan">
-        <div class="div">
-            <div class="div-slogan">
-                <div class="text-1">輕鬆享受台北一日悠閒</div>
-                <div class="text-2">探索每個角落，體驗城市的深度旅遊行程</div>
-            </div>
+    <div class="hero-section">
+        <div class="main">
+            <div class="slogan">
+                <div class="div">
+                    <div class="div-slogan">
+                        <div class="text-1">輕鬆享受台北一日悠閒</div>
+                        <div class="text-2">探索每個角落，體驗城市的深度旅遊行程</div>
+                    </div>
 
-            <div class="search">
-                <div class="search-desktop">
-                    <form>
-                        <div class="input-text"><input type="text" id="keyword" placeholder="輸入景點名稱查詢"></div>
-                        <button id="buttonId">
-                            <div class="icon">
-                                <img src="{{url_for('static', filename='css/icon_search.png')}}" alt="search">
-                            </div>
-                            <div class="bg"></div>
-                        </button>
-                    </form>
+                    <div class="search">
+                        <div class="search-desktop">
+                            <form>
+                                <div class="input-text"><input type="text" id="keyword" placeholder="輸入景點名稱查詢"></div>
+                                <button id="buttonId">
+                                    <div class="icon">
+                                        <img src="{{url_for('static', filename='css/icon_search.png')}}" alt="search">
+                                    </div>
+                                </button>
+                            </form>
 
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div>
+                <img class="welcome1" src="{{url_for('static', filename='css/welcome.png')}}" alt="welcome">
+            </div>
+
         </div>
     </div>
-    <div class="hero-section">
-        <img class="welcome1" src="{{url_for('static', filename='css/welcome.png')}}" alt="welcome">
-    </div>
+
     <div class="attractions" id="attractions">
         <div class="attractions-group" id="attractions-group"></div>
     </div>
