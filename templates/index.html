@@ -14,8 +14,11 @@
             let keyword = document.getElementById("keyword").value;
             //預設頁碼
             let page = 0;
+            //取得景點編號
+            let url_id = '';
 
-            // 定義url
+
+            // 串接首頁路由: 定義url
             if (keyword != "") {
                 const url = `/api/attractions?page=${page}&keyword=${keyword}`;
                 if (page != null) {
@@ -25,7 +28,7 @@
                 }
 
             } else {
-                const url = `/api/attractions?page=${page}`;
+                let url = `/api/attractions?page=${page}`;
                 if (page != null) {
                     queryImg(page, url);
                 } else {
@@ -33,8 +36,9 @@
                 }
             }
 
-            // 有圖片、無關鍵字
 
+
+            // 有圖片、無關鍵字
             async function queryImg(page, url) {
                 await fetch(url)
                     .then(res => {
@@ -49,7 +53,20 @@
 
                             let item = document.createElement("div");
                             item.className = "attraction-desktop";
-                            item.id = "attraction-desktop";
+
+                            //取得景點編號
+                            function clickId(e) {
+                                e.preventDefault();
+                                id = this.getAttribute('id');
+                                let url_id = "/attraction/" + id;
+                                window.location.href = url_id;
+                            }
+
+                            //景點編號
+                            item.id = dataobj.data[i]["id"];
+                            item.addEventListener("click", clickId);
+
+
 
                             //圖片
 
@@ -91,15 +108,17 @@
                                 title_text_tag.className = "title";
                                 title_text_tag.textContent = title_text;
                                 item_group.appendChild(item).appendChild(title_text_tag);
-
                             }
+
+
                         }
-                        const pagenum = dataobj.nextPage;
+                        let pagenum = dataobj.nextPage;
                         return pagenum;
                     })
                     .then(scroll => {
                         nextpage = scroll;
                         console.log("下一頁:" + nextpage);
+
                         // scroll事件
                         window.onscroll = function () {
                             const footer = document.querySelector("footer")
@@ -764,7 +783,7 @@
 
         /* ===================================== */
         /* 手機裝置尺寸 */
-        @media screen and (min-width:360px) and (max-width:1200px){
+        @media screen and (min-width:360px) and (max-width:1200px) {
             .main {
                 position: relative;
                 margin: auto;
