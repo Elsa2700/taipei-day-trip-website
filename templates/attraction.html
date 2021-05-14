@@ -6,730 +6,448 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attraction</title>
+    <!-- <script src="../static/js/attraction.js"></script> -->
+    <link rel="stylesheet" href="../static/css/attraction.css">
+    <script>
+
+        //取得景點api資訊
+        let href = location.href;
+        let id = href.split('/')[4];
+        let url = "/api/attraction/" + id;
+
+        queryId(url);
+        async function queryId(url) {
+            await fetch(url)
+                .then(res => {
+                    return res.json();
+                })
+                .then(content => {
+                    let dataobj = content;
+                    //景點名稱
+                    let profile_title = document.getElementById("profile-title");
+                    profile_title.textContent = dataobj.data["name"];
+                    //景點類別
+                    let profile_content = document.getElementById("profile-content");
+                    profile_content.textContent = dataobj.data["category"] + " at " + dataobj.data["mrt"];
+                    //資訊
+                    let info_content = document.getElementById("info-content");
+                    info_content.textContent = dataobj.data["description"];
+                    //地址
+                    let ads_content = document.getElementById("ads-content");
+                    ads_content.textContent = dataobj.data["address"];
+                    //交通
+                    let trf_content = document.getElementById("trf-content");
+                    trf_content.textContent = dataobj.data["transport"];
+                    //圖片
+                    let attracion_pic = document.getElementById("attracion-pic");
+                    attracion_pic.src = dataobj.data["images"][0];
+                    let index = 0;
+                    let imglen = dataobj.data["images"].length;
+
+                    //價格
+                    let field_price = document.getElementById("field-price");
+                    field_price.textContent = "新台幣 2000 元";
+
+
+                    //小圓點
+                    let btn_circle = document.getElementById("btn-circle");
+                    for (let i = 0; i < imglen; i++) {
+                        let img_circle = document.createElement("img");
+                        img_circle.id = "img_circle" + i;
+                        img_circle.src = "{{url_for('static', filename='css/circle current.png')}}";
+                        btn_circle.appendChild(img_circle);
+                    }
+
+
+                    //箭頭事件處理器
+                    let btn_left = document.getElementById("btn-left");
+                    btn_left.addEventListener("click", left);
+                    let btn_right = document.getElementById("btn-right");
+                    btn_right.addEventListener("click", right);
+
+                    //點擊左箭頭
+                    function left() {
+                        console.log("左" + index);
+                        index--;
+                        if (index < 0) {
+                            index = imglen - Math.abs(index);
+                        }
+                        attracion_pic.src = dataobj.data["images"][index];
+                        let img_circle_index = document.getElementById("img_circle" + index);
+                        let img_circle = document.getElementById("img_circle*");
+                        for (let i = 0; i < imglen; i++) {
+                            if (("img_circle" + i) == img_circle_index.id) {
+                                console.log(("img_circle" + i));
+                                console.log(img_circle_index.id);
+                                document.getElementById("img_circle" + i).src = "{{url_for('static', filename='css/circle current_b.png')}}";
+                            } else {
+                                document.getElementById("img_circle" + i).src = "{{url_for('static', filename='css/circle current.png')}}";
+                            }
+                        }
+                    }
+                    //點擊左箭頭
+
+                    function right(e) {
+                        e.preventDefault();
+                        console.log("右" + index);
+                        index++;
+                        if (index >= imglen) {
+                            index = index % imglen;
+                        }
+                        attracion_pic.src = dataobj.data["images"][index];
+                        let img_circle_index = document.getElementById("img_circle" + index);
+                        let img_circle = document.getElementById("img_circle*");
+                        for (let i = 0; i < imglen; i++) {
+                            if (("img_circle" + i) == img_circle_index.id) {
+                                console.log(("img_circle" + i));
+                                console.log(img_circle_index.id);
+                                document.getElementById("img_circle" + i).src = "{{url_for('static', filename='css/circle current_b.png')}}";
+                            } else {
+                                document.getElementById("img_circle" + i).src = "{{url_for('static', filename='css/circle current.png')}}";
+                            }
+                        }
+
+                    }
+
+
+                    // 登入視窗=================================================
+                    let loginId = document.getElementById("loginId");
+                    loginId.addEventListener("click", Login, false);
+                    function Login() {
+                        document.getElementById("loginPage").style.display = "block";
+                    }
+                    // 關閉登入視窗(外層)=================================================    
+                    let outerPagelogin = document.getElementById("login-bgPage");
+                    outerPagelogin.addEventListener("click", loginClose);
+                    function loginClose() {
+                        document.getElementById("loginPage").style.display = "none";
+
+                    }
+                    let outerPagesignup = document.getElementById("signup-bgPage");
+                    outerPagesignup.addEventListener("click", signupClose);
+                    function signupClose() {
+                        document.getElementById("signupPage").style.display = "none";
+                        document.getElementById("loginPage").style.display = "none";
+
+                    }
+                    // 關閉登入視窗(內層)=================================================    
+                    let innerPage_login = document.getElementById("loginPage-frame")
+                    let innerPage_signup = document.getElementById("signupPage-frame")
+                    innerPage_login.addEventListener("click", open);
+                    innerPage_signup.addEventListener("click", open);
+                    function open(e) {
+                        document.getElementById("loginPage").style.display = "block";
+                        e.stopPropagation();
+                        e.preventDefault();
+                    }
+
+
+                    // 轉至註冊視窗(點擊)=================================================
+                    let signupPage = document.getElementById("msg-signup");
+                    signupPage.addEventListener("click", querySignup);
+                    function querySignup() {
+                        document.getElementById("signupPage").style.display = "block";
+
+                    }
+                    // 轉至登入視窗(點擊)=================================================
+                    let loginPage = document.getElementById("msg-login");
+                    loginPage.addEventListener("click", queryLogin);
+                    function queryLogin() {
+                        document.getElementById("signupPage").style.display = "none";
+
+                    }
+                    //註冊(送出)================================================
+                    let signup_btn = document.getElementById("signup-btn");
+                    signup_btn.addEventListener("click", submitSignup);
+                    function submitSignup(e) {
+                        //抓取註冊資訊
+                        let username = document.getElementById("signup-username").value;
+                        let email = document.getElementById("signup-email").value;
+                        let psd = document.getElementById("signup-psd").value;
+
+                        //request body
+                        let data = {
+                            "name": username,
+                            "email": email,
+                            "password": psd
+                        };
+
+                        let options = {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(data)
+                        };
+                        console.log(options);
+
+                        e.preventDefault();
+
+
+                        signupReq('/api/user', options)
+
+                        async function signupReq() {
+                            await fetch('/api/user', options)
+                                .then(res => {
+                                    console.log(res);
+                                    return res.json();
+                                })
+                                .then(result => {
+                                    let dataobj = result;
+                                    console.log(dataobj["error"])
+                                    if (dataobj["error"] == true) {
+                                        let text = document.querySelector("#signup-msg")
+                                        text.textContent = dataobj["message"];
+                                        text.style.color = "red";
+
+                                    } else {
+                                        let text = document.querySelector("#signup-msg")
+                                        text.textContent = "註冊成功，請登入系統";
+                                        text.style.color = "green";
+                                    }
+
+                                })
+                                .catch(error => {
+                                    console.error("更新失敗");
+                                    let text = document.querySelector("#signup-msg")
+                                    text.textContent = "更新失敗";
+                                })
+
+                        }
+
+
+
+                    }
+
+                    //登入(送出)================================================
+                    let signin_btn = document.getElementById("signin-btn");
+                    signin_btn.addEventListener("click", submitSignin);
+                    function submitSignin(e) {
+
+                        //抓取登入資訊
+                        let email = document.getElementById("signin-email").value;
+                        let psd = document.getElementById("signin-psd").value;
+
+                        //request body
+                        let data = {
+                            "email": email,
+                            "password": psd
+                        };
+
+                        let options = {
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(data)
+                        };
+                        console.log(options);
+
+                        e.preventDefault();
+
+
+                        signinReq('/api/user', options)
+
+                        async function signinReq() {
+                            await fetch('/api/user', options)
+                                .then(res => {
+                                    console.log(res);
+                                    return res.json();
+                                })
+                                .then(result => {
+                                    let dataobj = result;
+                                    console.log(dataobj["error"])
+                                    if (dataobj["error"] == true) {
+                                        let text = document.querySelector("#signin-msg");
+                                        text.textContent = "電子郵件或密碼錯誤";
+                                        text.style.color = "red";
+                                    } else {
+                                        //重新載入頁面
+                                        window.document.location.reload();
+                                    }
+
+                                })
+                                .catch(error => {
+                                    console.error("更新失敗");
+                                    let text = document.querySelector("#signin-msg")
+                                    text.textContent = "電子郵件或密碼錯誤";
+                                    text.style.color = "red";
+                                })
+
+                        }
+
+
+
+                    }
+
+                    //當前使用者登入狀態=========================================
+                    queryState();
+                    async function queryState() {
+                        await fetch("/api/user")
+                            .then(res => {
+                                console.log(res);
+                                return res.json();
+                            })
+                            .then(result => {
+                                let dataobj = result;
+                                console.log(dataobj["data"])
+
+                                if (dataobj["data"] == null) {
+                                    //判斷式:null
+                                    let text = document.querySelector("#logintext");
+                                    text.textContent = "登入/註冊";
+
+                                } else {
+                                    //判斷式:非null
+                                    let text = document.querySelector("#logintext");
+                                    text.textContent = "登出系統";
+                                    //登出(點擊)
+                                    text.addEventListener("click", signout);
+                                    function signout(e) {
+                                        e.preventDefault;
+                                        let options = {
+                                            method: 'DELETE',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                            },
+                                        };
+
+                                        signoutReq('/api/user', options);
+
+                                        async function signoutReq() {
+                                            await fetch('/api/user', options)
+                                                .then(res => {
+                                                    console.log(res);
+                                                    return res.json();
+                                                })
+                                                .then(result => {
+                                                    let dataobj = result;
+                                                    if (dataobj["ok"] == true) {
+                                                        //重新載入頁面
+                                                        window.document.location.reload();
+                                                    }
+                                                })
+
+
+                                        }
+                                    }
+
+
+                                }
+
+
+
+                            })
+                    }
+
+                })
+        }
+
+        //訂購按鈕畫面
+        function radioText() {
+            let field_price = document.getElementById("field-price");
+            let price = document.querySelector('input[name="notaswitch-two"]:checked').value
+            field_price.textContent = price;
+        }
+
+    </script>
+
+
 </head>
-<style>
-    /* 初始狀態 */
-    body {
-        margin: 0px;
-        padding: 0px;
-    }
 
-    /* 導覽列 */
-    .nav {
-        width: 100%;
 
-
-    }
-
-    .nav .div .title {
-        font-family: Noto Sans;
-        font-size: 30px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: 34px;
-        letter-spacing: 0em;
-        text-align: left;
-        color: rgba(68, 136, 153, 1);
-        padding: 10px;
-
-    }
-
-    .hr-1 {
-        border: 1px solid rgba(232, 232, 232, 1);
-        margin-top: 3px;
-    }
-
-    .frame2 {
-        width: 175px;
-        display: flex;
-        justify-content: space-evenly;
-
-    }
-
-    .frame2 a {
-        margin: 10px;
-        font-family: Noto Sans TC;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 13px;
-        letter-spacing: 0em;
-        text-align: left;
-        text-decoration: none;
-        color: rgba(102, 102, 102, 1);
-    }
-
-
-
-
-
-    /* 頁尾 */
-    .footer {
-        /* Auto Layout */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 104px;
-        position: relative;
-        width: 100%;
-        /* Gray 700 */
-        background: #757575;
-    }
-
-    .footer .text {
-        /* Body - Bold 16(13.3) */
-        font-family: Noto Sans TC;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 16px;
-        line-height: 13px;
-        /* identical to box height, or 83% */
-        display: flex;
-        align-items: center;
-        /* White */
-        color: #FFFFFF;
-    }
-
-    input[type="radio"] {
-        display: none;
-    }
-
-    input[type="radio"]+label span {
-        display: inline-block;
-        width: 22px;
-        height: 22px;
-        margin: 0px;
-        vertical-align: middle;
-        cursor: pointer;
-        background: url(/static/css/Ellipse\ 1.png) top no-repeat;
-        position: relative;
-        top: -2px;
-        /* background-color: #FFFFFF; */
-    }
-
-    input[type="radio"]:checked+label span {
-        display: inline-block;
-        width: 22px;
-        height: 22px;
-        margin: 0px;
-        vertical-align: middle;
-        cursor: pointer;
-        position: relative;
-        background: url(/static/css/Ellipse\ 1.png) top no-repeat;
-
-    }
-
-    input[type="radio"]:checked+label span span {
-        display: inline-block;
-        width: 18px;
-        height: 18px;
-        margin: 0px;
-        vertical-align: middle;
-        cursor: pointer;
-        position: absolute;
-        top: 2px;
-        left: 2px;
-        background: url(/static/css/Ellipse\ 2.png) top no-repeat;
-
-    }
-
-    input[type="radio"] {
-        background-color: #FFFFFF;
-        background-color: #448899;
-
-    }
-
-    .radio {
-        margin: 10px;
-
-    }
-
-
-
-    /* 裝置1200px以上 */
-    @media screen and (min-width:1200px) {
-        .nav .div {
-            width: 1200px;
-            display: flex;
-            justify-content: space-between;
-            margin: auto;
-            align-items: center;
-        }
-
-
-
-        /* 段落section */
-        .section {
-            width: 1200px;
-            margin: 40px auto;
-            display: flex;
-            justify-content: space-between;
-            position: relative;
-        }
-
-        /* 段落-簡介 */
-        .profile {
-            position: absolute;
-            right: 0px;
-            width: 600px;
-            height: 400px;
-            justify-content: end;
-        }
-
-        .profile-title {
-            font-family: Noto Sans TC;
-            font-size: 24px;
-            font-style: normal;
-            font-weight: 700;
-            line-height: 24px;
-            letter-spacing: 0em;
-            text-align: left;
-            color: rgba(102, 102, 102, 1);
-
-        }
-
-        .profile-content {
-            font-family: Noto Sans TC;
-            font-size: 16px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 13px;
-            padding: 10px 0px;
-            margin: 0px;
-            color: rgba(102, 102, 102, 1);
-
-
-        }
-
-        .booking {
-            width: 600px;
-            height: 302px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            background: rgba(232, 232, 232, 1);
-            border-radius: 5px;
-            color: rgba(102, 102, 102, 1);
-        }
-
-        .booking-frame {
-            width: 560px;
-
-        }
-
-        h2 {
-            font-weight: bold;
-            font-family: Noto Sans TC;
-            font-size: 16px;
-            font-style: normal;
-            font-weight: 700;
-            line-height: 30px;
-            letter-spacing: 0em;
-            text-align: left;
-
-        }
-
-        .content {
-            font-family: Noto Sans TC;
-            font-size: 16px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 13px;
-            letter-spacing: 0em;
-            text-align: left;
-
-        }
-
-        button {
-            background-color: rgba(68, 136, 153, 1);
-            width: 154px;
-            height: 36px;
-            border-radius: 5px;
-            border: none
-        }
-
-        .btn-text {
-            font-family: Noto Sans TC;
-            font-size: 19px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 16px;
-            letter-spacing: 0em;
-            text-align: center;
-            color: rgba(255, 255, 255, 1);
-            text-align: center;
-
-        }
-
-        .date-img {
-            width: 24px;
-            height: 24px;
-        }
-
-
-        /* 段落-圖片 */
-        .pic {
-            position: absolute;
-            left: 0px;
-            width: 540px;
-            height: 406px;
-            justify-content: end;
-            /* margin-right: 1500px; */
-
-
-        }
-
-        .pic-frame {
-            height: 100%;
-            display: flex;
-            justify-content: center;
-        }
-
-        .attracion-pic {
-            width: 540px;
-            height: 406px;
-            z-index: 0px;
-
-        }
-
-        .btn-arrow {
-            width: 520px;
-            display: flex;
-            justify-content: space-between;
-            z-index: 1px;
-            position: absolute;
-            top: 190px;
-
-        }
-
-        .btn-arrow img {
-            width: 36px;
-            height: 36px;
-
-        }
-
-        .btn-circle {
-            width: 72px;
-            height: 12px;
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-            position: absolute;
-            bottom: 10px;
-            margin: auto;
-            opacity: .7;
-        }
-
-        .btn-circle img {
-            margin: 10px;
-        }
-
-        /* 文字資訊 */
-        .hr-2 {
-            margin: 450px auto 0px;
-            width: 1200px;
-            border: 1px solid rgba(232, 232, 232, 1);
-        }
-
-        .info {
-            width: 1200px;
-            height: 362px;
-            margin: 50px auto;
-            color: rgba(102, 102, 102, 1);
-
-        }
-
-        p {
-            padding: 10px 0px;
-            font-family: Noto Sans TC;
-            font-size: 16px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 23px;
-            letter-spacing: 0em;
-            text-align: left;
-            color: rgba(102, 102, 102, 1);
-
-        }
-
-        .ads p {
-            padding-left: 0px;
-        }
-
-        .trf p {
-            padding-left: 0px;
-        }
-
-
-    }
-
-    /* 裝置360px-1200px */
-    @media screen and (min-width:360px) and (max-width:1200px) {
-        .nav .div {
-            width: 98%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .frame2 {
-            width: 175px;
-            display: flex;
-            justify-content: space-between;
-
-
-        }
-
-
-        /* 段落section */
-        .section {
-            width: 100%;
-            height: auto;
-            margin: 40px auto 200px;
-            display: flex;
-            justify-content: center;
-            position: relative;
-            flex-wrap: wrap;
-
-        }
-
-        /* 段落-簡介 */
-        .profile {
-            width: 100%;
-            height: 400px;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .profile-title {
-            font-family: Noto Sans TC;
-            font-size: 24px;
-            font-style: normal;
-            font-weight: 700;
-            line-height: 24px;
-            letter-spacing: 0em;
-            text-align: left;
-            color: rgba(102, 102, 102, 1);
-            padding-left: 20px;
-
-        }
-
-        .profile-content {
-            font-family: Noto Sans TC;
-            font-size: 16px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 20px;
-            padding: 10px 0px;
-            margin-bottom: 10px;
-            color: rgba(102, 102, 102, 1);
-            text-align: start;
-            padding-left: 20px;
-
-        }
-
-        .field {
-            text-align: start;
-        }
-
-        .booking {
-            width: 95%;
-            height: 90%;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            background: rgba(232, 232, 232, 1);
-            border-radius: 5px;
-            color: rgba(102, 102, 102, 1);
-            margin: auto;
-        }
-
-        .booking-frame {
-            width: 100%;
-            padding: 10px;
-        }
-
-        h2 {
-            font-weight: bold;
-            font-family: Noto Sans TC;
-            font-size: 16px;
-            font-style: normal;
-            font-weight: 700;
-            line-height: 30px;
-            letter-spacing: 0em;
-            text-align: left;
-
-        }
-
-        .content {
-            font-family: Noto Sans TC;
-            font-size: 16px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 25px;
-            letter-spacing: 0em;
-            text-align: left;
-
-        }
-
-        button {
-            background-color: rgba(68, 136, 153, 1);
-            width: 154px;
-            height: 36px;
-            border-radius: 5px;
-            border: none
-        }
-
-        .btn-text {
-            font-family: Noto Sans TC;
-            font-size: 19px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 16px;
-            letter-spacing: 0em;
-            text-align: center;
-            color: rgba(255, 255, 255, 1);
-            text-align: center;
-
-        }
-
-        .date-img {
-            width: 24px;
-            height: 24px;
-        }
-
-
-        /* 段落-圖片 */
-        .pic {
-            justify-content: center;
-            width: 100%;
-            height: 400px;
-
-
-        }
-
-        .pic-frame {
-            height: 100%;
-            display: flex;
-            justify-content: center;
-
-        }
-
-        .attracion-pic {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-
-
-        }
-
-        .btn-arrow {
-            width: 90%;
-            display: flex;
-            justify-content: space-between;
-            z-index: 1px;
-            position: absolute;
-            height: 36px;
-            top: 200px;
-
-        }
-
-        .btn-arrow img {
-            width: 36px;
-            height: 36px;
-            opacity: .8;
-
-        }
-
-        .btn-circle {
-            width: 72px;
-            height: 12px;
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-            position: absolute;
-            opacity: .7;
-            top: 370px;
-        }
-
-        .btn-circle img {
-            margin: 10px;
-        }
-
-        /* 文字資訊 */
-        .hr-2 {
-            width: 100%;
-            border: 1px solid rgba(232, 232, 232, 1);
-        }
-
-        .info {
-            width: 100%;
-            height: 100%;
-            margin: 50px auto;
-            color: rgba(102, 102, 102, 1);
-
-        }
-
-        p {
-            padding-left: 10%;
-            padding-right: 10%;
-            font-family: Noto Sans TC;
-            font-size: 16px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 23px;
-            letter-spacing: 0em;
-            text-align: left;
-            color: rgba(102, 102, 102, 1);
-
-        }
-
-        .ads p {
-            padding-left: 10%;
-            padding-right: 10%;
-        }
-
-        .ads-title {
-            padding-left: 10%;
-            padding-right: 10%;
-        }
-
-        .trf p {
-            padding-left: 10%;
-            padding-right: 10%;
-        }
-
-        .trf-title {
-            padding-left: 10%;
-            padding-right: 10%;
-        }
-
-
-    }
-</style>
-<script>
-    //取得景點api資訊
-    let href = location.href;
-    let id = href.split('/')[4];
-    let url = "/api/attraction/" + id;
-
-    queryId(url);
-    async function queryId(url) {
-        await fetch(url)
-            .then(res => {
-                return res.json();
-            })
-            .then(content => {
-                let dataobj = content;
-                //景點名稱
-                let profile_title = document.getElementById("profile-title");
-                profile_title.textContent = dataobj.data["name"];
-                //景點類別
-                let profile_content = document.getElementById("profile-content");
-                profile_content.textContent = dataobj.data["category"] + " at " + dataobj.data["mrt"];
-                //資訊
-                let info_content = document.getElementById("info-content");
-                info_content.textContent = dataobj.data["description"];
-                //地址
-                let ads_content = document.getElementById("ads-content");
-                ads_content.textContent = dataobj.data["address"];
-                //交通
-                let trf_content = document.getElementById("trf-content");
-                trf_content.textContent = dataobj.data["transport"];
-                //圖片
-                let attracion_pic = document.getElementById("attracion-pic");
-                attracion_pic.src = dataobj.data["images"][0];
-                let index = 0;
-                let imglen = dataobj.data["images"].length;
-
-                //價格
-                let field_price = document.getElementById("field-price");
-                field_price.textContent = "新台幣 2000 元";
-
-
-                //小圓點
-                let btn_circle = document.getElementById("btn-circle");
-                for (let i = 0; i < imglen; i++) {
-                    let img_circle = document.createElement("img");
-                    img_circle.id = "img_circle" + i;
-                    img_circle.src = "{{url_for('static', filename='css/circle current.png')}}";
-                    btn_circle.appendChild(img_circle);
-                }
-
-
-                //箭頭事件處理器
-                let btn_left = document.getElementById("btn-left");
-                btn_left.addEventListener("click", left);
-                let btn_right = document.getElementById("btn-right");
-                btn_right.addEventListener("click", right);
-
-                //點擊左箭頭
-                function left() {
-                    console.log("左" + index);
-                    index--;
-                    if (index < 0) {
-                        index = imglen - Math.abs(index);
-                    }
-                    attracion_pic.src = dataobj.data["images"][index];
-                    let img_circle_index = document.getElementById("img_circle" + index);
-                    let img_circle = document.getElementById("img_circle*");
-                    for (let i = 0; i < imglen; i++) {
-                        if (("img_circle" + i) == img_circle_index.id) {
-                            console.log(("img_circle" + i));
-                            console.log(img_circle_index.id);
-                            document.getElementById("img_circle" + i).src = "{{url_for('static', filename='css/circle current_b.png')}}";
-                        } else {
-                            document.getElementById("img_circle" + i).src = "{{url_for('static', filename='css/circle current.png')}}";
-                        }
-                    }
-                }
-                //點擊左箭頭
-
-                function right(e) {
-                    e.preventDefault();
-                    console.log("右" + index);
-                    index++;
-                    if (index >= imglen) {
-                        index = index % imglen;
-                    }
-                    attracion_pic.src = dataobj.data["images"][index];
-                    let img_circle_index = document.getElementById("img_circle" + index);
-                    let img_circle = document.getElementById("img_circle*");
-                    for (let i = 0; i < imglen; i++) {
-                        if (("img_circle" + i) == img_circle_index.id) {
-                            console.log(("img_circle" + i));
-                            console.log(img_circle_index.id);
-                            document.getElementById("img_circle" + i).src = "{{url_for('static', filename='css/circle current_b.png')}}";
-                        } else {
-                            document.getElementById("img_circle" + i).src = "{{url_for('static', filename='css/circle current.png')}}";
-                        }
-                    }
-
-                }
-            })
-    }
-
-    //訂購按鈕畫面
-    function radioText() {
-        let field_price = document.getElementById("field-price");
-        let price = document.querySelector('input[name="notaswitch-two"]:checked').value
-        field_price.textContent = price;
-    }
-
-
-</script>
 
 <body>
-    <div class="nav">
-        <div class="div">
-            <div class="title">台北一日遊</div>
-            <div class="frame2">
-                <div><a href="#">預定行程</a></div>
-                <div><a href="#">登入/註冊</a></div>
+    <!-- 會員登入 -->
+    <div class="loginPage" id="loginPage">
+        <div class="bg-loginPage" id="login-bgPage">
+            <div class="loginPage-frame" id="loginPage-frame">
+                <div class="bar"></div>
+                <div class="header">
+                    <div class="header-text">登入會員帳號</div>
+                    <img class="close" src="{{url_for('static', filename='css/icon_close.png')}}" alt="">
+                </div>
+
+                <form action="/api/user" method="POST">
+                    <!-- 信箱 -->
+                    <div class="div-email">
+                        <input class="email" type="email" id="signin-email" name="signin-email" placeholder="輸入電子信箱"
+                            required>
+                    </div>
+
+                    <!-- 密碼 -->
+                    <div class="div-psd">
+                        <input class="psd" type="password" id="signin-psd" name="signin-password" placeholder="輸入密碼"
+                            required>
+                    </div>
+                </form>
+
+                <div class="div-btn-login">
+                    <button class="btn-login" id="signin-btn">登入帳戶</button>
+                </div>
+                <div class="signin-msg" id="signin-msg"></div>
+                <div class="msg" id="msg-signup">還沒有帳戶？點此註冊</div>
+            </div>
+        </div>
+
+    </div>
+    <!-- 會員登入 -->
+
+    <!-- 會員註冊 -->
+    <div class="signupPage" id="signupPage">
+        <div class="bg-loginPage" id="signup-bgPage">
+            <div class="signupPage-frame" id="signupPage-frame">
+                <div class="bar"></div>
+                <div class="header">
+                    <div class="header-text">註冊會員帳號</div>
+                    <img class="close" src="{{url_for('static', filename='css/icon_close.png')}}" alt="">
+                </div>
+
+                <form action="/api/user" method="POST">
+                    <!-- 姓名 -->
+                    <div class="div-username">
+                        <input class="username" type="text" id="signup-username" name="username" placeholder="輸入姓名"
+                            required>
+                    </div>
+                    <!-- 信箱 -->
+                    <div class="div-email">
+                        <input class="email" type="email" id="signup-email" name="email" placeholder="輸入電子信箱" required>
+                    </div>
+                    <!-- 密碼 -->
+                    <div class="div-psd">
+                        <input class="psd" type="password" id="signup-psd" name="password" placeholder="輸入密碼" required>
+                    </div>
+                    <div class="div-btn-login">
+                        <button class="btn-login" id="signup-btn">註冊新帳戶</button>
+                    </div>
+                    <div class="signup-msg" id="signup-msg"></div>
+                    <div class="msg" id="msg-login">已經有帳戶了？點此登入</div>
+                </form>
             </div>
         </div>
     </div>
-    <hr class="hr-1" />
+    <!-- 會員註冊 -->
+
+
+
+    <div class="nav">
+        <div class="div">
+            <div class="text">
+                <a href="/" class="title">台北一日遊</a>
+                <div class="frame2">
+                    <div>
+                        <a href="#">預定行程</a>
+                    </div>
+                    <div class="btn-nav" id="loginId">
+                        <div><a href="#" id="logintext">登入/註冊</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="hr-1" />
+
+    </div>
+
 
     <div class="section">
 
@@ -761,7 +479,7 @@
                     <div class="field">
                         <h2 class="field-date">選擇日期：
                             <span>
-                                <input type="date" placeholder="Date"></input>
+                                <input class="date" type="date" placeholder="Date"></input>
                             </span>
                         </h2>
                         <h2 class="field-time">選擇時間：
