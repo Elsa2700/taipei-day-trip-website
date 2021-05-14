@@ -8,6 +8,205 @@
     <title>Attraction</title>
 </head>
 <style>
+    /* 會員登入================================== */
+    .loginPage {
+        display: none;
+    }
+
+    .signupPage {
+        display: none;
+    }
+
+    .bg-loginPage {
+        background: rgba(0, 0, 0, .2);
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        border: 1px solid;
+        display: flex;
+        justify-content: center;
+        z-index: 15;
+    }
+
+    .bg-signupPage {
+        background: rgba(0, 0, 0, .2);
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        border: 1px solid;
+        display: flex;
+        justify-content: center;
+        z-index: 15;
+
+    }
+
+    .loginPage-frame {
+        z-index: 1;
+        width: 340px;
+        position: absolute;
+        z-index: 1;
+        top: 80px;
+        border-radius: 6px;
+        overflow: hidden;
+        background-color: rgba(255, 255, 255, 1);
+        ;
+    }
+
+    .signupPage-frame {
+        z-index: 1;
+        width: 340px;
+        position: absolute;
+        z-index: 1;
+        top: 80px;
+        border-radius: 6px;
+        overflow: hidden;
+        background-color: rgba(255, 255, 255, 1);
+        ;
+    }
+
+    .bar {
+        width: 100%;
+        height: 10px;
+        background: linear-gradient(270deg, #337788 0%, #66AABB 100%);
+
+    }
+
+    .header-text {
+        font-family: Noto Sans TC;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 24px;
+        letter-spacing: 0em;
+        text-align: center;
+        margin: 5px;
+        position: relative;
+        color: rgba(102, 102, 102, 1);
+        padding: 10px;
+
+
+    }
+
+    .close {
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        top: 20px;
+        right: 0px;
+        right: 20px;
+    }
+
+    .div-email {
+        display: flex;
+        justify-content: center;
+    }
+
+    .username {
+        width: 310px;
+        height: 47px;
+        background: rgba(255, 255, 255, 1);
+        border: 1px solid rgba(204, 204, 204, 1);
+        margin: 5px;
+        background: #FFFFFF;
+        /* Gray 500 */
+
+        border: 1px solid #CCCCCC;
+        box-sizing: border-box;
+        border-radius: 5px;
+
+    }
+
+    .div-username {
+        display: flex;
+        justify-content: center;
+    }
+
+
+    .email {
+        width: 310px;
+        height: 47px;
+        background: rgba(255, 255, 255, 1);
+        border: 1px solid rgba(204, 204, 204, 1);
+        margin: 5px;
+        background: #FFFFFF;
+        /* Gray 500 */
+
+        border: 1px solid #CCCCCC;
+        box-sizing: border-box;
+        border-radius: 5px;
+    }
+
+    .div-psd {
+        display: flex;
+        justify-content: center;
+    }
+
+    .psd {
+        width: 310px;
+        height: 47px;
+        background: rgba(255, 255, 255, 1);
+        border: 1px solid rgba(204, 204, 204, 1);
+        margin: 5px;
+        background: #FFFFFF;
+        /* Gray 500 */
+
+        border: 1px solid #CCCCCC;
+        box-sizing: border-box;
+        border-radius: 5px;
+    }
+
+    .div-btn-login {
+        display: flex;
+        justify-content: center;
+    }
+
+    .signup-msg {
+        display: flex;
+        justify-content: center;
+    }
+
+    .signin-msg {
+        display: flex;
+        justify-content: center;
+    }
+
+    .btn-login {
+        width: 310px;
+        /* Cyan 800 */
+        background: #448899;
+        border-radius: 5px;
+        font-family: Noto Sans TC;
+        font-size: 19px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 16px;
+        letter-spacing: 0em;
+        text-align: center;
+        color: rgba(255, 255, 255, 1);
+        margin: 5px;
+        padding: 10px;
+        border: none;
+
+    }
+
+    .msg {
+        width: 310px;
+        font-family: Noto Sans TC;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 13px;
+        letter-spacing: 0em;
+        text-align: center;
+        margin: 5px;
+        color: rgba(102, 102, 102, 1);
+        padding: 10px;
+
+    }
+
+    /* 會員登入================================== */
+
+
     /* 初始狀態 */
     body {
         margin: 0px;
@@ -17,9 +216,38 @@
     /* 導覽列 */
     .nav {
         width: 100%;
+        display: flex;
+        width: 100%;
+        height: 54px;
+        align-items: center;
+        position: fixed;
+        z-index: 10;
+        top: 0px;
 
+        /* White */
+        background: #FFFFFF;
 
     }
+
+    .nav .div {
+        width: 1200px;
+        margin: auto;
+        height: 54px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+    }
+
+    .nav .text {
+        margin-top: 0px;
+        position: fixed;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+
 
     .nav .div .title {
         font-family: Noto Sans;
@@ -31,6 +259,8 @@
         text-align: left;
         color: rgba(68, 136, 153, 1);
         padding: 10px;
+        text-decoration: none;
+
 
     }
 
@@ -90,6 +320,10 @@
         color: #FFFFFF;
     }
 
+    .date {
+        padding-left: 30px;
+    }
+
     input[type="radio"] {
         display: none;
     }
@@ -104,6 +338,8 @@
         background: url(/static/css/Ellipse\ 1.png) top no-repeat;
         position: relative;
         top: -2px;
+        margin-right: 20px;
+
         /* background-color: #FFFFFF; */
     }
 
@@ -116,6 +352,7 @@
         cursor: pointer;
         position: relative;
         background: url(/static/css/Ellipse\ 1.png) top no-repeat;
+        margin-right: 10px;
 
     }
 
@@ -144,11 +381,17 @@
 
     }
 
+    .radio-text {
+        background-color: blueviolet;
+
+    }
+
 
 
     /* 裝置1200px以上 */
     @media screen and (min-width:1200px) {
         .nav .div {
+            position: fixed;
             width: 1200px;
             display: flex;
             justify-content: space-between;
@@ -161,7 +404,7 @@
         /* 段落section */
         .section {
             width: 1200px;
-            margin: 40px auto;
+            margin: 0px auto;
             display: flex;
             justify-content: space-between;
             position: relative;
@@ -385,7 +628,7 @@
         .section {
             width: 100%;
             height: auto;
-            margin: 40px auto 200px;
+            margin: 0px auto 100px;
             display: flex;
             justify-content: center;
             position: relative;
@@ -706,6 +949,238 @@
                     }
 
                 }
+
+
+                // 登入視窗=================================================
+                let loginId = document.getElementById("loginId");
+                loginId.addEventListener("click", Login, false);
+                function Login() {
+                    document.getElementById("loginPage").style.display = "block";
+                }
+                // 關閉登入視窗(外層)=================================================    
+                let outerPagelogin = document.getElementById("login-bgPage");
+                outerPagelogin.addEventListener("click", loginClose);
+                function loginClose() {
+                    document.getElementById("loginPage").style.display = "none";
+
+                }
+                let outerPagesignup = document.getElementById("signup-bgPage");
+                outerPagesignup.addEventListener("click", signupClose);
+                function signupClose() {
+                    document.getElementById("signupPage").style.display = "none";
+                    document.getElementById("loginPage").style.display = "none";
+
+                }
+                // 關閉登入視窗(內層)=================================================    
+                let innerPage_login = document.getElementById("loginPage-frame")
+                let innerPage_signup = document.getElementById("signupPage-frame")
+                innerPage_login.addEventListener("click", open);
+                innerPage_signup.addEventListener("click", open);
+                function open(e) {
+                    document.getElementById("loginPage").style.display = "block";
+                    e.stopPropagation();
+                    e.preventDefault();
+                }
+
+
+                // 轉至註冊視窗(點擊)=================================================
+                let signupPage = document.getElementById("msg-signup");
+                signupPage.addEventListener("click", querySignup);
+                function querySignup() {
+                    document.getElementById("signupPage").style.display = "block";
+
+                }
+                // 轉至登入視窗(點擊)=================================================
+                let loginPage = document.getElementById("msg-login");
+                loginPage.addEventListener("click", queryLogin);
+                function queryLogin() {
+                    document.getElementById("signupPage").style.display = "none";
+
+                }
+                //註冊(送出)================================================
+                let signup_btn = document.getElementById("signup-btn");
+                signup_btn.addEventListener("click", submitSignup);
+                function submitSignup(e) {
+                    //抓取註冊資訊
+                    let username = document.getElementById("signup-username").value;
+                    let email = document.getElementById("signup-email").value;
+                    let psd = document.getElementById("signup-psd").value;
+
+                    //request body
+                    let data = {
+                        "name": username,
+                        "email": email,
+                        "password": psd
+                    };
+
+                    let options = {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data)
+                    };
+                    console.log(options);
+
+                    e.preventDefault();
+
+
+                    signupReq('/api/user', options)
+
+                    async function signupReq() {
+                        await fetch('/api/user', options)
+                            .then(res => {
+                                console.log(res);
+                                return res.json();
+                            })
+                            .then(result => {
+                                let dataobj = result;
+                                console.log(dataobj["error"])
+                                if (dataobj["error"] == true) {
+                                    let text = document.querySelector("#signup-msg")
+                                    text.textContent = dataobj["message"];
+                                    text.style.color = "red";
+
+                                } else {
+                                    let text = document.querySelector("#signup-msg")
+                                    text.textContent = "註冊成功，請登入系統";
+                                    text.style.color = "green";
+                                }
+
+                            })
+                            .catch(error => {
+                                console.error("更新失敗");
+                                let text = document.querySelector("#signup-msg")
+                                text.textContent = "更新失敗";
+                            })
+
+                    }
+
+
+
+                }
+
+                //登入(送出)================================================
+                let signin_btn = document.getElementById("signin-btn");
+                signin_btn.addEventListener("click", submitSignin);
+                function submitSignin(e) {
+
+                    //抓取登入資訊
+                    let email = document.getElementById("signin-email").value;
+                    let psd = document.getElementById("signin-psd").value;
+
+                    //request body
+                    let data = {
+                        "email": email,
+                        "password": psd
+                    };
+
+                    let options = {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data)
+                    };
+                    console.log(options);
+
+                    e.preventDefault();
+
+
+                    signinReq('/api/user', options)
+
+                    async function signinReq() {
+                        await fetch('/api/user', options)
+                            .then(res => {
+                                console.log(res);
+                                return res.json();
+                            })
+                            .then(result => {
+                                let dataobj = result;
+                                console.log(dataobj["error"])
+                                if (dataobj["error"] == true) {
+                                    let text = document.querySelector("#signin-msg");
+                                    text.textContent = "電子郵件或密碼錯誤";
+                                    text.style.color = "red";
+                                } else {
+                                    //重新載入頁面
+                                    window.document.location.reload();
+                                }
+
+                            })
+                            .catch(error => {
+                                console.error("更新失敗");
+                                let text = document.querySelector("#signin-msg")
+                                text.textContent = "電子郵件或密碼錯誤";
+                                text.style.color = "red";
+                            })
+
+                    }
+
+
+
+                }
+
+                //當前使用者登入狀態=========================================
+                queryState();
+                async function queryState() {
+                    await fetch("/api/user")
+                        .then(res => {
+                            console.log(res);
+                            return res.json();
+                        })
+                        .then(result => {
+                            let dataobj = result;
+                            console.log(dataobj["data"])
+
+                            if (dataobj["data"] == null) {
+                                //判斷式:null
+                                let text = document.querySelector("#logintext");
+                                text.textContent = "登入/註冊";
+
+                            } else {
+                                //判斷式:非null
+                                let text = document.querySelector("#logintext");
+                                text.textContent = "登出系統";
+                                //登出(點擊)
+                                text.addEventListener("click", signout);
+                                function signout(e) {
+                                    e.preventDefault;
+                                    let options = {
+                                        method: 'DELETE',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        },
+                                    };
+
+                                    signoutReq('/api/user', options);
+
+                                    async function signoutReq() {
+                                        await fetch('/api/user', options)
+                                            .then(res => {
+                                                console.log(res);
+                                                return res.json();
+                                            })
+                                            .then(result => {
+                                                let dataobj = result;
+                                                if (dataobj["ok"] == true) {
+                                                    //重新載入頁面
+                                                    window.document.location.reload();
+                                                }
+                                            })
+
+
+                                    }
+                                }
+
+
+                            }
+
+
+
+                        })
+                }
+
             })
     }
 
@@ -717,19 +1192,100 @@
     }
 
 
+
 </script>
 
 <body>
-    <div class="nav">
-        <div class="div">
-            <div class="title">台北一日遊</div>
-            <div class="frame2">
-                <div><a href="#">預定行程</a></div>
-                <div><a href="#">登入/註冊</a></div>
+    <!-- 會員登入 -->
+    <div class="loginPage" id="loginPage">
+        <div class="bg-loginPage" id="login-bgPage">
+            <div class="loginPage-frame" id="loginPage-frame">
+                <div class="bar"></div>
+                <div class="header">
+                    <div class="header-text">登入會員帳號</div>
+                    <img class="close" src="{{url_for('static', filename='css/icon_close.png')}}" alt="">
+                </div>
+
+                <form action="/api/user" method="POST">
+                    <!-- 信箱 -->
+                    <div class="div-email">
+                        <input class="email" type="email" id="signin-email" name="signin-email" placeholder="輸入電子信箱"
+                            required>
+                    </div>
+
+                    <!-- 密碼 -->
+                    <div class="div-psd">
+                        <input class="psd" type="password" id="signin-psd" name="signin-password" placeholder="輸入密碼"
+                            required>
+                    </div>
+                </form>
+
+                <div class="div-btn-login">
+                    <button class="btn-login" id="signin-btn">登入帳戶</button>
+                </div>
+                <div class="signin-msg" id="signin-msg"></div>
+                <div class="msg" id="msg-signup">還沒有帳戶？點此註冊</div>
+            </div>
+        </div>
+
+    </div>
+    <!-- 會員登入 -->
+
+    <!-- 會員註冊 -->
+    <div class="signupPage" id="signupPage">
+        <div class="bg-loginPage" id="signup-bgPage">
+            <div class="signupPage-frame" id="signupPage-frame">
+                <div class="bar"></div>
+                <div class="header">
+                    <div class="header-text">註冊會員帳號</div>
+                    <img class="close" src="{{url_for('static', filename='css/icon_close.png')}}" alt="">
+                </div>
+
+                <form action="/api/user" method="POST">
+                    <!-- 姓名 -->
+                    <div class="div-username">
+                        <input class="username" type="text" id="signup-username" name="username" placeholder="輸入姓名"
+                            required>
+                    </div>
+                    <!-- 信箱 -->
+                    <div class="div-email">
+                        <input class="email" type="email" id="signup-email" name="email" placeholder="輸入電子信箱" required>
+                    </div>
+                    <!-- 密碼 -->
+                    <div class="div-psd">
+                        <input class="psd" type="password" id="signup-psd" name="password" placeholder="輸入密碼" required>
+                    </div>
+                    <div class="div-btn-login">
+                        <button class="btn-login" id="signup-btn">註冊新帳戶</button>
+                    </div>
+                    <div class="signup-msg" id="signup-msg"></div>
+                    <div class="msg" id="msg-login">已經有帳戶了？點此登入</div>
+                </form>
             </div>
         </div>
     </div>
-    <hr class="hr-1" />
+    <!-- 會員註冊 -->
+
+
+
+    <div class="nav">
+        <div class="div">
+            <div class="text">
+                <a href="/" class="title">台北一日遊</a>
+                <div class="frame2">
+                    <div>
+                        <a href="#">預定行程</a>
+                    </div>
+                    <div class="btn-nav" id="loginId">
+                        <div><a href="#" id="logintext">登入/註冊</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="hr-1" />
+
+    </div>
+
 
     <div class="section">
 
@@ -761,7 +1317,7 @@
                     <div class="field">
                         <h2 class="field-date">選擇日期：
                             <span>
-                                <input type="date" placeholder="Date"></input>
+                                <input class="date" type="date" placeholder="Date"></input>
                             </span>
                         </h2>
                         <h2 class="field-time">選擇時間：
