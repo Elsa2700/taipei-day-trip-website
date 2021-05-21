@@ -394,6 +394,7 @@ def booked():
         if status == 'login':
             #登入且建立成功
             if mydb.is_connected():
+                mycursor=mydb.cursor()
                 #建立booking資料----------------------------
                 # mycursor.execute("DROP TABLE signup")
                 sql="CREATE TABLE booking (Id INT NOT NULL AUTO_INCREMENT, attractionId VARCHAR(255) NOT NULL, date DATE NOT NULL, time VARCHAR(255) NOT NULL, price VARCHAR(255) NOT NULL, PRIMARY KEY(Id))"
