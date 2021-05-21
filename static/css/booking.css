@@ -604,6 +604,7 @@ body {
         letter-spacing: 0em;
         text-align: left;
         padding: 20px;
+        margin: 20px auto;
     }
     .header div{
         width: 95%;
