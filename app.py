@@ -328,7 +328,6 @@ def inbooking():
     try:
         if session['status'] == 'login':
             # booking資料庫資料判斷-----
-            #有booking資料
             if mydb.is_connected():
                 #操作方法
                 mycursor=mydb.cursor()
@@ -337,9 +336,9 @@ def inbooking():
                 sql="SELECT * FROM booking"
                 mycursor.execute(sql)
                 #從資料庫搜尋到的查詢結果
-                record=mycursor.fetchone()
-                # print("fetchone: ",record[1])
-                if record != None:
+                record=mycursor.fetchall()
+                print(record)
+                if record != []:
                     # booking資料
                     booking_data = {
                         "data": {
@@ -397,15 +396,12 @@ def booked():
                 mycursor=mydb.cursor()
                 #建立booking資料----------------------------
                 # mycursor.execute("DROP TABLE signup")
-                sql="CREATE TABLE booking (Id INT NOT NULL AUTO_INCREMENT, attractionId VARCHAR(255) NOT NULL, date DATE NOT NULL, time VARCHAR(255) NOT NULL, price VARCHAR(255) NOT NULL, PRIMARY KEY(Id))"
-                mycursor.execute(sql)
+                # sql="CREATE TABLE booking (Id INT NOT NULL AUTO_INCREMENT, attractionId VARCHAR(255) NOT NULL, date DATE NOT NULL, time VARCHAR(255) NOT NULL, price VARCHAR(255) NOT NULL, PRIMARY KEY(Id))"
+                # mycursor.execute(sql)
                 #操作SQL:資料表booking中新增資料
-                mycursor=mydb.cursor()
                 sql="INSERT INTO booking (attractionId, date, time, price) VALUES (%s,%s,%s,%s)"
                 val=(attractionId, date, time, price)
                 mycursor.execute(sql,val)
-                # for (attractionId, date, time, price) in mycursor:
-                #     print(attractionId, date, time, price)
                 mydb.commit()
                 # 預定成功
                 booking_success = {
@@ -487,6 +483,8 @@ def delBooked():
             #操作SQL:資料表booking中新增資料----------------
             sql="DELETE from booking"
             mycursor.execute(sql)
+            mydb.commit()
+
 
 
             # 刪除成功
