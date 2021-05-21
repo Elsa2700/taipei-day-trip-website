@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attraction</title>
-    <!-- <script src="../static/js/attraction.js"></script> -->
-    <link rel="stylesheet" href="../static/css/attraction.css">
-    <script>
+    <!-- <script>
 
         //取得景點api資訊
         let href = location.href;
@@ -54,7 +52,7 @@
                     for (let i = 0; i < imglen; i++) {
                         let img_circle = document.createElement("img");
                         img_circle.id = "img_circle" + i;
-                        img_circle.src = "{{url_for('static', filename='css/circle current.png')}}";
+                        img_circle.src = "{{url_for('static', filename='css/circle_current.png')}}";
                         btn_circle.appendChild(img_circle);
                     }
 
@@ -79,9 +77,9 @@
                             if (("img_circle" + i) == img_circle_index.id) {
                                 console.log(("img_circle" + i));
                                 console.log(img_circle_index.id);
-                                document.getElementById("img_circle" + i).src = "{{url_for('static', filename='css/circle current_b.png')}}";
+                                document.getElementById("img_circle" + i).src = "{{url_for('static', filename='css/circle_current_b.png')}}";
                             } else {
-                                document.getElementById("img_circle" + i).src = "{{url_for('static', filename='css/circle current.png')}}";
+                                document.getElementById("img_circle" + i).src = "{{url_for('static', filename='css/circle_current.png')}}";
                             }
                         }
                     }
@@ -101,9 +99,9 @@
                             if (("img_circle" + i) == img_circle_index.id) {
                                 console.log(("img_circle" + i));
                                 console.log(img_circle_index.id);
-                                document.getElementById("img_circle" + i).src = "{{url_for('static', filename='css/circle current_b.png')}}";
+                                document.getElementById("img_circle" + i).src = "{{url_for('static', filename='css/circle_current_b.png')}}";
                             } else {
-                                document.getElementById("img_circle" + i).src = "{{url_for('static', filename='css/circle current.png')}}";
+                                document.getElementById("img_circle" + i).src = "{{url_for('static', filename='css/circle_current.png')}}";
                             }
                         }
 
@@ -140,6 +138,21 @@
                         e.stopPropagation();
                         e.preventDefault();
                     }
+                    let closeLogin = document.getElementById("close-login");
+                    closeLogin.addEventListener("click", CloseLogin);
+                    function CloseLogin(e) {
+                        document.getElementById("loginPage").style.display = "none";
+                        e.stopPropagation();
+                    }
+
+                    let closeSignup = document.getElementById("close-signup");
+                    closeSignup.addEventListener("click", CloseSignup);
+                    function CloseSignup(e) {
+                        document.getElementById("signupPage").style.display = "none";
+                        document.getElementById("loginPage").style.display = "none";
+                        e.stopPropagation();
+                    }
+
 
 
                     // 轉至註冊視窗(點擊)=================================================
@@ -350,12 +363,8 @@
             field_price.textContent = price;
         }
 
-    </script>
-
-
+    </script> -->
 </head>
-
-
 
 <body>
     <!-- 會員登入 -->
@@ -365,7 +374,7 @@
                 <div class="bar"></div>
                 <div class="header">
                     <div class="header-text">登入會員帳號</div>
-                    <img class="close" src="{{url_for('static', filename='css/icon_close.png')}}" alt="">
+                    <img class="close" id="close-login" src="{{url_for('static', filename='css/icon_close.png')}}" alt="">
                 </div>
 
                 <form action="/api/user" method="POST">
@@ -400,7 +409,7 @@
                 <div class="bar"></div>
                 <div class="header">
                     <div class="header-text">註冊會員帳號</div>
-                    <img class="close" src="{{url_for('static', filename='css/icon_close.png')}}" alt="">
+                    <img class="close" id="close-signup" src="{{url_for('static', filename='css/icon_close.png')}}" alt="">
                 </div>
 
                 <form action="/api/user" method="POST">
@@ -479,28 +488,29 @@
                     <div class="field">
                         <h2 class="field-date">選擇日期：
                             <span>
-                                <input class="date" type="date" placeholder="Date"></input>
+                                <input class="date" type="date" id="date" placeholder="Date"></input>
                             </span>
                         </h2>
                         <h2 class="field-time">選擇時間：
                             <span class="radio">
-                                <input type="radio" id="day" name="notaswitch-two" value="新台幣 2000 元"
+                                <input type="radio" id="morning" name="notaswitch-two" value="新台幣 2000 元"
                                     onclick="radioText(this);" checked>
-                                <label for="day" class="content"><span><span></span></span>上半天</label>
+                                <label for="morning" class="content"><span><span></span></span>上半天</label>
                             </span>
                             <span class="radio">
-                                <input type="radio" id="night" name="notaswitch-two" value="新台幣 2500 元"
+                                <input type="radio" id="afternoon" name="notaswitch-two" value="新台幣 2500 元"
                                     onclick="radioText(this);">
-                                <label for="night" class="content"><span><span></span></span>下半天</label>
+                                <label for="afternoon" class="content"><span><span></span></span>下半天</label>
                             </span>
                         </h2>
                         <h2 class="field-price">導覽費用：
                             <span class="content" id="field-price"></span>
 
                         </h2>
-                        <button type="button">
-                            <div class="btn-text">開始預訂行程</div>
+                        <button type="button" id="start-booking">
+                            <div class="btn-text" >開始預訂行程</div>
                         </button>
+                        <div class="msg" id="msg"></div>
                     </div>
                 </div>
 
@@ -526,5 +536,8 @@
         </div>
     </footer>
 </body>
+
+<script src="../static/js/attraction.js"></script>
+<link rel="stylesheet" href="../static/css/attraction.css">
 
 </html>

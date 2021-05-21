@@ -18,7 +18,8 @@
     justify-content: center;
     z-index: 15;
 }
-.bg-signupPage{
+
+.bg-signupPage {
     background: rgba(0, 0, 0, .2);
     position: fixed;
     width: 100%;
@@ -249,33 +250,24 @@ body {
 }
 
 .frame1 {
-    /* Frame 1 */
-
-    /* Auto Layout */
     flex-wrap: wrap;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 0px;
-
-
 }
 
 .frame1 a {
-    /* Body - Reg 16(13.3) */
     font-family: Noto Sans TC;
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
     line-height: 13px;
-    /* identical to box height, or 83% */
     display: flex;
     align-items: center;
     margin-left: 10px;
     padding: 3px;
     text-decoration: none;
-
-    /* Gray 800 */
     color: #666666;
 
 }
@@ -288,9 +280,7 @@ body {
     font-style: normal;
     font-weight: bold;
     font-size: 30px;
-    /* identical to box height, or 113% */
 
-    /* Cyan 800 */
     color: #448899;
 
 }
@@ -312,16 +302,7 @@ body {
     height: 78px;
     position: relative;
     top: 65px;
-
-
-
-    /* Inside Auto Layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
     margin: auto;
-
-
 
 }
 
@@ -346,9 +327,6 @@ body {
     border-radius: 5px;
     background-color: white;
     display: inline-flex;
-
-
-
 }
 
 .search-desktop input {
@@ -375,11 +353,6 @@ body {
     border-radius: 0 2px 2px 0;
 }
 
-.input:-internal-autofill-selected {
-    background-color: #fff;
-}
-
-
 
 
 .input-text {
@@ -389,18 +362,13 @@ body {
     height: 16px;
     left: 15px;
     top: 15px;
-
-    /* Body - Bold 16(13.3) */
     font-family: Noto Sans TC;
     font-style: normal;
     font-weight: bold;
     font-size: 16px;
     line-height: 13px;
-    /* or 83% */
     display: flex;
     align-items: center;
-
-    /* Gray 700 */
     color: #757575;
 
 
@@ -408,7 +376,6 @@ body {
 
 
 button .icon {
-    /* icon / search */
     width: 30px;
     height: 30px;
     position: absolute;
@@ -419,12 +386,9 @@ button .icon {
     align-items: center;
     z-index: 3;
 
-
-
 }
 
 button .icon img {
-    /* icon_search */
     z-index: 2;
     position: absolute;
     width: 30px;
@@ -437,7 +401,6 @@ button .icon img {
 }
 
 .div-slogan {
-    /* slogan */
     position: relative;
     width: 100%;
     height: 78px;
@@ -448,7 +411,6 @@ button .icon img {
 }
 
 .div-slogan .text-1 {
-    /* 輕鬆享受台北一日悠閒 */
 
     position: absolute;
     width: 100%;
@@ -736,10 +698,5 @@ button .icon img {
         margin: auto;
 
     }
-
-
-
-
-
 
 }
