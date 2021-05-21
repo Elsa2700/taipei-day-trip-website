@@ -13,7 +13,7 @@
     position: fixed;
     width: 100%;
     height: 100%;
-    border: 1px solid;
+    /* border: 1px solid; */
     display: flex;
     justify-content: center;
     z-index: 15;
@@ -24,7 +24,7 @@
     position: fixed;
     width: 100%;
     height: 100%;
-    border: 1px solid;
+    /* border: 1px solid; */
     display: flex;
     justify-content: center;
     z-index: 15;
@@ -197,20 +197,7 @@
 
 /* 會員登入================================== */
 
-.field .msg{
-    width: 310px;
-    font-family: Noto Sans TC;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 13px;
-    letter-spacing: 0em;
-    text-align: left;
-    margin: 5px;
-    color: rgba(102, 102, 102, 1);
-    padding: 10px;
 
-}
 /* 初始狀態 */
 body {
     margin: 0px;
@@ -323,77 +310,174 @@ body {
     /* White */
     color: #FFFFFF;
 }
-
-.date {
-    padding-left: 30px;
-}
-
-input[type="radio"] {
-    display: none;
-}
-
-input[type="radio"]+label span {
-    display: inline-block;
-    width: 22px;
-    height: 22px;
-    margin: 0px;
-    vertical-align: middle;
-    cursor: pointer;
-    background: url(/static/css/Ellipse\ 1.png) top no-repeat;
-    position: relative;
-    top: -2px;
-    margin-right: 20px;
-
-    /* background-color: #FFFFFF; */
-}
-
-input[type="radio"]:checked+label span {
-    display: inline-block;
-    width: 22px;
-    height: 22px;
-    margin: 0px;
-    vertical-align: middle;
-    cursor: pointer;
-    position: relative;
-    background: url(/static/css/Ellipse\ 1.png) top no-repeat;
-    margin-right: 20px;
-
-}
-
-input[type="radio"]:checked+label span span {
-    display: inline-block;
-    width: 18px;
-    height: 18px;
-    margin: 0px;
-    vertical-align: middle;
-    cursor: pointer;
+.footer_del {
+    /* Auto Layout */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
-    top: 2px;
-    left: 2px;
-    background: url(/static/css/Ellipse\ 2.png) top no-repeat;
+    bottom: 0;
+    width: 100%;
+    height: 200px;
+    /* Gray 700 */
+    background: #757575;
+}
+
+.footer_del_text {
+    /* Body - Bold 16(13.3) */
+    font-family: Noto Sans TC;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 13px;
+    /* identical to box height, or 83% */
+    display: flex;
+    align-items: center;
+    /* White */
+    color: #FFFFFF;
+}
+
+/* section */
+.booking-title{
+    font-family: Noto Sans TC;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 13px;
+    letter-spacing: 0em;
+    text-align: left;
+    color:rgba(68, 136, 153, 1);
 
 }
 
-input[type="radio"] {
-    background-color: #FFFFFF;
-    background-color: #448899;
+.b-c-title{
+    font-family: Noto Sans TC;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 40px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: rgba(102, 102, 102, 1);
+}
+.b-c-content{
+    font-family: Noto Sans TC;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 13px;
+    letter-spacing: 0em;
+    text-align: left;
+    color:rgba(102, 102, 102, 1);
+
 
 }
 
-.radio {
-    margin: 10px;
+
+.field-h{
+    font-family: Noto Sans TC;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 50px;
+    letter-spacing: 0em;
+    text-align: left;
+    color:rgba(102, 102, 102, 1);
+
+
+}
+.field input{
+    height: 38px;
+    width: 200px;
+    left: 81px;
+    top: 0px;
+    border-radius: 5px;
+    color: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(232, 232, 232, 1)
+}
+.sum-price{
+    font-family: Noto Sans TC;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 13px;
+    letter-spacing: 0em;
+    text-align: right;
+    color: rgba(102, 102, 102, 1);
+
+
+}
+/* 文字資訊 */
+.hr-2 {
+    width: 1200px;
+    border: 1px solid rgba(232, 232, 232, 1);
+    margin: 20px auto;
+}
+.info-msg{
+    font-family: Noto Sans TC;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    color:rgba(102, 102, 102, 1);
+    margin-top: 50px;
+
 
 }
 
-.radio-text {
-    background-color: blueviolet;
-
-}
 
 
 
 /* 裝置1200px以上 */
 @media screen and (min-width:1200px) {
+    .header{
+        font-family: Noto Sans TC;
+        font-size: 19px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 50px;
+        letter-spacing: 0em;
+        text-align: left;
+        color: rgba(102, 102, 102, 1);
+        margin: auto;
+        width: 980px;
+    
+    }
+    .frame_scene{
+        width: 980px;
+        color: rgba(102, 102, 102, 1);
+        font-family: Noto Sans TC;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 13px;
+        letter-spacing: 0em;
+        text-align: left;
+    }
+    .header div{
+        margin-top: 90px;
+    }
+    .booking-frame{
+        margin-left: 40px;
+        
+    }
+    .section .del{
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        top:0;
+        right: 0;
+        margin: 5px;
+    }
+    .sum{
+        width: 980px;
+        height: 100px;
+        margin: 10px auto;
+        text-align: end;
+    }
+
     .nav .div {
         position: fixed;
         width: 1200px;
@@ -408,92 +492,25 @@ input[type="radio"] {
 
     /* 段落section */
     .section {
-        width: 1200px;
-        margin: 0px auto;
+        width: 980px;
+        height: 200px;
+        margin: 30px auto;
+        padding: 10px;
         display: flex;
-        justify-content: space-between;
+        justify-content: start;
         position: relative;
+        /* border: 1px solid; */
     }
 
-    /* 段落-簡介 */
-    .profile {
-        position: absolute;
-        right: 0px;
-        width: 600px;
-        height: 400px;
-        justify-content: end;
-    }
 
-    .profile-title {
-        font-family: Noto Sans TC;
-        font-size: 24px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: 24px;
-        letter-spacing: 0em;
-        text-align: left;
-        color: rgba(102, 102, 102, 1);
-
-    }
-
-    .profile-content {
-        font-family: Noto Sans TC;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 13px;
-        padding: 10px 0px;
-        margin: 0px;
-        color: rgba(102, 102, 102, 1);
-
-
-    }
-
-    .booking {
-        width: 600px;
-        height: 302px;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        background: rgba(232, 232, 232, 1);
-        border-radius: 5px;
-        color: rgba(102, 102, 102, 1);
-    }
-
-    .booking-frame {
-        width: 560px;
-
-    }
-
-    h2 {
-        font-weight: bold;
-        font-family: Noto Sans TC;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: 30px;
-        letter-spacing: 0em;
-        text-align: left;
-
-    }
-
-    .content {
-        font-family: Noto Sans TC;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 13px;
-        letter-spacing: 0em;
-        text-align: left;
-
-    }
 
     button {
         background-color: rgba(68, 136, 153, 1);
         width: 154px;
         height: 36px;
         border-radius: 5px;
-        border: none
+        border: none;
+        margin-top: 20px;
     }
 
     .btn-text {
@@ -504,24 +521,17 @@ input[type="radio"] {
         line-height: 16px;
         letter-spacing: 0em;
         text-align: center;
-        color: rgba(255, 255, 255, 1);
-        text-align: center;
+        color:rgba(255, 255, 255, 1);
 
-    }
 
-    .date-img {
-        width: 24px;
-        height: 24px;
     }
 
 
     /* 段落-圖片 */
     .pic {
-        position: absolute;
-        left: 0px;
-        width: 540px;
-        height: 406px;
-        justify-content: end;
+        width: 266px;
+        height: 200px;
+        justify-content: start;
         /* margin-right: 1500px; */
 
 
@@ -534,57 +544,24 @@ input[type="radio"] {
     }
 
     .attracion-pic {
-        width: 540px;
-        height: 406px;
         z-index: 0px;
+        /* border: 1px solid; */
+        height: 200px;
+        width: 266px;
+
 
     }
 
-    .btn-arrow {
-        width: 520px;
-        display: flex;
-        justify-content: space-between;
-        z-index: 1px;
-        position: absolute;
-        top: 190px;
 
-    }
 
-    .btn-arrow img {
-        width: 36px;
-        height: 36px;
-
-    }
-
-    .btn-circle {
-        width: 72px;
-        height: 12px;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        position: absolute;
-        bottom: 10px;
-        margin: auto;
-        opacity: .7;
-    }
-
-    .btn-circle img {
-        margin: 10px;
-    }
-
-    /* 文字資訊 */
-    .hr-2 {
-        margin: 450px auto 0px;
-        width: 1200px;
-        border: 1px solid rgba(232, 232, 232, 1);
-    }
 
     .info {
-        width: 1200px;
+        width: 980px;
         height: auto;
-        margin: 50px auto;
+        margin: 10px auto;
         color: rgba(102, 102, 102, 1);
-
+        line-height: 50px;
+        
     }
 
     p {
@@ -600,19 +577,58 @@ input[type="radio"] {
 
     }
 
-    .ads p {
-        padding-left: 0px;
-    }
-
-    .trf p {
-        padding-left: 0px;
-    }
-
 
 }
 
 /* 裝置360px-1200px */
 @media screen and (min-width:360px) and (max-width:1200px) {
+    .header{
+        font-family: Noto Sans TC;
+        font-size: 19px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 50px;
+        letter-spacing: 0em;
+        text-align: left;
+        color: rgba(102, 102, 102, 1);
+    
+    }
+    .frame_scene{
+        color: rgba(102, 102, 102, 1);
+        font-family: Noto Sans TC;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 13px;
+        letter-spacing: 0em;
+        text-align: left;
+        padding: 20px;
+    }
+    .header div{
+        width: 95%;
+        margin: 90px auto 0px;
+    }
+    .sum-price{
+        margin-top:50px;
+    }
+    .sum{
+        width: 95%;
+        height: 100px;
+        margin: 10px auto;
+        text-align: end;
+    }
+    .booking{
+        width: 95%;
+        margin: 20px auto;
+    }
+    .section .del{
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        top:600px;
+        right: 10px;
+        margin: 5px;
+    }
     .nav .div {
         width: 98%;
         display: flex;
@@ -633,68 +649,12 @@ input[type="radio"] {
     .section {
         width: 100%;
         height: auto;
-        margin: 0px auto 100px;
+        margin: 40px auto;
         display: flex;
         justify-content: center;
         position: relative;
         flex-wrap: wrap;
 
-    }
-
-    /* 段落-簡介 */
-    .profile {
-        width: 100%;
-        height: 400px;
-        justify-content: center;
-        text-align: center;
-    }
-
-    .profile-title {
-        font-family: Noto Sans TC;
-        font-size: 24px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: 24px;
-        letter-spacing: 0em;
-        text-align: left;
-        color: rgba(102, 102, 102, 1);
-        padding-left: 20px;
-
-    }
-
-    .profile-content {
-        font-family: Noto Sans TC;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 20px;
-        padding: 10px 0px;
-        margin-bottom: 10px;
-        color: rgba(102, 102, 102, 1);
-        text-align: start;
-        padding-left: 20px;
-
-    }
-
-    .field {
-        text-align: start;
-    }
-
-    .booking {
-        width: 95%;
-        height: 90%;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        background: rgba(232, 232, 232, 1);
-        border-radius: 5px;
-        color: rgba(102, 102, 102, 1);
-        margin: auto;
-    }
-
-    .booking-frame {
-        width: 100%;
-        padding: 10px;
     }
 
     h2 {
@@ -708,6 +668,7 @@ input[type="radio"] {
         text-align: left;
 
     }
+
 
     .content {
         font-family: Noto Sans TC;
@@ -725,7 +686,8 @@ input[type="radio"] {
         width: 154px;
         height: 36px;
         border-radius: 5px;
-        border: none
+        border: none;
+        margin-top: 20px;
     }
 
     .btn-text {
@@ -741,16 +703,10 @@ input[type="radio"] {
 
     }
 
-    .date-img {
-        width: 24px;
-        height: 24px;
-    }
-
-
     /* 段落-圖片 */
     .pic {
         justify-content: center;
-        width: 100%;
+        width: 95%;
         height: 400px;
 
 
@@ -767,42 +723,11 @@ input[type="radio"] {
         width: 100%;
         height: auto;
         object-fit: cover;
+        /* border: 1px solid; */
 
 
     }
 
-    .btn-arrow {
-        width: 90%;
-        display: flex;
-        justify-content: space-between;
-        z-index: 1px;
-        position: absolute;
-        height: 36px;
-        top: 200px;
-
-    }
-
-    .btn-arrow img {
-        width: 36px;
-        height: 36px;
-        opacity: .8;
-
-    }
-
-    .btn-circle {
-        width: 72px;
-        height: 12px;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        position: absolute;
-        opacity: .7;
-        top: 370px;
-    }
-
-    .btn-circle img {
-        margin: 10px;
-    }
 
     /* 文字資訊 */
     .hr-2 {
@@ -811,7 +736,7 @@ input[type="radio"] {
     }
 
     .info {
-        width: 100%;
+        width: 95%;
         height: auto;
         margin: 50px auto;
         color: rgba(102, 102, 102, 1);
@@ -831,27 +756,6 @@ input[type="radio"] {
         color: rgba(102, 102, 102, 1);
 
     }
-
-    .ads p {
-        padding-left: 10%;
-        padding-right: 10%;
-    }
-
-    .ads-title {
-        padding-left: 10%;
-        padding-right: 10%;
-    }
-
-    .trf p {
-        padding-left: 10%;
-        padding-right: 10%;
-    }
-
-    .trf-title {
-        padding-left: 10%;
-        padding-right: 10%;
-    }
-
 
 }
 

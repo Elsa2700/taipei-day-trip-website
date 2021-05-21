@@ -1,4 +1,5 @@
 
+
 //取得景點api資訊
 let href = location.href;
 let id = href.split('/')[4];
@@ -43,7 +44,7 @@ async function queryId(url) {
             for (let i = 0; i < imglen; i++) {
                 let img_circle = document.createElement("img");
                 img_circle.id = "img_circle" + i;
-                img_circle.src = "{{url_for('static', filename='css/circle current.png')}}";
+                img_circle.src = "/static/css/circle_current.png";
                 btn_circle.appendChild(img_circle);
             }
 
@@ -68,9 +69,9 @@ async function queryId(url) {
                     if (("img_circle" + i) == img_circle_index.id) {
                         console.log(("img_circle" + i));
                         console.log(img_circle_index.id);
-                        document.getElementById("img_circle" + i).src = "{{url_for('static', filename='css/circle current_b.png')}}";
+                        document.getElementById("img_circle" + i).src = "/static/css/circle_current_b.png";
                     } else {
-                        document.getElementById("img_circle" + i).src = "{{url_for('static', filename='css/circle current.png')}}";
+                        document.getElementById("img_circle" + i).src = "/static/css/circle_current.png";
                     }
                 }
             }
@@ -90,14 +91,15 @@ async function queryId(url) {
                     if (("img_circle" + i) == img_circle_index.id) {
                         console.log(("img_circle" + i));
                         console.log(img_circle_index.id);
-                        document.getElementById("img_circle" + i).src = "{{url_for('static', filename='css/circle current_b.png')}}";
+                        document.getElementById("img_circle" + i).src = "/static/css/circle_current_b.png";
                     } else {
-                        document.getElementById("img_circle" + i).src = "{{url_for('static', filename='css/circle current.png')}}";
+                        document.getElementById("img_circle" + i).src = "/static/css/circle_current.png";
                     }
                 }
 
             }
 
+            // 使用者登入、註冊設定========================
 
             // 登入視窗=================================================
             let loginId = document.getElementById("loginId");
@@ -129,6 +131,22 @@ async function queryId(url) {
                 e.stopPropagation();
                 e.preventDefault();
             }
+            // 關閉登入視窗(內層關閉)=================================================  
+            let closeLogin = document.getElementById("close-login");
+            closeLogin.addEventListener("click", CloseLogin);
+            function CloseLogin(e) {
+                document.getElementById("loginPage").style.display = "none";
+                e.stopPropagation();
+            }
+
+            let closeSignup = document.getElementById("close-signup");
+            closeSignup.addEventListener("click", CloseSignup);
+            function CloseSignup(e) {
+                document.getElementById("signupPage").style.display = "none";
+                document.getElementById("loginPage").style.display = "none";
+                e.stopPropagation();
+            }
+
 
 
             // 轉至註冊視窗(點擊)=================================================
@@ -329,14 +347,121 @@ async function queryId(url) {
                     })
             }
 
+            // 使用者登入、註冊設定========================
+
+
         })
 }
 
 //訂購按鈕畫面
-function radioText() {
+let time_api = "早上 9 點到下午 4 點";
+let price_api = "2000";
+function radioText(e) {
     let field_price = document.getElementById("field-price");
     let price = document.querySelector('input[name="notaswitch-two"]:checked').value
     field_price.textContent = price;
+    time_api = e.id;
+    if(time_api == "morning"){
+        time_api = "早上 9 點到下午 4 點"
+    }else{
+        time_api = "下午 2 點到晚上 9 點"
+    }
+    price_api = e.value.substr(3, 5);
+    
 }
+
+
+//開始預定行程
+let start_booking = document.getElementById("start-booking");
+start_booking.addEventListener("click", queryBooking);
+function queryBooking() {
+    querybookingState();
+    async function querybookingState() {
+        await fetch("/api/user")
+            .then(res => {
+                console.log(res);
+                return res.json();
+            })
+            .then(result => {
+                let dataobj = result;
+                console.log(dataobj["data"])
+
+                if (dataobj["data"] == null) {
+                    //判斷式:null(未登入)
+                    Login();
+                    function Login() {
+                        document.getElementById("loginPage").style.display = "block";
+                    }
+                } else {
+                    //判斷式:不為null(已登入)
+                    newBooking()
+                    function newBooking(e) {
+                        //抓取註冊資訊
+                        let date_api = document.getElementById("date").value;
+
+                        //request body
+                        let data = {
+                            "attractionId": id,
+                            "date": date_api,
+                            "time": time_api,
+                            "price": price_api,
+                        };
+
+                        let options = {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(data)
+                        };
+                        console.log(options);
+
+                        //向後端連線取得booking api回應
+                        bookingReq('/api/booking', options)
+
+                        async function bookingReq() {
+                            await fetch('/api/booking', options)
+                                .then(res => {
+                                    console.log(res);
+                                    return res.json();
+                                })
+                                .then(result => {
+                                    let dataobj = result;
+                                    console.log(dataobj["error"])
+                                    if (dataobj["error"] == true) {
+                                        let text = document.querySelector("#msg")
+                                        text.textContent = dataobj["message"];
+                                        text.style.color = "red";
+
+                                    } else {
+                                        let text = document.querySelector("#msg")
+                                        text.textContent = "成功建立行程";
+                                        text.style.color = "green";
+                                        window.location.href = "/booking";
+                                    }
+
+                                })
+                                .catch(error => {
+                                    console.error("更新失敗");
+                                    let text = document.querySelector("#msg")
+                                    text.textContent = "更新失敗";
+                                })
+
+                        }
+
+
+
+                    }
+
+                    
+
+                }
+
+
+            })
+
+    }
+}
+
 
 
