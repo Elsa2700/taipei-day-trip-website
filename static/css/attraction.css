@@ -409,7 +409,7 @@ input[type="radio"] {
     /* 段落section */
     .section {
         width: 1200px;
-        margin: 0px auto;
+        margin: 80px auto;
         display: flex;
         justify-content: space-between;
         position: relative;
