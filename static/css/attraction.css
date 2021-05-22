@@ -416,7 +416,6 @@ input{
 @media screen and (min-width:1200px) {
     .nav .div {
         position: fixed;
-        width: 1200px;
         display: flex;
         justify-content: space-between;
         margin: auto;
@@ -634,7 +633,6 @@ input{
 /* 裝置360px-1200px */
 @media screen and (min-width:360px) and (max-width:1200px) {
     .nav .div {
-        width: 98%;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -799,7 +797,7 @@ input{
         z-index: 1px;
         position: absolute;
         height: 36px;
-        top: 180px;
+        top: 200px;
 
     }
 
@@ -818,7 +816,7 @@ input{
         align-items: center;
         position: absolute;
         opacity: .7;
-        top: 370px;
+        top: 400px;
     }
 
     .btn-circle img {
@@ -840,8 +838,8 @@ input{
     }
 
     p {
-        padding-left: 10%;
-        padding-right: 10%;
+        padding-left: 5%;
+        padding-right: 5%;
         font-family: Noto Sans TC;
         font-size: 16px;
         font-style: normal;
@@ -854,23 +852,19 @@ input{
     }
 
     .ads p {
-        padding-left: 10%;
-        padding-right: 10%;
+        padding-left: 5%;
+        padding-right: 5%;
     }
 
     .ads-title {
-        padding-left: 10%;
-        padding-right: 10%;
+        padding-left: 5%;
+        padding-right: 5%;
     }
 
-    .trf p {
-        padding-left: 10%;
-        padding-right: 10%;
-    }
 
     .trf-title {
-        padding-left: 10%;
-        padding-right: 10%;
+        padding-left: 5%;
+        padding-right: 5%;
     }
 
 
