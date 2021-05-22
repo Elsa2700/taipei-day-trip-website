@@ -452,7 +452,8 @@ body {
         line-height: 13px;
         letter-spacing: 0em;
         text-align: left;
-        margin: auto;
+        margin: 20px auto;
+        width: 980px;
     }
     .header div{
         margin-top: 90px;
@@ -591,7 +592,8 @@ body {
         line-height: 13px;
         letter-spacing: 0em;
         text-align: left;
-        margin:auto;
+        margin: 20px auto;
+        width: 95%;
     }
     .header div{
         width: 95%;
