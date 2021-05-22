@@ -66,12 +66,20 @@ function getData() {
                     let image = new Image();
                     image.src = url_img
                     image.className = "img";
-                    let image_tag = document.createElement("div");
-                    item_group.appendChild(item).appendChild(image_tag).appendChild(image);
+                    item_group.appendChild(item).appendChild(image);
 
                     //文字
+                    let title_text = dataobj.data[i]["name"];
+                    if (title_text != null) {
+                        title_text.className = "title";
+                        let title_text_tag = document.createElement("div");
+                        title_text_tag.className = "title";
+                        title_text_tag.textContent = title_text;
+                        item_group.appendChild(item).appendChild(title_text_tag);
+                    }
+
                     let text = document.createElement("div");
-                    text.className = "text";
+                    text.className = "text_attraction";
                     text.id = "text";
                     let cat_text = dataobj.data[i]["category"];
                     if (cat_text != null) {
@@ -93,14 +101,7 @@ function getData() {
                     }
 
 
-                    let title_text = dataobj.data[i]["name"];
-                    if (title_text != null) {
-                        title_text.className = "title";
-                        let title_text_tag = document.createElement("div");
-                        title_text_tag.className = "title";
-                        title_text_tag.textContent = title_text;
-                        item_group.appendChild(item).appendChild(title_text_tag);
-                    }
+
 
 
                 }
@@ -192,15 +193,25 @@ function getData() {
                             let image = new Image();
                             image.src = url_img
                             image.className = "img";
-                            let image_tag = document.createElement("div");
 
-                            item_group.appendChild(item).appendChild(image_tag).appendChild(image);
+                            item_group.appendChild(item).appendChild(image);
 
 
                             //文字
                             let text = document.createElement("div");
-                            text.className = "text";
+                            text.className = "text_attraction";
                             text.id = "text";
+
+                            let title_text = dataobj.data[i]["name"];
+                            if (title_text != null) {
+                                title_text.className = "title";
+                                let title_text_tag = document.createElement("div");
+                                title_text_tag.className = "title";
+                                title_text_tag.textContent = title_text;
+                                item_group.appendChild(item).appendChild(title_text_tag);
+
+                            }
+
                             let cat_text = dataobj.data[i]["category"];
                             if (cat_text != null) {
                                 cat_text.className = "cat";
@@ -221,15 +232,7 @@ function getData() {
                             }
 
 
-                            let title_text = dataobj.data[i]["name"];
-                            if (title_text != null) {
-                                title_text.className = "title";
-                                let title_text_tag = document.createElement("div");
-                                title_text_tag.className = "title";
-                                title_text_tag.textContent = title_text;
-                                item_group.appendChild(item).appendChild(title_text_tag);
 
-                            }
                         }
                         const pagenum = dataobj.nextPage;
                         return pagenum;

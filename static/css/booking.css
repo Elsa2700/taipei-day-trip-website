@@ -214,6 +214,7 @@ body {
     position: fixed;
     z-index: 10;
     top: 0px;
+    border-bottom: 1px solid rgba(232, 232, 232, 1);
 
     /* White */
     background: #FFFFFF;
@@ -221,22 +222,21 @@ body {
 }
 
 .nav .div {
-    width: 1200px;
+    width: 100%;
     margin: auto;
     height: 54px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
+    position: fixed;
 }
 
 .nav .text {
-    margin-top: 0px;
-    position: fixed;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
+    width: 1200px;
+    margin:auto;
 }
 
 
@@ -255,10 +255,7 @@ body {
 
 }
 
-.hr-1 {
-    border: 1px solid rgba(232, 232, 232, 1);
-    margin-top: 3px;
-}
+
 
 .frame2 {
     width: 175px;
@@ -430,6 +427,7 @@ body {
 
 
 
+
 /* 裝置1200px以上 */
 @media screen and (min-width:1200px) {
     .header{
@@ -446,7 +444,6 @@ body {
     
     }
     .frame_scene{
-        width: 980px;
         color: rgba(102, 102, 102, 1);
         font-family: Noto Sans TC;
         font-size: 16px;
@@ -479,15 +476,7 @@ body {
         text-align: end;
     }
 
-    .nav .div {
-        position: fixed;
-        width: 1200px;
-        display: flex;
-        justify-content: space-between;
-        margin: auto;
-        align-items: center;
-        height: auto;
-    }
+
 
 
 
@@ -588,7 +577,6 @@ body {
         font-size: 19px;
         font-style: normal;
         font-weight: 700;
-        line-height: 50px;
         letter-spacing: 0em;
         text-align: left;
         color: rgba(102, 102, 102, 1);
@@ -603,8 +591,7 @@ body {
         line-height: 13px;
         letter-spacing: 0em;
         text-align: left;
-        padding: 20px;
-        margin: 20px auto;
+        margin:auto;
     }
     .header div{
         width: 95%;
@@ -733,7 +720,7 @@ body {
 
     /* 文字資訊 */
     .hr-2 {
-        width: 100%;
+        width: 95%;
         border: 1px solid rgba(232, 232, 232, 1);
     }
 
