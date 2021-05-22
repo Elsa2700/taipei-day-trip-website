@@ -218,9 +218,10 @@ body {
     align-items: center;
     position: fixed;
     z-index: 10;
-
+    top:0px;
     /* White */
     background: #FFFFFF;
+    border-bottom: 1px solid rgba(232, 232, 232, 1);
 
 }
 
@@ -280,6 +281,7 @@ body {
     font-style: normal;
     font-weight: bold;
     font-size: 30px;
+    text-decoration: none;
 
     color: #448899;
 
@@ -287,7 +289,11 @@ body {
 
 
 
+
 /* 標題 */
+.section{
+    margin-top: 54px;
+}
 .slogan {
     width: 320px;
     height: 100%;
@@ -336,6 +342,15 @@ body {
     height: 40px;
     border: none;
     outline: none;
+    color: rgba(117, 117, 117, 1);
+    font-family: Noto Sans TC;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 13px;
+    letter-spacing: 0em;
+    text-align: left;
+
 
 
 }
@@ -506,16 +521,25 @@ button .icon img {
     /* White */
     color: #FFFFFF;
 }
+.text_attraction{
+    z-index: 1;
+    /* position: absolute;
+    bottom: 12px;
+    height: 20px; */
+    right: 10px;
+    display: flex;
+    margin: 0px auto;
+
+}
 
 .title {
 
     /* 平安鐘 */
-    position: absolute;
-    width: 220px;
-    height: 22px;
-    top: 180px;
-    left: 10px;
-    line-height: 20px;
+    /* position: absolute; */
+    width: 250px;
+    /* top: 180px;
+    left: 10px; */
+    margin:0px auto;
 
 
     /* Body - Bold 16(13.3) */
@@ -533,22 +557,18 @@ button .icon img {
 
 .attraction-desktop .traffic {
     /* 忠孝復興 */
-    position: absolute;
-    width: 100px;
-    height: 20px;
-    left: 10px;
-    top: 225px;
-
+    width: 125px;
     /* Body - Reg 16(13.3) */
     font-family: Noto Sans TC;
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
-    line-height: 13px;
+    line-height: 20px;
     vertical-align: middle;
     /* or 83% */
     display: inline-block;
     align-items: center;
+    text-align: end;
 
     /* Gray 700 */
     color: #757575;
@@ -559,21 +579,14 @@ button .icon img {
 
 .attraction-desktop .cat {
     /* 公共藝術 */
-    position: absolute;
-    width: 100px;
-    height: 20px;
-    left: 120px;
-    top: 225px;
-    text-align: end;
-
-
+    width: 125px;
 
     /* Body - Reg 16(13.3) */
     font-family: Noto Sans TC;
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
-    line-height: 13px;
+    line-height: 20px;
     /* or 83% */
     display: inline-block;
 
@@ -585,12 +598,12 @@ button .icon img {
 
 .attraction-desktop img {
     /* img */
-    position: absolute;
-    border-radius: 5px;
+    /* position: absolute; */
+    border-radius: 5px 5px 0px 0px;
     width: 100%;
-    height: 170px;
-    left: 0px;
-    top: 0px;
+    height: 160px;
+    /* left: 0px;
+    top: 0px; */
     background: #C4C4C4;
 
 }
@@ -609,13 +622,12 @@ button .icon img {
 .attraction-desktop {
 
     flex-wrap: wrap;
-    width: 240px;
-    height: 250px;
-    margin: 15px 10px;
+    width: 270px;
+    height: 242px;
+    margin-bottom: 30px;
     position: relative;
     display: flex;
     justify-content: space-between;
-    border: 1px solid red;
 
     /* White */
     background: #FFFFFF;
@@ -625,11 +637,14 @@ button .icon img {
     border: 1px solid #E8E8E8;
 
 }
+/* .attraction-desktop div{
+    height: 160px;
+} */
 
 .attractions-group {
     flex-wrap: wrap;
     display: flex;
-    justify-content: space-evenly;
+    justify-content:space-between;
     align-items: center;
 
 }
@@ -641,7 +656,7 @@ button .icon img {
 
     .main {
         position: relative;
-        width: 1200px;
+        width: 1180px;
         margin: auto;
         height: 100%;
         display: flex;
@@ -651,17 +666,15 @@ button .icon img {
 
 
     .attractions-group {
-        width: 1300px;
-
-
+        width: 1170px;
     }
 
     .welcome1 {
         /* display: none; */
         width: 550px;
         position: absolute;
-        right: 3px;
-        top: 9px;
+        right: -138px;
+        top: 10px;
 
     }
 
@@ -688,15 +701,38 @@ button .icon img {
 
     }
 
+    .attractions-group {
+        width: 90%;
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .attraction-desktop {
+
+        flex-wrap: wrap;
+        width: 322px;
+        height: 280px;
+        margin-bottom: 30px;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+    
+        /* White */
+        background: #FFFFFF;
+        border-radius: 5px;
+        /* Gray 300 */
+    
+        border: 1px solid #E8E8E8;
+    
+    }
+
 
     .attraction-desktop.text {
         height: 100px;
-
     }
-
     .attraction-desktop img {
-        margin: auto;
-
+        height: 202px;
     }
+
 
 }

@@ -372,8 +372,6 @@ def inbooking():
         response = app.response_class(json.dumps(booking_fail, ensure_ascii= False),status=403,mimetype='application/json')
         return response  
 
-
-
 #預定行程:新行程api============================================\
 @app.route("/api/booking", methods=["POST"])
 def booked():
