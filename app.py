@@ -428,9 +428,9 @@ def booked():
             if mydb.is_connected():
                 mycursor=mydb.cursor()
                 #建立booking資料----------------------------
-                mycursor.execute("DROP TABLE booking")
-                sql="CREATE TABLE booking (Id INT NOT NULL AUTO_INCREMENT, attractionId VARCHAR(255) NOT NULL, date VARCHAR(255) NOT NULL, time VARCHAR(255) NOT NULL, price VARCHAR(255) NOT NULL, PRIMARY KEY(Id))"
-                mycursor.execute(sql)
+                # mycursor.execute("DROP TABLE booking")
+                # sql="CREATE TABLE booking (Id INT NOT NULL AUTO_INCREMENT, attractionId VARCHAR(255) NOT NULL, date VARCHAR(255) NOT NULL, time VARCHAR(255) NOT NULL, price VARCHAR(255) NOT NULL, PRIMARY KEY(Id))"
+                # mycursor.execute(sql)
                 #操作SQL:資料表booking中新增資料
                 sql="INSERT INTO booking (attractionId, date, time, price) VALUES (%s,%s,%s,%s)"
                 val=(attractionId, date, time, price)
@@ -452,8 +452,8 @@ def booked():
                 # 建立中繼表(signup資料表 vs booking資料表)=======
                 # 操作SQL:建立新資料表
                 # mycursor.execute("DROP TABLE signup_to_booking")
-                sql="CREATE TABLE signup_to_booking (signup_id INT NOT NULL, booking_id INT NOT NULL, FOREIGN KEY (signup_id) REFERENCES signup (Id) ON DELETE RESTRICT ON UPDATE CASCADE, FOREIGN KEY (booking_id) REFERENCES booking (Id) ON DELETE RESTRICT ON UPDATE CASCADE, PRIMARY KEY (signup_id, booking_id))"
-                mycursor.execute(sql)
+                # sql="CREATE TABLE signup_to_booking (signup_id INT NOT NULL, booking_id INT NOT NULL, FOREIGN KEY (signup_id) REFERENCES signup (Id) ON DELETE RESTRICT ON UPDATE CASCADE, FOREIGN KEY (booking_id) REFERENCES booking (Id) ON DELETE RESTRICT ON UPDATE CASCADE, PRIMARY KEY (signup_id, booking_id))"
+                # mycursor.execute(sql)
  
                 sql="INSERT INTO signup_to_booking (signup_id, booking_id) VALUES (%s,%s)"
                 val=(session['userid'], bookingId)  
