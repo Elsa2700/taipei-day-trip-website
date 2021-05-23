@@ -66,12 +66,20 @@ function getData() {
                     let image = new Image();
                     image.src = url_img
                     image.className = "img";
-                    let image_tag = document.createElement("div");
-                    item_group.appendChild(item).appendChild(image_tag).appendChild(image);
+                    item_group.appendChild(item).appendChild(image);
 
                     //文字
+                    let title_text = dataobj.data[i]["name"];
+                    if (title_text != null) {
+                        title_text.className = "title";
+                        let title_text_tag = document.createElement("div");
+                        title_text_tag.className = "title";
+                        title_text_tag.textContent = title_text;
+                        item_group.appendChild(item).appendChild(title_text_tag);
+                    }
+
                     let text = document.createElement("div");
-                    text.className = "text";
+                    text.className = "text_attraction";
                     text.id = "text";
                     let cat_text = dataobj.data[i]["category"];
                     if (cat_text != null) {
@@ -93,14 +101,7 @@ function getData() {
                     }
 
 
-                    let title_text = dataobj.data[i]["name"];
-                    if (title_text != null) {
-                        title_text.className = "title";
-                        let title_text_tag = document.createElement("div");
-                        title_text_tag.className = "title";
-                        title_text_tag.textContent = title_text;
-                        item_group.appendChild(item).appendChild(title_text_tag);
-                    }
+
 
 
                 }
@@ -134,7 +135,10 @@ function getData() {
                     }
                 };
             })
+
     }
+
+
 
     //關鍵字搜尋==================================================
     //開啟連線
@@ -189,15 +193,25 @@ function getData() {
                             let image = new Image();
                             image.src = url_img
                             image.className = "img";
-                            let image_tag = document.createElement("div");
 
-                            item_group.appendChild(item).appendChild(image_tag).appendChild(image);
+                            item_group.appendChild(item).appendChild(image);
 
 
                             //文字
                             let text = document.createElement("div");
-                            text.className = "text";
+                            text.className = "text_attraction";
                             text.id = "text";
+
+                            let title_text = dataobj.data[i]["name"];
+                            if (title_text != null) {
+                                title_text.className = "title";
+                                let title_text_tag = document.createElement("div");
+                                title_text_tag.className = "title";
+                                title_text_tag.textContent = title_text;
+                                item_group.appendChild(item).appendChild(title_text_tag);
+
+                            }
+
                             let cat_text = dataobj.data[i]["category"];
                             if (cat_text != null) {
                                 cat_text.className = "cat";
@@ -218,15 +232,7 @@ function getData() {
                             }
 
 
-                            let title_text = dataobj.data[i]["name"];
-                            if (title_text != null) {
-                                title_text.className = "title";
-                                let title_text_tag = document.createElement("div");
-                                title_text_tag.className = "title";
-                                title_text_tag.textContent = title_text;
-                                item_group.appendChild(item).appendChild(title_text_tag);
 
-                            }
                         }
                         const pagenum = dataobj.nextPage;
                         return pagenum;
@@ -268,49 +274,25 @@ function getData() {
 
     // 登入視窗=================================================
     let loginId = document.getElementById("loginId");
-    loginId.addEventListener("click", Login, false);
+    loginId.addEventListener("click", Login);
     function Login() {
         document.getElementById("loginPage").style.display = "block";
     }
-    // 關閉登入視窗(外層)=================================================    
-    let outerPagelogin = document.getElementById("login-bgPage");
-    outerPagelogin.addEventListener("click", loginClose);
-    function loginClose(){
-        document.getElementById("loginPage").style.display = "none";
-
-    }
-    let outerPagesignup = document.getElementById("signup-bgPage");
-    outerPagesignup.addEventListener("click", signupClose);
-    function signupClose(){
-        document.getElementById("signupPage").style.display = "none";
-        document.getElementById("loginPage").style.display = "none";
-
-    }
-    // 關閉登入視窗(內層)=================================================    
-    let innerPage_login = document.getElementById("loginPage-frame")
-    let innerPage_signup = document.getElementById("signupPage-frame")
-    innerPage_login.addEventListener("click", open);
-    innerPage_signup.addEventListener("click", open);
-    function open(e){
-        document.getElementById("loginPage").style.display = "block";
-        e.stopPropagation();
-        e.preventDefault();
-    }
-    
 
     // 轉至註冊視窗(點擊)=================================================
     let signupPage = document.getElementById("msg-signup");
     signupPage.addEventListener("click", querySignup);
     function querySignup() {
         document.getElementById("signupPage").style.display = "block";
-        
+        console.log("轉至登入視窗")
+
     }
     // 轉至登入視窗(點擊)=================================================
     let loginPage = document.getElementById("msg-login");
     loginPage.addEventListener("click", queryLogin);
     function queryLogin() {
         document.getElementById("signupPage").style.display = "none";
-        
+
     }
     //註冊(送出)================================================
     let signup_btn = document.getElementById("signup-btn");
@@ -338,7 +320,7 @@ function getData() {
         console.log(options);
 
         e.preventDefault();
-        
+
 
         signupReq('/api/user', options)
 
@@ -379,7 +361,7 @@ function getData() {
     let signin_btn = document.getElementById("signin-btn");
     signin_btn.addEventListener("click", submitSignin);
     function submitSignin(e) {
-        
+
         //抓取登入資訊
         let email = document.getElementById("signin-email").value;
         let psd = document.getElementById("signin-psd").value;
@@ -400,7 +382,7 @@ function getData() {
         console.log(options);
 
         e.preventDefault();
-        
+
 
         signinReq('/api/user', options)
 
@@ -436,6 +418,48 @@ function getData() {
 
     }
 
+    // 關閉登入視窗(外層)=================================================    
+    let outerPagelogin = document.getElementById("login-bgPage");
+    outerPagelogin.addEventListener("click", loginClose);
+    function loginClose() {
+        document.getElementById("loginPage").style.display = "none";
+        console.log("關閉視窗")
+
+    }
+    let outerPagesignup = document.getElementById("signup-bgPage");
+    outerPagesignup.addEventListener("click", signupClose);
+    function signupClose() {
+        document.getElementById("signupPage").style.display = "none";
+        document.getElementById("loginPage").style.display = "none";
+
+    }
+
+    // 關閉登入視窗(內層固定)=================================================    
+    let innerPage_login = document.getElementById("loginPage-frame")
+    let innerPage_signup = document.getElementById("signupPage-frame")
+    innerPage_login.addEventListener("click", open);
+    innerPage_signup.addEventListener("click", open);
+    function open(e) {
+        document.getElementById("loginPage").style.display = "block";
+        e.stopPropagation();
+        e.preventDefault();
+    }
+    // 關閉登入視窗(內層關閉)=================================================  
+    let closeLogin = document.getElementById("close-login");
+    closeLogin.addEventListener("click", CloseLogin);
+    function CloseLogin(e) {
+        document.getElementById("loginPage").style.display = "none";
+        e.stopPropagation();
+    }
+
+    let closeSignup = document.getElementById("close-signup");
+    closeSignup.addEventListener("click", CloseSignup);
+    function CloseSignup(e) {
+        document.getElementById("signupPage").style.display = "none";
+        document.getElementById("loginPage").style.display = "none";
+        e.stopPropagation();
+    }
+
     //當前使用者登入狀態=========================================
     queryState();
     async function queryState() {
@@ -447,14 +471,14 @@ function getData() {
             .then(result => {
                 let dataobj = result;
                 console.log(dataobj["data"])
-                
+
                 if (dataobj["data"] == null) {
-                    //判斷式:null
+                    //判斷式:null(未登入)
                     let text = document.querySelector("#logintext");
                     text.textContent = "登入/註冊";
-                    
+
                 } else {
-                    //判斷式:非null
+                    //判斷式:非null(已登入)
                     let text = document.querySelector("#logintext");
                     text.textContent = "登出系統";
                     //登出(點擊)
@@ -467,7 +491,6 @@ function getData() {
                                 'Content-Type': 'application/json',
                             },
                         };
-
                         signoutReq('/api/user', options);
 
                         async function signoutReq() {
@@ -488,7 +511,6 @@ function getData() {
                         }
                     }
 
-
                 }
 
 
@@ -496,6 +518,35 @@ function getData() {
             })
     }
 
+    //預定行程=========================================
+    let booking = document.getElementById("booking");
+    booking.addEventListener("click", queryBooking);
+    function queryBooking() {
+        querybookingState();
+        async function querybookingState() {
+            await fetch("/api/user")
+                .then(res => {
+                    console.log(res);
+                    return res.json();
+                })
+                .then(result => {
+                    let dataobj = result;
+                    console.log(dataobj["data"])
 
+                    if (dataobj["data"] == null) {
+                        //判斷式:null(未登入)
+                        Login();
+                    } else {
+                        window.location.href = "/booking";
+
+                    }
+
+
+                })
+
+        }
+
+
+    }
 }
 

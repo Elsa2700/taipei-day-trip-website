@@ -112,9 +112,17 @@ def attractionId(attractionId):
                 # print((row[0][-3:]).lower())
                 if ((row[0][-3:]).lower())== "jpg" or ((row[0][-3:]).lower())== "png":
                     img_data.append(row[0]) 
-                    print((row[0][-3:]).lower())  
+                    # print((row[0][-3:]).lower())  
                     data_dic["images"]=img_data  
             data={"data": data_dic}
+
+            #透過session紀錄使用狀態
+            session['id'] = data_dic["id"]
+            session['name'] = data_dic["name"]
+            session['address'] = data_dic["address"]
+            session['image'] = data_dic["images"]
+            
+
             response = app.response_class(json.dumps( data, ensure_ascii= False),status=200,mimetype='application/json')
             return response
         else:
@@ -144,8 +152,8 @@ def getState():
             #登入成功
             login_sta = {
                 "data": {
-                    "id": session['id'],
-                    "name": session['name'],
+                    "id": session['userid'],
+                    "name": session['username'],
                     "email": session['email']
                     }
                 }
@@ -266,10 +274,10 @@ def signin():
                     "ok": True
                 }
 
-                # #透過session紀錄使用狀態
+                #透過session紀錄使用狀態
                 session['status'] = 'login'  #使用狀態
-                session['id'] = record[0] #id
-                session['name'] = record[1] #name
+                session['userid'] = record[0] #id
+                session['username'] = record[1] #name
                 session['email'] =record[2] #email
 
 
@@ -311,6 +319,198 @@ def signout():
         }
     response = app.response_class(json.dumps(signout_success, ensure_ascii= False),status=200,mimetype='application/json')
     return response
+
+
+#預定行程:未確認api============================================
+@app.route("/api/booking", methods=["GET"])
+def inbooking():
+    # 登入
+    try:
+        if session['status'] == 'login':
+            # booking資料庫資料判斷-----
+            if mydb.is_connected():
+                #操作方法
+                mycursor=mydb.cursor()
+                #查詢要查詢的會員帳號
+                #操作SQL:查詢資料表(單一參數)----------------
+                sql="SELECT * FROM booking"
+                mycursor.execute(sql)
+                #從資料庫搜尋到的查詢結果
+                record=mycursor.fetchall()
+                print(record)
+                if record != []:
+                    # booking資料
+                    booking_data = {
+                        "data": {
+                            "attraction": {
+                                "id": session['id'],
+                                "name": session['name'],
+                                "address": session['address'],
+                                "image": session['image']
+                                },
+                            "date": session['date'],
+                            "time": session['time'],
+                            "price": session['price']
+                        }
+                    }
+                    #回應有資料
+                    response = app.response_class(json.dumps(booking_data, ensure_ascii= False),status=200,mimetype='application/json')
+                    return response
+                else:
+                    #回應無資料: null 
+                    null = None
+                    booking_data = {"data":null}
+                    print("無資料")
+                    response = app.response_class(json.dumps(booking_data, ensure_ascii= False),status=200,mimetype='application/json')
+                    return response 
+    #未登入系統，拒絕存取
+    except Error as error:
+        booking_fail = {
+            "error": True,
+            "message": "未登入系統，拒絕存取"
+            }
+        response = app.response_class(json.dumps(booking_fail, ensure_ascii= False),status=403,mimetype='application/json')
+        return response  
+
+#預定行程:新行程api============================================\
+@app.route("/api/booking", methods=["POST"])
+def booked():
+    #POST方法:
+    data = request.get_json(force=True)
+    attractionId = data['attractionId']
+    date = data['date']
+    time = data['time']
+    price = data['price']
+
+    
+    #資料庫處理**************************************
+    try:
+        # 使用者狀態
+        status=session.get('status')
+        # 登入
+        if status == 'login':
+            #登入且建立成功
+            if mydb.is_connected():
+                mycursor=mydb.cursor()
+                #建立booking資料----------------------------
+                # mycursor.execute("DROP TABLE signup")
+                # sql="CREATE TABLE booking (Id INT NOT NULL AUTO_INCREMENT, attractionId VARCHAR(255) NOT NULL, date DATE NOT NULL, time VARCHAR(255) NOT NULL, price VARCHAR(255) NOT NULL, PRIMARY KEY(Id))"
+                # mycursor.execute(sql)
+                #操作SQL:資料表booking中新增資料
+                sql="INSERT INTO booking (attractionId, date, time, price) VALUES (%s,%s,%s,%s)"
+                val=(attractionId, date, time, price)
+                mycursor.execute(sql,val)
+                mydb.commit()
+                # 預定成功
+                booking_success = {
+                    "ok": True,
+                    }
+                
+                # #抓取booking訂單的id
+                # sql="SELECT * FROM booking WHERE attractionId = %s and date = %s"
+                # val=(email, password)
+                # mycursor.execute(sql,val)
+
+                # #從資料庫搜尋到的查詢結果
+                # record=mycursor.fetchone()
+
+                # 建立中繼表(signup資料表 vs booking資料表)=======
+                # 操作SQL:建立新資料表
+                # mycursor.execute("DROP TABLE signup_to_booking")
+                # sql="CREATE TABLE signup_to_booking (signup_id INT NOT NULL, booking_id INT NOT NULL, FOREIGN KEY (signup_id) REFERENCES signup (Id) ON DELETE RESTRICT ON UPDATE CASCADE, FOREIGN KEY (booking_id) REFERENCES booking (Id) ON DELETE RESTRICT ON UPDATE CASCADE, PRIMARY KEY (signup_id, booking_id))"
+                # mycursor.execute(sql)
+ 
+                # sql="INSERT INTO signup_to_booking (signup_id, booking_id) VALUES (%s,%s)"
+                # val=(session['id'], #抓到BOOKING ID)  #利用join
+                # mycursor.execute(sql,val)
+                # mydb.commit()
+                    
+
+                # booking的id
+                # sql="SELECT * FROM booking WHERE email = %s"
+                # mycursor=mydb.cursor()
+
+
+                #透過session紀錄使用狀態
+                session['date'] = date 
+                session['time'] = time 
+                session['price'] = price 
+
+
+                #導向成功取得資料的json格式
+                response = app.response_class(json.dumps(booking_success, ensure_ascii= False),status=200,mimetype='application/json')
+                return response
+            #登入、建立失敗，輸入不正確或其他原因
+            else:
+                #註冊失敗
+                booking_fail = {
+                    "error": True,
+                    "message": "建立失敗，輸入不正確或其他原因"
+                    }
+                response = app.response_class(json.dumps(booking_fail, ensure_ascii= False),status=400,mimetype='application/json')
+                return response  
+        # 未登入
+        else:
+            #註冊失敗
+            booking_fail = {
+                "error": True,
+                "message": "未登入系統，拒絕存取"
+                }
+            response = app.response_class(json.dumps(booking_fail, ensure_ascii= False),status=403,mimetype='application/json')
+            return response  
+    # 當資料未重覆: 連線失敗，導向失敗頁面，顯示"帳號已經被註冊"訊息
+    except Error as error:
+        #伺服器內部錯誤
+        booking_fail = {
+        "error": True,
+        "message": "請填寫行程資料"
+        }
+        response = app.response_class(json.dumps(booking_fail, ensure_ascii= False),status=500,mimetype='application/json')
+        return response  
+
+    #資料庫處理**************************************
+
+#預定行程:刪除api============================================
+@app.route("/api/booking", methods=["DELETE"])
+def delBooked():
+    status=session.get('status')
+    if status == "login":
+        if mydb.is_connected():
+            #操作方法
+            mycursor=mydb.cursor()
+            #操作SQL:資料表booking中新增資料----------------
+            sql="DELETE from booking"
+            mycursor.execute(sql)
+            mydb.commit()
+
+
+
+            # 刪除成功
+            del_success = {
+                "ok": True,
+                }
+            response = app.response_class(json.dumps(del_success, ensure_ascii= False),status=200,mimetype='application/json')
+            return response
+                #登入、建立失敗，輸入不正確或其他原因
+        else:
+            #註冊失敗
+            del_fail = {
+                "error": True,
+                "message": "資料刪除失敗"
+                }
+            response = app.response_class(json.dumps(del_fail, ensure_ascii= False),status=400,mimetype='application/json')
+            return response  
+    else:
+        # 未登入系統，拒絕存取
+        del_fail = {
+            "error": True,
+            "message": "未登入系統，拒絕存取"
+            }
+        response = app.response_class(json.dumps(del_fail, ensure_ascii= False),status=403,mimetype='application/json')
+        return response
+
+
+
 
 # Pages
 @app.route("/")
