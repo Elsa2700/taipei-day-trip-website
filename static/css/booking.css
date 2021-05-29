@@ -430,6 +430,9 @@ body {
 
 /* 裝置1200px以上 */
 @media screen and (min-width:1200px) {
+    .booking{
+        margin-left: 20px;
+    }
     .header{
         font-family: Noto Sans TC;
         font-size: 19px;
@@ -458,10 +461,7 @@ body {
     .header div{
         margin-top: 90px;
     }
-    .booking-frame{
-        margin-left: 40px;
-        
-    }
+
     .section .del{
         width: 30px;
         height: 30px;
@@ -617,7 +617,7 @@ body {
         height: 30px;
         position: absolute;
         top:600px;
-        right: 10px;
+        right: 20px;
         margin: 5px;
     }
     .nav .div {
