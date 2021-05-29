@@ -7,8 +7,6 @@ function getData() {
     let keyword = document.getElementById("keyword").value;
     //預設頁碼
     let page = 0;
-    //取得景點編號
-    let url_id = '';
 
     //定義各種url==================================================
 
