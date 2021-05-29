@@ -200,15 +200,7 @@
 /* 會員登入================================== */
 
 
-/* 初始狀態 */
-body {
-    margin: 0px;
-    padding: 0px;
-    background: url('/static/css/Sky.png');
-    background-size: cover 10px;
-    background-repeat: no-repeat;
 
-}
 
 /* 導覽列 */
 .nav {
@@ -379,12 +371,29 @@ body {
         text-align: start;
         margin:20px;
     }
+    body {
+        margin: 0px;
+        padding: 0px;
+        background: url('/static/css/Sky.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+
+    }
 
 
 }
 
 /* 裝置360px-1200px */
 @media screen and (min-width:360px) and (max-width:1200px) {
+    /* 初始狀態 */
+    body {
+        margin: 0px;
+        padding: 0px;
+        background: url('/static/css/Sky.png');
+        background-size: cover 10px;
+        background-repeat: no-repeat;
+
+    }
     .header{
         font-family: Noto Sans TC;
         font-size: 19px;
