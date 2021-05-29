@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thankyou</title>
+
+</head>
+
+<body onload="getData()">
+    <!-- 會員登入 -->
+    <div class="loginPage" id="loginPage">
+        <div class="bg-loginPage" id="login-bgPage">
+            <div class="loginPage-frame" id="loginPage-frame">
+                <div class="bar"></div>
+                <div class="header">
+                    <div class="header-text">登入會員帳號</div>
+                    <img class="close" id="close-login" src="{{url_for('static', filename='css/icon_close.png')}}"
+                        alt="">
+                </div>
+
+                <form action="/api/user" method="POST">
+                    <!-- 信箱 -->
+                    <div class="div-email">
+                        <input class="email" type="email" id="signin-email" name="signin-email" placeholder="輸入電子信箱"
+                            required>
+                    </div>
+
+                    <!-- 密碼 -->
+                    <div class="div-psd">
+                        <input class="psd" type="password" id="signin-psd" name="signin-password" placeholder="輸入密碼"
+                            required>
+                    </div>
+                </form>
+
+                <div class="div-btn-login">
+                    <button class="btn-login" id="signin-btn">登入帳戶</button>
+                </div>
+                <div class="signin-msg" id="signin-msg"></div>
+                <div class="msg" id="msg-signup">還沒有帳戶？點此註冊</div>
+            </div>
+        </div>
+
+    </div>
+    <!-- 會員登入 -->
+
+    <!-- 會員註冊 -->
+    <div class="signupPage" id="signupPage">
+        <div class="bg-loginPage" id="signup-bgPage">
+            <div class="signupPage-frame" id="signupPage-frame">
+                <div class="bar"></div>
+                <div class="header">
+                    <div class="header-text">註冊會員帳號</div>
+                    <img class="close" id="close-signup" src="{{url_for('static', filename='css/icon_close.png')}}"
+                        alt="">
+                </div>
+
+                <form action="/api/user" method="POST">
+                    <!-- 姓名 -->
+                    <div class="div-username">
+                        <input class="username" type="text" id="signup-username" name="username" placeholder="輸入姓名"
+                            required>
+                    </div>
+                    <!-- 信箱 -->
+                    <div class="div-email">
+                        <input class="email" type="email" id="signup-email" name="email" placeholder="輸入電子信箱" required>
+                    </div>
+                    <!-- 密碼 -->
+                    <div class="div-psd">
+                        <input class="psd" type="password" id="signup-psd" name="password" placeholder="輸入密碼" required>
+                    </div>
+                    <div class="div-btn-login">
+                        <button class="btn-login" id="signup-btn">註冊新帳戶</button>
+                    </div>
+                    <div class="signup-msg" id="signup-msg"></div>
+                    <div class="msg" id="msg-login">已經有帳戶了？點此登入</div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 會員註冊 -->
+
+    <div class="nav">
+        <div class="div">
+            <div class="text">
+                <a href="/" class="title">台北一日遊</a>
+                <div class="frame2">
+                    <div>
+                        <a href="#" id="booking">預定行程</a>
+                    </div>
+                    <div class="btn-nav" id="loginId">
+                        <div><a href="#" id="logintext">登入/註冊</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="header_order">
+        <div style="font-size: 27px;margin-bottom:10px;padding:5px;background-color: rgb(95, 173, 175);color: cornsilk;border-radius:10px;">恭喜!完成預定行程</div><div>➳訂單姓名:<span id="order_name"></span></div>
+        <div>
+            ➳訂單編號:<span id="orderNum_thank" name="number"></span>
+            <br>已完成付款程序囉</br>
+        </div>
+        <div class="section">
+            <div class="icon1" id="thankyou_icon"></div>
+            <div class="icon2"></div>
+
+        </div>
+    </div>
+
+
+
+    <!-- 信用卡 -->
+
+
+
+
+    </div>
+    <footer class="footer" id="footer">
+        <div class="text">
+            COPYRIGHT © 2021 台北一日遊
+        </div>
+    </footer>
+    <div id="footer_frame"></div>
+
+</body>
+
+<script src="../static/js/thankyou.js"></script>
+<link rel="stylesheet" href="../static/css/thankyou.css">
+
+</html>
