@@ -1,13 +1,13 @@
 from flask import *
 import mysql.connector
 from mysql.connector import Error
-import json
+import json, requests
+from datetime import date
+
 app=Flask(__name__)
 
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
-#session產生金鑰
-#comand: python -c 'import os; print(os.urandom(16))'
 app.secret_key='secret'
 
 #資料庫連線
@@ -32,7 +32,6 @@ def attractions():
     #資料庫處理**************************************
     mycursor=mydb.cursor()
     #查詢要查詢的會員帳號
-    #操作SQL:查詢資料表(單一參數)----------------
     sql="SELECT * FROM attractions where stitle like %s limit %s, %s"
     mycursor.execute(sql, (("%"+keyword+"%"),(page*12),12))
     #從資料庫搜尋到的查詢結果
@@ -372,7 +371,7 @@ def inbooking():
         response = app.response_class(json.dumps(booking_fail, ensure_ascii= False),status=403,mimetype='application/json')
         return response  
 
-#預定行程:新行程api============================================\
+#預定行程:新行程api============================================
 @app.route("/api/booking", methods=["POST"])
 def booked():
     #POST方法:
@@ -405,31 +404,7 @@ def booked():
                 booking_success = {
                     "ok": True,
                     }
-                
-                # #抓取booking訂單的id
-                # sql="SELECT * FROM booking WHERE attractionId = %s and date = %s"
-                # val=(email, password)
-                # mycursor.execute(sql,val)
-
-                # #從資料庫搜尋到的查詢結果
-                # record=mycursor.fetchone()
-
-                # 建立中繼表(signup資料表 vs booking資料表)=======
-                # 操作SQL:建立新資料表
-                # mycursor.execute("DROP TABLE signup_to_booking")
-                # sql="CREATE TABLE signup_to_booking (signup_id INT NOT NULL, booking_id INT NOT NULL, FOREIGN KEY (signup_id) REFERENCES signup (Id) ON DELETE RESTRICT ON UPDATE CASCADE, FOREIGN KEY (booking_id) REFERENCES booking (Id) ON DELETE RESTRICT ON UPDATE CASCADE, PRIMARY KEY (signup_id, booking_id))"
-                # mycursor.execute(sql)
- 
-                # sql="INSERT INTO signup_to_booking (signup_id, booking_id) VALUES (%s,%s)"
-                # val=(session['id'], #抓到BOOKING ID)  #利用join
-                # mycursor.execute(sql,val)
-                # mydb.commit()
-                    
-
-                # booking的id
-                # sql="SELECT * FROM booking WHERE email = %s"
-                # mycursor=mydb.cursor()
-
+            
 
                 #透過session紀錄使用狀態
                 session['date'] = date 
@@ -451,7 +426,7 @@ def booked():
                 return response  
         # 未登入
         else:
-            #註冊失敗
+            #未登入失敗
             booking_fail = {
                 "error": True,
                 "message": "未登入系統，拒絕存取"
@@ -509,6 +484,145 @@ def delBooked():
         response = app.response_class(json.dumps(del_fail, ensure_ascii= False),status=403,mimetype='application/json')
         return response
 
+#訂單建立:清單api============================================
+@app.route("/api/orders", methods=["POST"])
+def order():
+    try:
+        # 登入
+        status = session.get('status')
+        if status == 'login':
+            #POST方法:
+            data = request.get_json(force=True)
+            prime = data['prime']
+
+            # 紀錄訂單狀態
+            session['order'] = "unpaid"
+            session['contact_name'] = data['order']['contact']['name']
+            session['contact_email'] = data['order']['contact']['email']
+            session['contact_phone'] = data['order']['contact']['phone']
+
+            # 訂單建立失敗
+            if session['contact_name'] == "" or session['contact_email'] == "" or session['contact_phone'] == "":
+                # 訂單失敗
+                order_fail = {
+                    "error": True,
+                    "message": "訂單建立失敗，輸入不正確或其他原因"
+                    }
+
+                response = app.response_class(json.dumps(order_fail, ensure_ascii= False),status=400,mimetype='application/json')
+                return response
+            # 訂單建立成功
+            else:
+                #tappay server 連線-------
+                url = "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime"
+                headers = {'content-type':'application/json','x-api-key':'partner_D7xWITe3QnKxgA4p6ZIJrvkKLzyAkdRybJQeIw3RZKvjtgDnLSHjdxRu'}
+                data = {
+                    "prime": prime,
+                    "partner_key": 'partner_D7xWITe3QnKxgA4p6ZIJrvkKLzyAkdRybJQeIw3RZKvjtgDnLSHjdxRu',
+                    "merchant_id": "Chiao_ESUN",
+                    "details":"TapPay Test",
+                    "amount": 100,
+                    "cardholder": {
+                        "phone_number": "+886923456789",
+                        "name": "王小明",
+                        "email": "LittleMing@Wang.com",
+                        "zip_code": "100",
+                        "address": "台北市天龍區芝麻街1號1樓",
+                        "national_id": "A123456789"
+                        },
+                    }
+
+                req = requests.post(url, data=json.dumps(data), headers=headers)
+                result = json.loads(req.text)
+
+                # 付款成功
+                if result['status'] == 0:
+                    # 紀錄訂單狀態:已付款
+                    session['order'] = "paid"
+                    pay_success = {
+                        "data": {
+                            "number": result['rec_trade_id'],
+                            "payment": {
+                            "status": 0,
+                            "message": "付款成功"
+                            }
+                        }
+                    }
+
+                    response = app.response_class(json.dumps(pay_success, ensure_ascii= False),status=200,mimetype='application/json')
+                    return response
+                else:
+                    # 付款失敗
+                    pay_fail = {
+                        "data": {
+                            "number": result['rec_trade_id'],
+                            "payment": {
+                            "status": 1,
+                            "message": "付款失敗"
+                            }
+                        }
+                    }
+
+                    response = app.response_class(json.dumps(pay_fail, ensure_ascii= False),status=200,mimetype='application/json')
+                    return response
+        else:
+            #未登入失敗
+            order_fail = {
+                "error": True,
+                "message": "未登入系統，拒絕存取"
+                }
+            response = app.response_class(json.dumps(order_fail, ensure_ascii= False),status=403,mimetype='application/json')
+            return response  
+    # 當資料未重覆: 連線失敗，導向失敗頁面，顯示"帳號已經被註冊"訊息
+    except Error as error:
+        #伺服器內部錯誤
+        order_fail = {
+        "error": True,
+        "message": "伺服器內部錯誤"
+        }
+        response = app.response_class(json.dumps(order_fail, ensure_ascii= False),status=500,mimetype='application/json')
+        return response  
+
+@app.route("/api/order/<orderNumber>")
+def orderId(orderNumber):
+    # 登入
+    status = session.get('status')
+    if status == 'login':
+        # 訂單有資料
+        orderinfo = {
+            "data": {
+                "number": orderNumber,
+                "price": session['price'],
+                "trip": {
+                "attraction": {
+                    "id": session['id'],
+                    "name": session['name'],
+                    "address": session['address'],
+                    "image": session['image']
+                },
+                "date": session['date'],
+                "time": session['time']
+                },
+                "contact": {
+                "name": session['contact_name'],
+                "email": session['contact_email'],
+                "phone": session['contact_phone']
+                },
+                "status": 1
+            }
+        }
+        print(orderinfo)
+
+        response = app.response_class(json.dumps(orderinfo, ensure_ascii= False),status=200,mimetype='application/json')
+        return response
+    else:
+        #未登入失敗
+        order_fail = {
+            "error": True,
+            "message": "未登入系統，拒絕存取"
+            }
+        response = app.response_class(json.dumps(order_fail, ensure_ascii= False),status=403,mimetype='application/json')
+        return response  
 
 
 

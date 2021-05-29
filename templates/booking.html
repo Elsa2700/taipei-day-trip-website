@@ -25,13 +25,13 @@
                     <!-- 信箱 -->
                     <div class="div-email">
                         <input class="email" type="email" id="signin-email" name="signin-email" placeholder="輸入電子信箱"
-                            required>
+                            required />
                     </div>
 
                     <!-- 密碼 -->
                     <div class="div-psd">
                         <input class="psd" type="password" id="signin-psd" name="signin-password" placeholder="輸入密碼"
-                            required>
+                            required />
                     </div>
                 </form>
 
@@ -61,15 +61,17 @@
                     <!-- 姓名 -->
                     <div class="div-username">
                         <input class="username" type="text" id="signup-username" name="username" placeholder="輸入姓名"
-                            required>
+                            required />
                     </div>
                     <!-- 信箱 -->
                     <div class="div-email">
-                        <input class="email" type="email" id="signup-email" name="email" placeholder="輸入電子信箱" required>
+                        <input class="email" type="email" id="signup-email" name="email" placeholder="輸入電子信箱"
+                            required />
                     </div>
                     <!-- 密碼 -->
                     <div class="div-psd">
-                        <input class="psd" type="password" id="signup-psd" name="password" placeholder="輸入密碼" required>
+                        <input class="psd" type="password" id="signup-psd" name="password" placeholder="輸入密碼"
+                            required />
                     </div>
                     <div class="div-btn-login">
                         <button class="btn-login" id="signup-btn">註冊新帳戶</button>
@@ -138,56 +140,76 @@
 
         <div class="info">
             <div class="header">您的聯絡資訊</div>
+
             <div class="field">
-                <h2 class="field-h">聯絡姓名：
-                    <span>
-                        <input class="field-name" type="text" placeholder="姓名"></input>
-                    </span>
-                </h2>
-                <h2 class="field-h">連絡信箱：
-                    <span>
-                        <input class="field-email" type="email" placeholder="信箱"></input>
-                    </span>
-                </h2>
-                <h2 class="field-h">手機號碼：
-                    <span>
-                        <input class="field-phone" type="text" placeholder="手機號碼"></input>
-                    </span>
-                </h2>
+                <form action="info">
+                    <h2 class="field-h">聯絡姓名：
+                        <span>
+                            <input class="tpfield" type="text" id="f-name" placeholder="姓名" required />
+                        </span>
+                    </h2>
+                    <h2 class="field-h">連絡信箱：
+                        <span>
+                            <input class="tpfield" type="email" id="f-email" placeholder="信箱" required />
+                        </span>
+                    </h2>
+                    <h2 class="field-h">手機號碼：
+                        <span>
+                            <input class="tpfield" type="text" id="f-tel" placeholder="手機號碼" required />
+                        </span>
+                    </h2>
+                </form>
+
                 <div class="info-msg">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
             </div>
         </div>
         <hr class="hr-2" />
 
+        <!-- 信用卡 -->
+
         <div class="info">
             <div class="header">信用卡付款資訊</div>
-            <div class="field">
-                <h2 class="field-h">卡片號碼：
-                    <span>
-                        <input class="field-psd" type="password" placeholder="**** **** **** ****"></input>
-                    </span>
-                </h2>
-                <h2 class="field-h">過期時間：
-                    <span>
-                        <input class="field-exptime" type="date" placeholder="MM / YY"></input>
-                    </span>
-                </h2>
-                <h2 class="field-h">驗證密碼：
-                    <span>
-                        <input class="field-virtify" type="text" placeholder="CVV"></input>
-                    </span>
-                </h2>
-            </div>
+            <form class="ui form">
+                <div class="field">
+                    <div id="tappay-iframe">
+                        <form action="credit">
+                            <h2 class="field-h">卡片號碼：
+                                <div class="tpfield" id="card-number"></div><span class="msg-error"
+                                    id="number-msg"></span>
+                            </h2>
+                            <h2 class="field-h">過期時間：
+                                <div class="tpfield" id="card-expiration-date"></div><span class="msg-error"
+                                    id="expir-msg"></span>
+                            </h2>
+                            <h2 class="field-h">驗證密碼：
+                                <div class="tpfield" id="card-ccv"></div><span class="msg-error" id="ccv-msg"></span>
+                            </h2>
+
+                        </form>
+
+                        <div class="field-msg" id="field-msg"></div>
+
+                    </div>
+
+                </div>
+
+            </form>
+
         </div>
         <hr class="hr-2" />
+    </div>
 
-        <div class="sum">
-            <div class="sum-price">總價：<span>新台幣 2000 元</span></div>
-            <button type="button">
-                <div class="btn-text">確認訂購並付款</div>
-            </button>
+    <!-- 信用卡 -->
 
-        </div>
+
+    <div class="sum" id="sum">
+        <div class="sum-price">總價：<span>新台幣 2000 元</span></div>
+        <button type="button" id="submit">
+            <div class="btn-text"></div>確認訂購並付款
+    </div>
+    </button>
+
+    </div>
 
     </div>
     <footer class="footer" id="footer">
@@ -199,6 +221,11 @@
 
 </body>
 
+<!-- 引入 SKD 並且進行初始化 -->
+<script src="https://js.tappaysdk.com/tpdirect/v5.7.0"></script>
+<script>
+    TPDirect.setupSDK(20433, 'app_cbLWK8UChw4TtPo28sbIYEBKG8jq93gFOz6EzwwZj0tQf6C9lOHvBW8wntJ7', 'sandbox')
+</script>
 <script src="../static/js/booking.js"></script>
 <link rel="stylesheet" href="../static/css/booking.css">
 
