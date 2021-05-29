@@ -1,15 +1,14 @@
 from flask import *
 import mysql.connector
 from mysql.connector import Error
-
 import json, requests
-from datetime import date
-
 
 app=Flask(__name__)
 
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
+#session產生金鑰
+#comand: python -c 'import os; print(os.urandom(16))'
 app.secret_key='secret'
 
 #資料庫連線
@@ -34,6 +33,7 @@ def attractions():
     #資料庫處理**************************************
     mycursor=mydb.cursor()
     #查詢要查詢的會員帳號
+    #操作SQL:查詢資料表(單一參數)----------------
     sql="SELECT * FROM attractions where stitle like %s limit %s, %s"
     mycursor.execute(sql, (("%"+keyword+"%"),(page*12),12))
     #從資料庫搜尋到的查詢結果
@@ -332,65 +332,31 @@ def inbooking():
             if mydb.is_connected():
                 #操作方法
                 mycursor=mydb.cursor()
-                #使用者
-                print("使用者id: ",session['userid'])
-                #中繼表:抓取使用者的訂單(可能一筆以上)
-                sql="SELECT * FROM signup_to_booking where signup_id = %s"
-                val=session['userid']
-                mycursor.execute(sql,(val,))
+                #查詢要查詢的會員帳號
+                #操作SQL:查詢資料表(單一參數)----------------
+                sql="SELECT * FROM booking"
+                mycursor.execute(sql)
+                #從資料庫搜尋到的查詢結果
                 record=mycursor.fetchall()
                 print(record)
-
-                #有一筆以上的訂單
                 if record != []:
-                    result=[]
-                    for i in range(len(record)):
-                        #資料庫:抓取booking資料
-                        bookingid=record[i][1]
-                        sql="SELECT * FROM booking where Id = %s"
-                        val=bookingid
-                        mycursor.execute(sql,(val,))
-                        record_booking=mycursor.fetchone()
-                        print(record_booking)
-
-                        #資料庫:抓取attractions資料
-                        attractionsid=record_booking[1]
-                        sql="SELECT * FROM attractions where RowNumber = %s"
-                        val=attractionsid
-                        mycursor.execute(sql,(val,))
-                        record_attractions=mycursor.fetchone()
-                        #資料庫:抓取attractions url 圖片資料
-                        sql_img="SELECT * FROM attractions_url where RowNumber = %s"
-                        val=attractionsid
-                        mycursor.execute(sql_img,(val,))
-                        record_img=mycursor.fetchall()
-                        img_data=[]
-                        for row in record_img:
-                            if ((row[1][-3:]).lower())== "jpg" or ((row[1][-3:]).lower())== "png":
-                                img_data.append(row[1]) 
-                        
-
-                        # 建立booking API
-                        data_dic={}
-                        attraction_dic={}
-                        attraction_dic["id"]=record_attractions[0]
-                        attraction_dic["name"]=record_attractions[1]
-                        attraction_dic["address"]=record_attractions[4]
-                        attraction_dic["image"]= img_data[0]
-                        data_dic["attraction"]=attraction_dic
-                        data_dic["date"]=record_booking[2]
-                        data_dic["time"]=record_booking[3]
-                        data_dic["price"]=record_booking[4]
-                        result.append(data_dic)
-
-                    booking_data={"data":result}
-                    print(booking_data)
-
+                    # booking資料
+                    booking_data = {
+                        "data": {
+                            "attraction": {
+                                "id": session['id'],
+                                "name": session['name'],
+                                "address": session['address'],
+                                "image": session['image']
+                                },
+                            "date": session['date'],
+                            "time": session['time'],
+                            "price": session['price']
+                        }
+                    }
                     #回應有資料
                     response = app.response_class(json.dumps(booking_data, ensure_ascii= False),status=200,mimetype='application/json')
                     return response
-
-                # 使用者無訂單
                 else:
                     #回應無資料: null 
                     null = None
@@ -428,23 +394,19 @@ def booked():
             if mydb.is_connected():
                 mycursor=mydb.cursor()
                 #建立booking資料----------------------------
-                # mycursor.execute("DROP TABLE booking")
-                # sql="CREATE TABLE booking (Id INT NOT NULL AUTO_INCREMENT, attractionId VARCHAR(255) NOT NULL, date VARCHAR(255) NOT NULL, time VARCHAR(255) NOT NULL, price VARCHAR(255) NOT NULL, PRIMARY KEY(Id))"
+                # mycursor.execute("DROP TABLE signup")
+                # sql="CREATE TABLE booking (Id INT NOT NULL AUTO_INCREMENT, attractionId VARCHAR(255) NOT NULL, date DATE NOT NULL, time VARCHAR(255) NOT NULL, price VARCHAR(255) NOT NULL, PRIMARY KEY(Id))"
                 # mycursor.execute(sql)
                 #操作SQL:資料表booking中新增資料
                 sql="INSERT INTO booking (attractionId, date, time, price) VALUES (%s,%s,%s,%s)"
                 val=(attractionId, date, time, price)
                 mycursor.execute(sql,val)
                 mydb.commit()
-
-
                 # 預定成功
                 booking_success = {
                     "ok": True,
                     }
-
             
-
 
                 #透過session紀錄使用狀態
                 session['date'] = date 
@@ -488,29 +450,16 @@ def booked():
 #預定行程:刪除api============================================
 @app.route("/api/booking", methods=["DELETE"])
 def delBooked():
-    data = request.get_json(force=True)
-    del_order = data['number']
-    
     status=session.get('status')
     if status == "login":
         if mydb.is_connected():
             #操作方法
             mycursor=mydb.cursor()
-            #操作SQL:取得刪除訂單的id----------------
-            sql="select Id from booking limit %s,1"
-            val=del_order
-            mycursor.execute(sql,(val,))
-            del_id=mycursor.fetchone()
+            #操作SQL:資料表booking中新增資料----------------
+            sql="DELETE from booking"
+            mycursor.execute(sql)
+            mydb.commit()
 
-            #操作SQL:刪除中繼表的訂單資料----------------
-            sql="DELETE from signup_to_booking where booking_id = %s"
-            val=del_id
-            mycursor.execute(sql,val)
-            mydb.commit()
-            sql="DELETE from booking where Id =%s"
-            val=del_id
-            mycursor.execute(sql,val)
-            mydb.commit()
 
 
             # 刪除成功

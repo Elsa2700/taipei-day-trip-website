@@ -173,7 +173,6 @@ function getData() {
                                     }
                                 })
 
-
                                 let submitButton = document.getElementById('submit');
                                 submitButton.addEventListener("click", onSubmit)
                                 let prime = ""
@@ -311,11 +310,8 @@ function getData() {
                                 window.document.location.reload();
                             })
 
-                                }
-                            })
 
                     }
-
                 }
             })
     }
