@@ -111,6 +111,9 @@ function getData() {
                                 //景點地點
                                 let profile_ads = document.getElementById("b-c-ads");
                                 profile_ads.textContent = dataobj.data["attraction"]["address"];
+                                //確認金額
+                                let sum_price = document.getElementById("sum-price");
+                                sum_price.textContent = dataobj.data["price"];
 
 
                                 //信用卡=============================================
