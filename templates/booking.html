@@ -142,7 +142,7 @@
             <div class="header">您的聯絡資訊</div>
 
             <div class="field">
-                <form action="info">
+                <form action="/api/orders" method="POST">
                     <h2 class="field-h">聯絡姓名：
                         <span>
                             <input class="tpfield" type="text" id="f-name" placeholder="姓名" required />
@@ -172,7 +172,7 @@
             <form class="ui form">
                 <div class="field">
                     <div id="tappay-iframe">
-                        <form action="credit">
+                        <form action="/api/orders" method="POST">
                             <h2 class="field-h">卡片號碼：
                                 <div class="tpfield" id="card-number"></div><span class="msg-error"
                                     id="number-msg"></span>
@@ -184,7 +184,6 @@
                             <h2 class="field-h">驗證密碼：
                                 <div class="tpfield" id="card-ccv"></div><span class="msg-error" id="ccv-msg"></span>
                             </h2>
-
                         </form>
 
                         <div class="field-msg" id="field-msg"></div>
