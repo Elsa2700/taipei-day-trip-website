@@ -14,8 +14,8 @@ app.secret_key='secret'
 #資料庫連線
 mydb = mysql.connector.connect(
     host="localhost",    #主機名稱
-    user="debian-sys-maint",  #帳號
-    password="XI9BNrhAuluqvv1k", #密碼
+    user="root",  #帳號
+    password="ELSA2700", #密碼
     database="travel",     #使用資料庫
 )
 
@@ -642,5 +642,5 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
-
-app.run(host="0.0.0.0", port=3000, debug = True)
+# host="0.0.0.0", 
+app.run(port=3000, debug = True)

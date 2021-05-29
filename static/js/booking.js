@@ -143,15 +143,15 @@ function getData() {
                                         },
                                         // Styling ccv field
                                         'input.ccv': {
-                                            'font-size': '16px'
+                                            'font-size': '18px'
                                         },
                                         // Styling expiration-date field
                                         'input.expiration-date': {
-                                            'font-size': '16px'
+                                            'font-size': '18px'
                                         },
                                         // Styling card-number field
                                         'input.card-number': {
-                                            'font-size': '16px'
+                                            'font-size': '18px'
                                         },
                                         // style valid state
                                         '.valid': {
