@@ -8,6 +8,7 @@ function getData() {
     //預設頁碼
     let page = 0;
 
+
     //定義各種url==================================================
 
     // 串接首頁路由: 定義url
@@ -98,10 +99,6 @@ function getData() {
                         item_group.appendChild(item).appendChild(text).appendChild(traffic_text_tag);
                     }
 
-
-
-
-
                 }
                 let pagenum = dataobj.nextPage;
                 return pagenum;
@@ -183,9 +180,22 @@ function getData() {
                     } else {
                         for (let i = 0; i < dataobj.data.length; i++) {
                             // 框架
+
                             let item = document.createElement("div");
                             item.className = "attraction-desktop";
                             item.id = "attraction-desktop";
+                            //取得景點編號
+                            function clickId(e) {
+                                e.preventDefault();
+                                id = this.getAttribute('id');
+                                let url_id = "/attraction/" + id;
+                                window.location.href = url_id;
+                            }
+
+                            //景點編號
+                            item.id = dataobj.data[i]["id"];
+                            item.addEventListener("click", clickId);
+
                             //圖片
                             let url_img = dataobj.data[i]["images"][0];
                             let image = new Image();
