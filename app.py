@@ -15,15 +15,11 @@ app.secret_key='secret'
 #資料庫連線
 dbconfig = {
   "host": "localhost",
-  "user":"debian-sys-maint",
-  "password":"XI9BNrhAuluqvv1k",
+  "user":"root",
+  "password":"ELSA2700",
   "database":"travel"
 }
-mydb = mysql.connector.connect(pool_name = "mypool",pool_size = 7,**dbconfig)
-# cnxpool = mysql.connector.pooling.MySQLConnectionPool(**dbconfig)
-# cnx = mysql.connector.connect()
-
-mycursor = mydb.cursor()
+mydb1 = mysql.connector.connect(pool_name ="mypool",pool_size = 6,**dbconfig)
 
 #景點api
 @app.route("/api/attractions", methods=["GET"])
@@ -35,8 +31,8 @@ def attractions():
 
 
     #資料庫處理**************************************
-    cnx1 = mysql.connector.connect(pool_name = "mypool")
-    mycursor=mydb.cursor()
+    mydb1 = mysql.connector.connect(pool_name = "mypool")
+    mycursor=mydb1.cursor()
     #查詢要查詢的會員帳號
     #操作SQL:查詢資料表(單一參數)----------------
     sql="SELECT * FROM attractions where stitle like %s limit %s, %s"
@@ -73,27 +69,28 @@ def attractions():
             else:
                 page_data = None
             data={"nextPage":page_data,"data":result}
+            mydb1.close()
             response = app.response_class(json.dumps( data, ensure_ascii= False),status=200,mimetype='application/json')
-            cnx1.close()
             return response
         else:
             data={"nextPage":None,"data":[]}
+            mydb1.close()
             response = app.response_class(json.dumps( data, ensure_ascii= False),status=200,mimetype='application/json')
-            cnx1.close()
             return response           
     except:
         fail = {
         "error":True,
         "message": "自訂的錯誤訊息"
         }
+        mydb1.close()
         response = app.response_class(json.dumps( fail, ensure_ascii= False),status=500,mimetype='application/json')
         return response
 
 @app.route("/api/attraction/<attractionId>")
 def attractionId(attractionId):
     #資料庫處理**************************************
-    cnx2 = mysql.connector.connect(pool_name = "mypool")
-    mycursor=mydb.cursor()
+    mydb2 = mysql.connector.connect(pool_name = "mypool")
+    mycursor=mydb2.cursor()
     #操作SQL:查詢資料表(單一參數)----------------
     sql="SELECT * FROM attractions where RowNumber= %s"
     RN=(str(attractionId),)
@@ -130,23 +127,23 @@ def attractionId(attractionId):
             session['address'] = data_dic["address"]
             session['image'] = data_dic["images"]
             
-
+            mydb2.close()
             response = app.response_class(json.dumps( data, ensure_ascii= False),status=200,mimetype='application/json')
-            cnx2.close()
             return response
         else:
             fail = {
             "error":True,
             "message": "自訂的錯誤訊息"
             }
+            mydb2.close()
             response = app.response_class(json.dumps( fail, ensure_ascii= False),status=400,mimetype='application/json')
-            cnx2.close()
             return response
     except:
         fail = {
         "error":True,
         "message": "自訂的錯誤訊息"
         }
+        mydb2.close()
         response = app.response_class(json.dumps( fail, ensure_ascii= False),status=500,mimetype='application/json')
         return response
 
@@ -269,49 +266,48 @@ def signin():
     #資料庫處理**************************************
     try:
         #當連線成功，執行下列程式碼
-        if mydb.is_connected():
-            #操作方法
-            cnx4 = mysql.connector.connect()
-            mycursor=mydb.cursor()
+        #操作方法
+        mydb3 = mysql.connector.connect(pool_name = "mypool")
+        mycursor=mydb3.cursor()
 
-            #查詢使用者輸入的帳號、密碼:有對應結果 
-            #操作SQL:查詢資料表----------------
-            sql="SELECT * FROM signup WHERE email = %s and password = %s"
-            val=(email, password)
-            mycursor.execute(sql,val)
+        #查詢使用者輸入的帳號、密碼:有對應結果 
+        #操作SQL:查詢資料表----------------
+        sql="SELECT * FROM signup WHERE email = %s and password = %s"
+        val=(email, password)
+        mycursor.execute(sql,val)
 
-            #從資料庫搜尋到的查詢結果
-            record=mycursor.fetchone()
-            print("使用者登入資料: ",record)
-            if record != None:
-                #登入成功
-                signin_success = {
-                    "ok": True
+        #從資料庫搜尋到的查詢結果
+        record=mycursor.fetchone()
+        print("使用者登入資料: ",record)
+        if record != None:
+            #登入成功
+            signin_success = {
+                "ok": True
+            }
+
+            #透過session紀錄使用狀態
+            session['status'] = 'login'  #使用狀態
+            session['userid'] = record[0] #id
+            session['username'] = record[1] #name
+            session['email'] =record[2] #email
+
+
+            #導向成功取得資料的json格式
+            mydb3.close()
+            response = app.response_class(json.dumps(signin_success, ensure_ascii= False),status=200,mimetype='application/json')
+            return response
+        else:
+            #登入失敗
+            signin_fail = {
+                "error": True,
+                "message": "自訂的錯誤訊息"
                 }
 
-                #透過session紀錄使用狀態
-                session['status'] = 'login'  #使用狀態
-                session['userid'] = record[0] #id
-                session['username'] = record[1] #name
-                session['email'] =record[2] #email
-
-
-                #導向成功取得資料的json格式
-                response = app.response_class(json.dumps(signin_success, ensure_ascii= False),status=200,mimetype='application/json')
-                cnx4.close()
-                return response
-            else:
-                #登入失敗
-                signin_fail = {
-                    "error": True,
-                    "message": "自訂的錯誤訊息"
-                    }
-
-                #透過session紀錄使用狀態
-                session['status'] = 'unlogin'  #使用狀態
-                response = app.response_class(json.dumps(signin_fail, ensure_ascii= False),status=400,mimetype='application/json')
-                cnx4.close()
-                return response  
+            #透過session紀錄使用狀態
+            session['status'] = 'unlogin'  #使用狀態
+            mydb3.close()
+            response = app.response_class(json.dumps(signin_fail, ensure_ascii= False),status=400,mimetype='application/json')
+            return response  
 
     # 當資料未重覆: 連線失敗，導向失敗頁面，顯示"帳號已經被註冊"訊息
     except Error as error:
@@ -320,6 +316,7 @@ def signin():
         "error": True,
         "message": "自訂的錯誤訊息"
         }
+        mydb3.close()
         response = app.response_class(json.dumps(signin_fail, ensure_ascii= False),status=500,mimetype='application/json')
         return response  
 
@@ -345,50 +342,49 @@ def inbooking():
     try:
         if session['status'] == 'login':
             # booking資料庫資料判斷-----
-            if mydb.is_connected():
-                #操作方法
-                cnx5 = mysql.connector.connect()
-                mycursor=mydb.cursor()
-                #查詢要查詢的會員帳號
-                #操作SQL:查詢資料表(單一參數)----------------
-                sql="SELECT * FROM booking"
-                mycursor.execute(sql)
-                #從資料庫搜尋到的查詢結果
-                record=mycursor.fetchall()
-                print(record)
-                if record != []:
-                    # booking資料
-                    booking_data = {
-                        "data": {
-                            "attraction": {
-                                "id": session['id'],
-                                "name": session['name'],
-                                "address": session['address'],
-                                "image": session['image']
-                                },
-                            "date": session['date'],
-                            "time": session['time'],
-                            "price": session['price']
-                        }
+            #操作方法
+            mydb4 = mysql.connector.connect(pool_name = "mypool")
+            mycursor=mydb4.cursor()
+            #查詢要查詢的會員帳號
+            #操作SQL:查詢資料表(單一參數)----------------
+            sql="SELECT * FROM booking"
+            mycursor.execute(sql)
+            #從資料庫搜尋到的查詢結果
+            record=mycursor.fetchall()
+            print(record)
+            if record != []:
+                # booking資料
+                booking_data = {
+                    "data": {
+                        "attraction": {
+                            "id": session['id'],
+                            "name": session['name'],
+                            "address": session['address'],
+                            "image": session['image']
+                            },
+                        "date": session['date'],
+                        "time": session['time'],
+                        "price": session['price']
                     }
-                    #回應有資料
-                    response = app.response_class(json.dumps(booking_data, ensure_ascii= False),status=200,mimetype='application/json')
-                    cnx5.close()
-                    return response
-                else:
-                    #回應無資料: null 
-                    null = None
-                    booking_data = {"data":null}
-                    print("無資料")
-                    response = app.response_class(json.dumps(booking_data, ensure_ascii= False),status=200,mimetype='application/json')
-                    # cnx.close()
-                    return response 
+                }
+                #回應有資料
+                mydb4.close()
+                response = app.response_class(json.dumps(booking_data, ensure_ascii= False),status=200,mimetype='application/json')
+                return response
+            else:
+                #回應無資料: null 
+                null = None
+                booking_data = {"data":null}
+                mydb4.close()
+                response = app.response_class(json.dumps(booking_data, ensure_ascii= False),status=200,mimetype='application/json')
+                return response 
     #未登入系統，拒絕存取
     except Error as error:
         booking_fail = {
             "error": True,
             "message": "未登入系統，拒絕存取"
             }
+        mydb4.close()
         response = app.response_class(json.dumps(booking_fail, ensure_ascii= False),status=403,mimetype='application/json')
         return response  
 
@@ -410,9 +406,9 @@ def booked():
         # 登入
         if status == 'login':
             #登入且建立成功
-            if mydb.is_connected():
-                cnx6 = mysql.connector.connect()
-                mycursor=mydb.cursor()
+            mydb5 = mysql.connector.connect(pool_name = "mypool")
+            mycursor=mydb5.cursor()
+            if mydb5.is_connected():
                 #建立booking資料----------------------------
                 # mycursor.execute("DROP TABLE signup")
                 # sql="CREATE TABLE booking (Id INT NOT NULL AUTO_INCREMENT, attractionId VARCHAR(255) NOT NULL, date DATE NOT NULL, time VARCHAR(255) NOT NULL, price VARCHAR(255) NOT NULL, PRIMARY KEY(Id))"
@@ -421,7 +417,7 @@ def booked():
                 sql="INSERT INTO booking (attractionId, date, time, price) VALUES (%s,%s,%s,%s)"
                 val=(attractionId, date, time, price)
                 mycursor.execute(sql,val)
-                mydb.commit()
+                mydb5.commit()
                 # 預定成功
                 booking_success = {
                     "ok": True,
@@ -435,8 +431,8 @@ def booked():
 
 
                 #導向成功取得資料的json格式
+                mydb5.close()
                 response = app.response_class(json.dumps(booking_success, ensure_ascii= False),status=200,mimetype='application/json')
-                cnx6.close()
                 return response
             #登入、建立失敗，輸入不正確或其他原因
             else:
@@ -445,8 +441,8 @@ def booked():
                     "error": True,
                     "message": "建立失敗，輸入不正確或其他原因"
                     }
+                mydb5.close()
                 response = app.response_class(json.dumps(booking_fail, ensure_ascii= False),status=400,mimetype='application/json')
-                cnx6.close()
                 return response  
         # 未登入
         else:
@@ -455,6 +451,7 @@ def booked():
                 "error": True,
                 "message": "未登入系統，拒絕存取"
                 }
+            mydb5.close()
             response = app.response_class(json.dumps(booking_fail, ensure_ascii= False),status=403,mimetype='application/json')
             return response  
     # 當資料未重覆: 連線失敗，導向失敗頁面，顯示"帳號已經被註冊"訊息
@@ -474,23 +471,21 @@ def booked():
 def delBooked():
     status=session.get('status')
     if status == "login":
-        if mydb.is_connected():
-            #操作方法
-            cnx7 = mysql.connector.connect()
-            mycursor=mydb.cursor()
+        #操作方法
+        mydb6 = mysql.connector.connect(pool_name = "mypool")
+        mycursor=mydb6.cursor()
+        if mydb6.is_connected():
             #操作SQL:資料表booking中新增資料----------------
             sql="DELETE from booking"
             mycursor.execute(sql)
-            mydb.commit()
-
-
+            mydb6.commit()
 
             # 刪除成功
             del_success = {
                 "ok": True,
                 }
+            mydb6.close()
             response = app.response_class(json.dumps(del_success, ensure_ascii= False),status=200,mimetype='application/json')
-            cnx7.close()
             return response
             #登入、建立失敗，輸入不正確或其他原因
         else:
@@ -499,8 +494,8 @@ def delBooked():
                 "error": True,
                 "message": "資料刪除失敗"
                 }
+            mydb6.close()
             response = app.response_class(json.dumps(del_fail, ensure_ascii= False),status=400,mimetype='application/json')
-            cnx7.close()
             return response  
     else:
         # 未登入系統，拒絕存取
@@ -667,5 +662,5 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
-
-app.run(host="0.0.0.0", port=3000, debug = True)
+# host="0.0.0.0", 
+app.run(port=3000, debug = True)
