@@ -15,8 +15,8 @@ app.secret_key='secret'
 #資料庫連線
 dbconfig = {
   "host": "localhost",
-  "user":"root",
-  "password":"ELSA2700",
+  "user":"debian-sys-maint",
+  "password":"XI9BNrhAuluqvv1k",
   "database":"travel"
 }
 mydb1 = mysql.connector.connect(pool_name ="mypool",pool_size = 6,**dbconfig)
@@ -662,5 +662,5 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
-# host="0.0.0.0", 
-app.run(port=3000, debug = True)
+ 
+app.run(host="0.0.0.0",port=3000, debug = True)
