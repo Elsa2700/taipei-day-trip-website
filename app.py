@@ -27,9 +27,13 @@ mail = Mail(app)
 # #資料庫連線
 
 load_dotenv()
+
+print(os.getenv('EMAIL'))
+print(os.getenv('DB_USER'))
+print(os.getenv('DB_PSW'))
 dbconfig = {
   "host": os.getenv('DB_HOST'),
-  "username": os.getenv('DB_USER'),
+  "user": os.getenv('DB_USER'),
   "password": os.getenv('DB_PSW'),
   "database": os.getenv('DBT')
 }
