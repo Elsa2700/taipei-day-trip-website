@@ -315,7 +315,7 @@ body {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 200px;
+    height: 104px;
     /* Gray 700 */
     background: #757575;
 }
@@ -392,7 +392,7 @@ body {
     line-height: 50px;
     letter-spacing: 0em;
     text-align: left;
-    color:rgb(184, 32, 32);
+    color:rgb(219, 13, 13);
     display: flex;
     align-items: center;
 
@@ -502,6 +502,9 @@ body {
         right: 40px;
         margin: 5px;
     }
+    .del:hover{
+        cursor: pointer;
+    }
     .sum{
         width: 980px;
         height: 100px;
@@ -556,6 +559,9 @@ body {
         text-align: center;
         color:rgba(255, 255, 255, 1);
 
+    }
+    #submit:hover{
+        cursor: pointer;
     }
 
 

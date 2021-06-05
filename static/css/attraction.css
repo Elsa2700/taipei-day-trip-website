@@ -250,7 +250,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 1200px;
+    width: 100%;
     margin:auto;
 }
 
@@ -299,7 +299,10 @@ body {
 
 
 /* 頁尾 */
-.footer{
+
+
+
+.footer .text {
     /* Body - Bold 16(13.3) */
     font-family: Noto Sans TC;
     font-style: normal;
@@ -312,18 +315,7 @@ body {
     /* White */
     color: #FFFFFF;
 }
-.footer .text {
-    /* Auto Layout */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 100px;
-    /* Gray 700 */
-    background: #757575;
-}
+
 
 
 
@@ -332,6 +324,9 @@ body {
     width: 193px;
     height: 35px;
     border: none;
+}
+.date:hover{
+    cursor: pointer;
 }
 input[type="date"]::-webkit-calendar-picker-indicator {
     width: 24px;
@@ -416,6 +411,19 @@ input{
 
 /* 裝置1200px以上 */
 @media screen and (min-width:1200px) {
+   /* 頁尾 */
+    .footer {
+        /* Auto Layout */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 104px;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        /* Gray 700 */
+        background: #757575;
+    }
     .nav .div {
         position: fixed;
         display: flex;
@@ -529,6 +537,15 @@ input{
         text-align: center;
 
     }
+    .btn-text:hover{
+        cursor: pointer;
+    }
+    .btn-right:hover{
+        cursor: pointer;
+    }
+    .btn-left:hover{
+        cursor: pointer;
+    }
 
     .date-img {
         width: 24px;
@@ -634,6 +651,17 @@ input{
 
 /* 裝置360px-1200px */
 @media screen and (min-width:360px) and (max-width:1200px) {
+    .footer {
+        /* Auto Layout */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 104px;
+        position: relative;
+        width: 100%;
+        /* Gray 700 */
+        background: #757575;
+    }
     .nav .div {
         display: flex;
         align-items: center;
