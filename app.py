@@ -685,7 +685,8 @@ def orderId(orderNumber):
             },
             "message":"已發送確認信件拉! 去看看你的信箱吧 :)"
         }
-        msg = Message('恭喜完成預定台北一日遊行程', sender = 'chiaowebsite@gmail.com', recipients = [session['contact_email']])
+        load_dotenv()
+        msg = Message('恭喜完成預定台北一日遊行程', sender = os.getenv('EMAIL'), recipients = [session['contact_email']])
         msg.html = render_template("email.html", number = orderNumber, price = session['price'], name = session['name'], address = session['address'], image = session['image'][0], date = session['date'], time = session['time'], username = session['contact_name'])
         mail.send(msg)
  
