@@ -1,4 +1,19 @@
-
+/* loading img=================================== */
+.load-layer {
+    background-image: url(https://media.giphy.com/media/TvLuZ00OIADoQ/giphy.gif);
+    opacity: .5;
+    z-index: 5;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    padding: 0 auto;
+    margin: 0 auto;
+    /* background-color: rgba(0, 0, 0, .6); */
+    height: 100%;
+    width: 100%;
+    position: fixed;
+  }
 /* 會員登入================================== */
 .loginPage {
     display: none;
@@ -418,8 +433,6 @@ input{
         justify-content: center;
         align-items: center;
         height: 104px;
-        position: absolute;
-        bottom: 0;
         width: 100%;
         /* Gray 700 */
         background: #757575;

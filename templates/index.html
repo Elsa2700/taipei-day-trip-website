@@ -10,7 +10,10 @@
 
 </head>
 
-<body onload="getData()">
+
+
+<body>
+    <div class="load-layer" id="load"></div>
     <!-- 會員登入 -->
     <div class="loginPage" id="loginPage">
         <div class="bg-loginPage" id="login-bgPage">
@@ -102,10 +105,6 @@
 
     </div>
 
-
-
-
-
     <div class="section">
         <div class="hero-section">
             <div class="main">
@@ -118,17 +117,16 @@
 
                         <div class="search">
                             <div class="search-desktop">
-                                <form>
-                                    <div class="input-text"><input type="text" id="keyword" placeholder="輸入景點名稱查詢"
+
+                                    <input class="input-text" type="text" id="keyword" placeholder="輸入景點名稱查詢"
                                             autocomplete="off">
-                                    </div>
                                     <button id="buttonId" class="buttonId">
                                         <div class="icon">
                                             <img src="{{url_for('static', filename='css/icon_search.png')}}"
                                                 alt="search">
                                         </div>
                                     </button>
-                                </form>
+
 
                             </div>
                         </div>
@@ -153,6 +151,8 @@
             </div>
         </div>
     </footer>
+
+
 
 
 </body>

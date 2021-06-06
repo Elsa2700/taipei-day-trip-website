@@ -29,7 +29,7 @@ mail = Mail(app)
 load_dotenv()
 dbconfig = {
   "host": os.getenv('DB_HOST'),
-  "username": os.getenv('DB_USER'),
+  "user": os.getenv('DB_USER'),
   "password": os.getenv('DB_PSW'),
   "database": os.getenv('DBT')
 }
