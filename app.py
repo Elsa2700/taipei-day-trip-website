@@ -27,9 +27,13 @@ mail = Mail(app)
 # #資料庫連線
 
 load_dotenv()
+
+print(os.getenv('EMAIL'))
+print(os.getenv('DB_USER'))
+print(os.getenv('DB_PSW'))
 dbconfig = {
   "host": os.getenv('DB_HOST'),
-  "username": os.getenv('DB_USER'),
+  "user": os.getenv('DB_USER'),
   "password": os.getenv('DB_PSW'),
   "database": os.getenv('DBT')
 }
@@ -230,7 +234,6 @@ def signup():
             return response 
         elif not name.isalnum() or not password.isalnum():
             #註冊失敗
-            print(name.isalnum(),password.isalnum())
             signup_fail = {
                 "error": True,
                 "message": "帳號及密碼請填寫字母或數字"
@@ -685,7 +688,10 @@ def orderId(orderNumber):
             },
             "message":"已發送確認信件拉! 去看看你的信箱吧 :)"
         }
-        msg = Message('恭喜完成預定台北一日遊行程', sender = 'chiaowebsite@gmail.com', recipients = [session['contact_email']])
+
+        load_dotenv()
+        msg = Message('恭喜完成預定台北一日遊行程', sender = os.getenv('EMAIL'), recipients = [session['contact_email']])
+
         msg.html = render_template("email.html", number = orderNumber, price = session['price'], name = session['name'], address = session['address'], image = session['image'][0], date = session['date'], time = session['time'], username = session['contact_name'])
         mail.send(msg)
  
@@ -717,5 +723,5 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
-#  host="0.0.0.0",
-app.run(port=3000, debug = True)
+
+app.run(host="0.0.0.0", port=3000, debug = True)
