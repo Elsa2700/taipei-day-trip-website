@@ -115,6 +115,8 @@ function getData() {
                 let ordername = result["data"]["contact"]["name"];
                 let ordername_icon = document.getElementById("order_name");
                 ordername_icon.textContent = ordername;
+                let emailmsg = document.getElementById("msg");
+                emailmsg.textContent = result["message"];
             })
     }
 

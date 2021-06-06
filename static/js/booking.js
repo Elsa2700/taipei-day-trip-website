@@ -187,7 +187,8 @@ function getData() {
                                     const tappayStatus = TPDirect.card.getTappayFieldsStatus()
                                     // 確認是否可以 getPrime
                                     if (tappayStatus.canGetPrime === false) {
-                                        errormsg.textContent = "無法取得Prime金鑰"
+                                        //前端->後端tappay------------------
+                                        errormsg.textContent = "無法取得Prime金鑰，信用卡付款失敗"
                                         return
                                     }
                                     // Get prime
@@ -197,13 +198,10 @@ function getData() {
                                             return
                                         }
                                         prime = result.card.prime
-
-
-                                        //前端->後端tappay-------------------
                                         let contact_name = document.getElementById("f-name");
                                         let contact_email = document.getElementById("f-email");
                                         let contact_phone = document.getElementById("f-tel");
-                                        // console.log(profile_price.textContent);
+
                                         //request body
                                         let data = {
                                             "prime": prime,
@@ -247,7 +245,7 @@ function getData() {
                                                 })
                                                 .then(result => {
                                                     if (result["error"] == true) {
-                                                        let errormsg = document.getElementById("field-msg")
+                                                        let errormsg = document.getElementById("field-msg2")
                                                         errormsg.textContent = result["message"];
                                                         errormsg.style.color = "red";
 
@@ -270,6 +268,8 @@ function getData() {
 
 
                                         //信用卡==========================
+
+
 
 
 

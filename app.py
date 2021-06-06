@@ -2,24 +2,39 @@ from flask import *
 import mysql.connector
 from mysql.connector import Error
 import json, requests
-from mysql.connector.pooling import MySQLConnectionPool
+from dotenv import dotenv_values
+from dotenv import load_dotenv
+import os
+from flask_mail import Mail, Message
 
 app=Flask(__name__)
+mail= Mail(app)
 
+load_dotenv()
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = os.getenv('EMAIL')
+app.config['MAIL_PASSWORD'] = os.getenv('EMAILPSW')
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
 app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
 
-
 app.secret_key='secret'
+mail = Mail(app)
 
-#資料庫連線
+
+# #資料庫連線
+
+load_dotenv()
 dbconfig = {
-  "host": "localhost",
-  "user":"debian-sys-maint",
-  "password":"XI9BNrhAuluqvv1k",
-  "database":"travel"
+  "host": os.getenv('DB_HOST'),
+  "username": os.getenv('DB_USER'),
+  "password": os.getenv('DB_PSW'),
+  "database": os.getenv('DBT')
 }
-mydb1 = mysql.connector.connect(pool_name ="mypool",pool_size = 6,**dbconfig)
+
+mydb1 = mysql.connector.connect(pool_name ="mypool",pool_size = 7,**dbconfig)
 
 #景點api
 @app.route("/api/attractions", methods=["GET"])
@@ -195,52 +210,52 @@ def signup():
     #資料庫處理**************************************
     try:
         #當連線成功，執行下列程式碼
-        if mydb.is_connected():
-            #操作方法
-            cnx3 = mysql.connector.connect(pool_name = "mypool")
-            mycursor=mydb.cursor()
-            #資料庫帳號username 設為UNIQUE:決定帳號名稱是否重複
-            # 操作SQL:建立新資料表----------------
-            # mycursor.execute("DROP TABLE signup")
-            # sql="CREATE TABLE signup (Id INT NOT NULL AUTO_INCREMENT, username VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL, UNIQUE (email), PRIMARY KEY(Id))"
-            # mycursor.execute(sql)
-            #操作SQL:資料表signup中新增資料----------------
-            sql="INSERT INTO signup (username, email, password) VALUES (%s,%s,%s) "
-            val=(name, email, password)
-            if name != "" and email != "" and password != "":
-                mycursor.execute(sql,val)
-                mydb.commit()
+        #操作方法
+        mydb3 = mysql.connector.connect(pool_name = "mypool")
+        mycursor=mydb3.cursor()
+        #資料庫帳號username 設為UNIQUE:決定帳號名稱是否重複
+        # 操作SQL:建立新資料表----------------
+        # mycursor.execute("DROP TABLE signup")
+        # sql="CREATE TABLE signup (Id INT NOT NULL AUTO_INCREMENT, username VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL, UNIQUE (email), PRIMARY KEY(Id))"
+        # mycursor.execute(sql)
 
-                # 註冊成功
-                signup_success = {
-                    "ok": True,
-                    "message": "註冊成功，請登入系統"
-                    }
-
-                #導向成功取得資料的json格式
-                response = app.response_class(json.dumps(signup_success, ensure_ascii= False),status=200,mimetype='application/json')
-                # cnx.close()
-                return response
-            else:
-                #註冊失敗
-                signup_fail = {
-                    "error": True,
-                    "message": "不可填入空白"
-                    }
-                response = app.response_class(json.dumps(signup_fail, ensure_ascii= False),status=400,mimetype='application/json')
-                # cnx.close()
-                return response 
-
-
-        else:
+        if name == "" and email == "" and password == "":
             #註冊失敗
             signup_fail = {
                 "error": True,
-                "message": "Email 已經註冊帳戶"
+                "message": "不可填入空白"
                 }
+            mydb3.close()
             response = app.response_class(json.dumps(signup_fail, ensure_ascii= False),status=400,mimetype='application/json')
-            cnx3.close()
-            return response  
+            return response 
+        elif not name.isalnum() or not password.isalnum():
+            #註冊失敗
+            print(name.isalnum(),password.isalnum())
+            signup_fail = {
+                "error": True,
+                "message": "帳號及密碼請填寫字母或數字"
+                }
+            mydb3.close()
+            response = app.response_class(json.dumps(signup_fail, ensure_ascii= False),status=400,mimetype='application/json')
+            return response 
+        else:
+            #註冊成功
+            #操作SQL:資料表signup中新增資料----------------
+            sql="INSERT INTO signup (username, email, password) VALUES (%s,%s,%s) "
+            val=(name, email, password)
+            mycursor.execute(sql,val)
+            mydb3.commit()
+
+            # 註冊成功
+            signup_success = {
+                "ok": True,
+                "message": "註冊成功，請登入系統"
+                }
+
+            #導向成功取得資料的json格式
+            mydb3.close()
+            response = app.response_class(json.dumps(signup_success, ensure_ascii= False),status=200,mimetype='application/json')
+            return response
 
     # 當資料未重覆: 連線失敗，導向失敗頁面，顯示"帳號已經被註冊"訊息
     except Error as error:
@@ -257,66 +272,78 @@ def signup():
 #登入api=====================================================
 @app.route("/api/user", methods=["PATCH"])
 def signin():
-    #取得會員的註冊資料
-    data = request.get_json(force=True)
-    email = data['email']
-    password = data['password']
-    print("信箱: ", email, "密碼: ", password)
-
     #資料庫處理**************************************
     try:
-        #當連線成功，執行下列程式碼
-        #操作方法
-        mydb3 = mysql.connector.connect(pool_name = "mypool")
-        mycursor=mydb3.cursor()
-
-        #查詢使用者輸入的帳號、密碼:有對應結果 
-        #操作SQL:查詢資料表----------------
-        sql="SELECT * FROM signup WHERE email = %s and password = %s"
-        val=(email, password)
-        mycursor.execute(sql,val)
-
-        #從資料庫搜尋到的查詢結果
-        record=mycursor.fetchone()
-        print("使用者登入資料: ",record)
-        if record != None:
-            #登入成功
-            signin_success = {
-                "ok": True
-            }
-
-            #透過session紀錄使用狀態
-            session['status'] = 'login'  #使用狀態
-            session['userid'] = record[0] #id
-            session['username'] = record[1] #name
-            session['email'] =record[2] #email
-
-
-            #導向成功取得資料的json格式
-            mydb3.close()
-            response = app.response_class(json.dumps(signin_success, ensure_ascii= False),status=200,mimetype='application/json')
-            return response
-        else:
-            #登入失敗
+        mydb4 = mysql.connector.connect(pool_name = "mypool")
+        mycursor=mydb4.cursor()
+        #取得會員的註冊資料
+        data = request.get_json(force=True)
+        email = data['email']
+        password = data['password']
+        if email == "" or password =="":
+            #註冊失敗
             signin_fail = {
                 "error": True,
-                "message": "自訂的錯誤訊息"
+                "message": "請輸入會員帳號密碼資料"
+                }
+            #導向成功取得資料的json格式
+            mydb4.close()
+            response = app.response_class(json.dumps(signin_fail, ensure_ascii= False),status=200,mimetype='application/json')
+            return response
+
+        else:
+            #當連線成功，執行下列程式碼
+            #操作方法
+            mydb4 = mysql.connector.connect(pool_name = "mypool")
+            mycursor=mydb4.cursor()
+
+            #查詢使用者輸入的帳號、密碼:有對應結果 
+            #操作SQL:查詢資料表----------------
+            sql="SELECT * FROM signup WHERE email = %s and password = %s"
+            val=(email, password)
+            mycursor.execute(sql,val)
+
+            #從資料庫搜尋到的查詢結果
+            record=mycursor.fetchone()
+            print("使用者登入資料: ",record)
+            if record != None:
+                #登入成功
+                signin_success = {
+                    "ok": True
                 }
 
-            #透過session紀錄使用狀態
-            session['status'] = 'unlogin'  #使用狀態
-            mydb3.close()
-            response = app.response_class(json.dumps(signin_fail, ensure_ascii= False),status=400,mimetype='application/json')
-            return response  
+                #透過session紀錄使用狀態
+                session['status'] = 'login'  #使用狀態
+                session['userid'] = record[0] #id
+                session['username'] = record[1] #name
+                session['email'] =record[2] #email
+
+
+                #導向成功取得資料的json格式
+                mydb4.close()
+                response = app.response_class(json.dumps(signin_success, ensure_ascii= False),status=200,mimetype='application/json')
+                return response
+            else:
+                #登入失敗
+                signin_fail = {
+                    "error": True,
+                    "message": "電子郵件或密碼錯誤"
+                    }
+
+                #透過session紀錄使用狀態
+                session['status'] = 'unlogin'  #使用狀態
+                mydb4.close()
+                response = app.response_class(json.dumps(signin_fail, ensure_ascii= False),status=400,mimetype='application/json')
+                return response  
 
     # 當資料未重覆: 連線失敗，導向失敗頁面，顯示"帳號已經被註冊"訊息
     except Error as error:
         # 登入失敗
         signin_fail = {
         "error": True,
-        "message": "自訂的錯誤訊息"
+        "message": "帳號已經被註冊"
         }
-        mydb3.close()
+        mydb4.close()
         response = app.response_class(json.dumps(signin_fail, ensure_ascii= False),status=500,mimetype='application/json')
         return response  
 
@@ -343,8 +370,8 @@ def inbooking():
         if session['status'] == 'login':
             # booking資料庫資料判斷-----
             #操作方法
-            mydb4 = mysql.connector.connect(pool_name = "mypool")
-            mycursor=mydb4.cursor()
+            mydb5 = mysql.connector.connect(pool_name = "mypool")
+            mycursor=mydb5.cursor()
             #查詢要查詢的會員帳號
             #操作SQL:查詢資料表(單一參數)----------------
             sql="SELECT * FROM booking"
@@ -368,14 +395,14 @@ def inbooking():
                     }
                 }
                 #回應有資料
-                mydb4.close()
+                mydb5.close()
                 response = app.response_class(json.dumps(booking_data, ensure_ascii= False),status=200,mimetype='application/json')
                 return response
             else:
                 #回應無資料: null 
                 null = None
                 booking_data = {"data":null}
-                mydb4.close()
+                mydb5.close()
                 response = app.response_class(json.dumps(booking_data, ensure_ascii= False),status=200,mimetype='application/json')
                 return response 
     #未登入系統，拒絕存取
@@ -384,7 +411,6 @@ def inbooking():
             "error": True,
             "message": "未登入系統，拒絕存取"
             }
-        mydb4.close()
         response = app.response_class(json.dumps(booking_fail, ensure_ascii= False),status=403,mimetype='application/json')
         return response  
 
@@ -395,8 +421,10 @@ def booked():
     data = request.get_json(force=True)
     attractionId = data['attractionId']
     date = data['date']
+    datenow = data['datenow']
     time = data['time']
     price = data['price']
+    print(datenow)
 
     
     #資料庫處理**************************************
@@ -406,34 +434,44 @@ def booked():
         # 登入
         if status == 'login':
             #登入且建立成功
-            mydb5 = mysql.connector.connect(pool_name = "mypool")
-            mycursor=mydb5.cursor()
-            if mydb5.is_connected():
+            mydb6 = mysql.connector.connect(pool_name = "mypool")
+            mycursor=mydb6.cursor()
+            if mydb6.is_connected():
                 #建立booking資料----------------------------
                 # mycursor.execute("DROP TABLE signup")
                 # sql="CREATE TABLE booking (Id INT NOT NULL AUTO_INCREMENT, attractionId VARCHAR(255) NOT NULL, date DATE NOT NULL, time VARCHAR(255) NOT NULL, price VARCHAR(255) NOT NULL, PRIMARY KEY(Id))"
                 # mycursor.execute(sql)
                 #操作SQL:資料表booking中新增資料
-                sql="INSERT INTO booking (attractionId, date, time, price) VALUES (%s,%s,%s,%s)"
-                val=(attractionId, date, time, price)
-                mycursor.execute(sql,val)
-                mydb5.commit()
-                # 預定成功
-                booking_success = {
-                    "ok": True,
-                    }
-            
+                if date == "" or datenow > date:
+                    #未選擇日期
+                    booking_fail = {
+                        "error": True,
+                        "message": "未選擇日期或輸入過去的日期"
+                        }
+                    mydb6.close()
+                    response = app.response_class(json.dumps(booking_fail, ensure_ascii= False),status=400,mimetype='application/json')
+                    return response  
+                else:
+                    sql="INSERT INTO booking (attractionId, date, time, price) VALUES (%s,%s,%s,%s)"
+                    val=(attractionId, date, time, price)
+                    mycursor.execute(sql,val)
+                    mydb6.commit()
+                    # 預定成功
+                    booking_success = {
+                        "ok": True,
+                        }
+                
 
-                #透過session紀錄使用狀態
-                session['date'] = date 
-                session['time'] = time 
-                session['price'] = price 
+                    #透過session紀錄使用狀態
+                    session['date'] = date 
+                    session['time'] = time 
+                    session['price'] = price 
 
 
-                #導向成功取得資料的json格式
-                mydb5.close()
-                response = app.response_class(json.dumps(booking_success, ensure_ascii= False),status=200,mimetype='application/json')
-                return response
+                    #導向成功取得資料的json格式
+                    mydb6.close()
+                    response = app.response_class(json.dumps(booking_success, ensure_ascii= False),status=200,mimetype='application/json')
+                    return response
             #登入、建立失敗，輸入不正確或其他原因
             else:
                 #註冊失敗
@@ -441,7 +479,7 @@ def booked():
                     "error": True,
                     "message": "建立失敗，輸入不正確或其他原因"
                     }
-                mydb5.close()
+                mydb6.close()
                 response = app.response_class(json.dumps(booking_fail, ensure_ascii= False),status=400,mimetype='application/json')
                 return response  
         # 未登入
@@ -451,7 +489,7 @@ def booked():
                 "error": True,
                 "message": "未登入系統，拒絕存取"
                 }
-            mydb5.close()
+            mydb6.close()
             response = app.response_class(json.dumps(booking_fail, ensure_ascii= False),status=403,mimetype='application/json')
             return response  
     # 當資料未重覆: 連線失敗，導向失敗頁面，顯示"帳號已經被註冊"訊息
@@ -472,19 +510,19 @@ def delBooked():
     status=session.get('status')
     if status == "login":
         #操作方法
-        mydb6 = mysql.connector.connect(pool_name = "mypool")
-        mycursor=mydb6.cursor()
-        if mydb6.is_connected():
+        mydb7 = mysql.connector.connect(pool_name = "mypool")
+        mycursor=mydb7.cursor()
+        if mydb7.is_connected():
             #操作SQL:資料表booking中新增資料----------------
             sql="DELETE from booking"
             mycursor.execute(sql)
-            mydb6.commit()
+            mydb7.commit()
 
             # 刪除成功
             del_success = {
                 "ok": True,
                 }
-            mydb6.close()
+            mydb7.close()
             response = app.response_class(json.dumps(del_success, ensure_ascii= False),status=200,mimetype='application/json')
             return response
             #登入、建立失敗，輸入不正確或其他原因
@@ -494,7 +532,7 @@ def delBooked():
                 "error": True,
                 "message": "資料刪除失敗"
                 }
-            mydb6.close()
+            mydb7.close()
             response = app.response_class(json.dumps(del_fail, ensure_ascii= False),status=400,mimetype='application/json')
             return response  
     else:
@@ -528,7 +566,16 @@ def order():
                 # 訂單失敗
                 order_fail = {
                     "error": True,
-                    "message": "訂單建立失敗，輸入不正確或其他原因"
+                    "message": "訂單建立失敗，未輸入資料"
+                    }
+
+                response = app.response_class(json.dumps(order_fail, ensure_ascii= False),status=400,mimetype='application/json')
+                return response
+            elif not session['contact_name'].isalnum() or not session['contact_phone'].isalnum() or not session['contact_phone'].isnumeric():
+                # 訂單失敗
+                order_fail = {
+                    "error": True,
+                    "message": "訂單建立失敗，輸入不正確"
                     }
 
                 response = app.response_class(json.dumps(order_fail, ensure_ascii= False),status=400,mimetype='application/json')
@@ -536,11 +583,12 @@ def order():
             # 訂單建立成功
             else:
                 #tappay server 連線-------
+                load_dotenv()
                 url = "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime"
                 headers = {'content-type':'application/json','x-api-key':'partner_D7xWITe3QnKxgA4p6ZIJrvkKLzyAkdRybJQeIw3RZKvjtgDnLSHjdxRu'}
                 data = {
                     "prime": prime,
-                    "partner_key": 'partner_D7xWITe3QnKxgA4p6ZIJrvkKLzyAkdRybJQeIw3RZKvjtgDnLSHjdxRu',
+                    "partner_key": os.getenv('PARTNER_KEY'),
                     "merchant_id": "Chiao_ESUN",
                     "details":"TapPay Test",
                     "amount": 100,
@@ -556,6 +604,7 @@ def order():
 
                 req = requests.post(url, data=json.dumps(data), headers=headers)
                 result = json.loads(req.text)
+                print(result)
 
                 # 付款成功
                 if result['status'] == 0:
@@ -607,6 +656,8 @@ def order():
 
 @app.route("/api/order/<orderNumber>")
 def orderId(orderNumber):
+    #訂單成立:寄信通知
+
     # 登入
     status = session.get('status')
     if status == 'login':
@@ -631,9 +682,13 @@ def orderId(orderNumber):
                 "phone": session['contact_phone']
                 },
                 "status": 1
-            }
+            },
+            "message":"已發送確認信件拉! 去看看你的信箱吧 :)"
         }
-        print(orderinfo)
+        msg = Message('恭喜完成預定台北一日遊行程', sender = 'chiaowebsite@gmail.com', recipients = [session['contact_email']])
+        msg.html = render_template("email.html", number = orderNumber, price = session['price'], name = session['name'], address = session['address'], image = session['image'][0], date = session['date'], time = session['time'], username = session['contact_name'])
+        mail.send(msg)
+ 
 
         response = app.response_class(json.dumps(orderinfo, ensure_ascii= False),status=200,mimetype='application/json')
         return response
@@ -662,5 +717,5 @@ def booking():
 def thankyou():
 	return render_template("thankyou.html")
 
- 
-app.run(host="0.0.0.0",port=3000, debug = True)
+#  host="0.0.0.0",
+app.run(port=3000, debug = True)

@@ -82,27 +82,30 @@
                 </form>
             </div>
         </div>
-        
+
     </div>
     <!-- 會員註冊 -->
-
-
     <div class="nav">
         <div class="div">
-            <a href="/" class="text">台北一日遊</a>
-
-            <div class="frame2">
-                <div class="frame1">
-                    <div class="btn-nav">
+            <div class="text">
+                <a href="/" class="title">台北一日遊</a>
+                <div class="frame2">
+                    <div>
                         <a href="#" id="booking">預定行程</a>
                     </div>
                     <div class="btn-nav" id="loginId">
-                        <a href="#" id="logintext">登入/註冊</a>
+                        <div><a href="#" id="logintext">登入/註冊</a></div>
                     </div>
                 </div>
             </div>
-        </div>  
+        </div>
+
     </div>
+
+
+
+
+
     <div class="section">
         <div class="hero-section">
             <div class="main">
@@ -116,9 +119,10 @@
                         <div class="search">
                             <div class="search-desktop">
                                 <form>
-                                    <div class="input-text"><input type="text" id="keyword" placeholder="輸入景點名稱查詢">
+                                    <div class="input-text"><input type="text" id="keyword" placeholder="輸入景點名稱查詢"
+                                            autocomplete="off">
                                     </div>
-                                    <button id="buttonId">
+                                    <button id="buttonId" class="buttonId">
                                         <div class="icon">
                                             <img src="{{url_for('static', filename='css/icon_search.png')}}"
                                                 alt="search">

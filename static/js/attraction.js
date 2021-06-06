@@ -100,60 +100,19 @@ function getData() {
                 }
 
                 // 使用者登入、註冊設定========================
-
                 // 登入視窗=================================================
                 let loginId = document.getElementById("loginId");
-                loginId.addEventListener("click", Login, false);
+                loginId.addEventListener("click", Login);
                 function Login() {
                     document.getElementById("loginPage").style.display = "block";
                 }
-                // 關閉登入視窗(外層)=================================================    
-                let outerPagelogin = document.getElementById("login-bgPage");
-                outerPagelogin.addEventListener("click", loginClose);
-                function loginClose() {
-                    document.getElementById("loginPage").style.display = "none";
-
-                }
-                let outerPagesignup = document.getElementById("signup-bgPage");
-                outerPagesignup.addEventListener("click", signupClose);
-                function signupClose() {
-                    document.getElementById("signupPage").style.display = "none";
-                    document.getElementById("loginPage").style.display = "none";
-
-                }
-                // 關閉登入視窗(內層)=================================================    
-                let innerPage_login = document.getElementById("loginPage-frame")
-                let innerPage_signup = document.getElementById("signupPage-frame")
-                innerPage_login.addEventListener("click", open);
-                innerPage_signup.addEventListener("click", open);
-                function open(e) {
-                    document.getElementById("loginPage").style.display = "block";
-                    e.stopPropagation();
-                    e.preventDefault();
-                }
-                // 關閉登入視窗(內層關閉)=================================================  
-                let closeLogin = document.getElementById("close-login");
-                closeLogin.addEventListener("click", CloseLogin);
-                function CloseLogin(e) {
-                    document.getElementById("loginPage").style.display = "none";
-                    e.stopPropagation();
-                }
-
-                let closeSignup = document.getElementById("close-signup");
-                closeSignup.addEventListener("click", CloseSignup);
-                function CloseSignup(e) {
-                    document.getElementById("signupPage").style.display = "none";
-                    document.getElementById("loginPage").style.display = "none";
-                    e.stopPropagation();
-                }
-
-
 
                 // 轉至註冊視窗(點擊)=================================================
                 let signupPage = document.getElementById("msg-signup");
                 signupPage.addEventListener("click", querySignup);
                 function querySignup() {
                     document.getElementById("signupPage").style.display = "block";
+                    console.log("轉至登入視窗")
 
                 }
                 // 轉至登入視窗(點擊)=================================================
@@ -217,7 +176,8 @@ function getData() {
                             .catch(error => {
                                 console.error("更新失敗");
                                 let text = document.querySelector("#signup-msg")
-                                text.textContent = "更新失敗";
+                                text.textContent = "請輸入會員帳號密碼";
+                                text.style.color = "red";
                             })
 
                     }
@@ -262,11 +222,10 @@ function getData() {
                                 return res.json();
                             })
                             .then(result => {
-                                let dataobj = result;
-                                console.log(dataobj["error"])
-                                if (dataobj["error"] == true) {
+                                console.log(result["error"])
+                                if (result["error"] == true) {
                                     let text = document.querySelector("#signin-msg");
-                                    text.textContent = "電子郵件或密碼錯誤";
+                                    text.textContent = result["message"];
                                     text.style.color = "red";
                                 } else {
                                     //重新載入頁面
@@ -277,7 +236,7 @@ function getData() {
                             .catch(error => {
                                 console.error("更新失敗");
                                 let text = document.querySelector("#signin-msg")
-                                text.textContent = "電子郵件或密碼錯誤";
+                                text.textContent = "請輸入會員帳號密碼";
                                 text.style.color = "red";
                             })
 
@@ -285,6 +244,48 @@ function getData() {
 
 
 
+                }
+
+                // 關閉登入視窗(外層)=================================================    
+                let outerPagelogin = document.getElementById("login-bgPage");
+                outerPagelogin.addEventListener("click", loginClose);
+                function loginClose() {
+                    document.getElementById("loginPage").style.display = "none";
+                    console.log("關閉視窗")
+
+                }
+                let outerPagesignup = document.getElementById("signup-bgPage");
+                outerPagesignup.addEventListener("click", signupClose);
+                function signupClose() {
+                    document.getElementById("signupPage").style.display = "none";
+                    document.getElementById("loginPage").style.display = "none";
+
+                }
+
+                // 關閉登入視窗(內層固定)=================================================    
+                let innerPage_login = document.getElementById("loginPage-frame")
+                let innerPage_signup = document.getElementById("signupPage-frame")
+                innerPage_login.addEventListener("click", open);
+                innerPage_signup.addEventListener("click", open);
+                function open(e) {
+                    document.getElementById("loginPage").style.display = "block";
+                    e.stopPropagation();
+                    e.preventDefault();
+                }
+                // 關閉登入視窗(內層關閉)=================================================  
+                let closeLogin = document.getElementById("close-login");
+                closeLogin.addEventListener("click", CloseLogin);
+                function CloseLogin(e) {
+                    document.getElementById("loginPage").style.display = "none";
+                    e.stopPropagation();
+                }
+
+                let closeSignup = document.getElementById("close-signup");
+                closeSignup.addEventListener("click", CloseSignup);
+                function CloseSignup(e) {
+                    document.getElementById("signupPage").style.display = "none";
+                    document.getElementById("loginPage").style.display = "none";
+                    e.stopPropagation();
                 }
 
                 //當前使用者登入狀態=========================================
@@ -300,12 +301,12 @@ function getData() {
                             console.log(dataobj["data"])
 
                             if (dataobj["data"] == null) {
-                                //判斷式:null
+                                //判斷式:null(未登入)
                                 let text = document.querySelector("#logintext");
                                 text.textContent = "登入/註冊";
 
                             } else {
-                                //判斷式:非null
+                                //判斷式:非null(已登入)
                                 let text = document.querySelector("#logintext");
                                 text.textContent = "登出系統";
                                 //登出(點擊)
@@ -318,7 +319,6 @@ function getData() {
                                             'Content-Type': 'application/json',
                                         },
                                     };
-
                                     signoutReq('/api/user', options);
 
                                     async function signoutReq() {
@@ -339,13 +339,14 @@ function getData() {
                                     }
                                 }
 
-
                             }
 
 
 
                         })
                 }
+
+
 
 
             })
@@ -424,14 +425,20 @@ function getData() {
                         newBooking()
                         function newBooking(e) {
                             //抓取註冊資訊
+                            let now = new Date();
+                            let today = now.getFullYear() + "-" +(now.getMonth()+1).toString().padStart(2, "0") + "-" + now.getDate().toString().padStart(2, "0");
                             let date_api = document.getElementById("date").value;
+                            // console.log("現在",today);
+                            // console.log("預定日",date_api);
+                            // console.log(date_api > today);
 
                             //request body
                             let data = {
                                 "attractionId": id,
                                 "date": date_api,
+                                "datenow": today,
                                 "time": time_api,
-                                "price": price_api,
+                                "price": price_api
                             };
 
                             let options = {
@@ -453,11 +460,9 @@ function getData() {
                                         return res.json();
                                     })
                                     .then(result => {
-                                        let dataobj = result;
-                                        console.log(dataobj["error"])
-                                        if (dataobj["error"] == true) {
+                                        if (result["error"] == true) {
                                             let text = document.querySelector("#msg")
-                                            text.textContent = dataobj["message"];
+                                            text.textContent = result["message"];
                                             text.style.color = "red";
 
                                         } else {

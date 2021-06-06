@@ -356,7 +356,8 @@ function getData() {
                 .catch(error => {
                     console.error("更新失敗");
                     let text = document.querySelector("#signup-msg")
-                    text.textContent = "更新失敗";
+                    text.textContent = "請輸入會員帳號密碼";
+                    text.style.color = "red";
                 })
 
         }
@@ -401,11 +402,10 @@ function getData() {
                     return res.json();
                 })
                 .then(result => {
-                    let dataobj = result;
-                    console.log(dataobj["error"])
-                    if (dataobj["error"] == true) {
+                    console.log(result["error"])
+                    if (result["error"] == true) {
                         let text = document.querySelector("#signin-msg");
-                        text.textContent = "電子郵件或密碼錯誤";
+                        text.textContent = result["message"];
                         text.style.color = "red";
                     } else {
                         //重新載入頁面
@@ -416,7 +416,7 @@ function getData() {
                 .catch(error => {
                     console.error("更新失敗");
                     let text = document.querySelector("#signin-msg")
-                    text.textContent = "電子郵件或密碼錯誤";
+                    text.textContent = "請輸入會員帳號密碼";
                     text.style.color = "red";
                 })
 
