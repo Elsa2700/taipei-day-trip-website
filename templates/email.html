@@ -1,0 +1,73 @@
+<html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>email</title>
+    <style>
+        .frame {
+            display: flex;
+            justify-content: start;
+            align-items: center;
+        }
+
+        td {
+            border: 1px solid #333;
+            padding: 10px;
+        }
+
+
+        img {
+            height: 200px;
+            margin: 10px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+
+
+<body>
+    <h3>{{username}} 您好,</h3>
+    <h3>此信件為台北一日遊訂單確認信件~</h3>
+    <div class="frame">
+        <table style="border: 1px solid black">
+            <tr>
+                <td>編號: </td>
+                <td>{{number}}</td>
+            </tr>
+            <tr>
+                <td>價格: </td>
+                <td>新台幣 {{price}} 元</td>
+            </tr>
+            <tr>
+                <td>旅遊資訊: </td>
+                <td>
+                    <ul>
+                        <li>名稱: {{name}}</li>
+                        <li>位置: {{address}}</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>日期: </td>
+                <td>{{date}}</td>
+            </tr>
+            <tr>
+                <td>時段</td>
+                <td>{{time}}</td>
+            </tr>
+
+        </table>
+
+    <img class="img" src={{image}} alt="">
+
+
+
+
+    </div>
+
+</html>

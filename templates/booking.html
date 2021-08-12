@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attraction</title>
+
+</head>
+
+<body>
+    <div class="load-layer" id="load"></div>
+    <!-- 會員登入 -->
+    <div class="loginPage" id="loginPage">
+        <div class="bg-loginPage" id="login-bgPage">
+            <div class="loginPage-frame" id="loginPage-frame">
+                <div class="bar"></div>
+                <div class="header">
+                    <div class="header-text">登入會員帳號</div>
+                    <img class="close" id="close-login" src="{{url_for('static', filename='css/icon_close.png')}}"
+                        alt="">
+                </div>
+
+                <form action="/api/user" method="POST">
+                    <!-- 信箱 -->
+                    <div class="div-email">
+                        <input class="email" type="email" id="signin-email" name="signin-email" autocomplete="off" placeholder="輸入電子信箱"
+                            required />
+                    </div>
+
+                    <!-- 密碼 -->
+                    <div class="div-psd">
+                        <input class="psd" type="password" id="signin-psd" name="signin-password" autocomplete="off" placeholder="輸入密碼"
+                            required />
+                    </div>
+                </form>
+
+                <div class="div-btn-login">
+                    <button class="btn-login" id="signin-btn">登入帳戶</button>
+                </div>
+                <div class="signin-msg" id="signin-msg"></div>
+                <div class="msg" id="msg-signup">還沒有帳戶？點此註冊</div>
+            </div>
+        </div>
+
+    </div>
+    <!-- 會員登入 -->
+
+    <!-- 會員註冊 -->
+    <div class="signupPage" id="signupPage">
+        <div class="bg-loginPage" id="signup-bgPage">
+            <div class="signupPage-frame" id="signupPage-frame">
+                <div class="bar"></div>
+                <div class="header">
+                    <div class="header-text">註冊會員帳號</div>
+                    <img class="close" id="close-signup" src="{{url_for('static', filename='css/icon_close.png')}}"
+                        alt="">
+                </div>
+
+                <form action="/api/user" method="POST">
+                    <!-- 姓名 -->
+                    <div class="div-username">
+                        <input class="username" type="text" id="signup-username" name="username" placeholder="輸入姓名"
+                        autocomplete="off" required />
+                    </div>
+                    <!-- 信箱 -->
+                    <div class="div-email">
+                        <input class="email" type="email" id="signup-email" name="email" placeholder="輸入電子信箱"
+                        autocomplete="off" required />
+                    </div>
+                    <!-- 密碼 -->
+                    <div class="div-psd">
+                        <input class="psd" type="password" id="signup-psd" name="password" placeholder="輸入密碼"
+                        autocomplete="off" required />
+                    </div>
+                    <div class="div-btn-login">
+                        <button class="btn-login" id="signup-btn">註冊新帳戶</button>
+                    </div>
+                    <div class="signup-msg" id="signup-msg"></div>
+                    <div class="msg" id="msg-login">已經有帳戶了？點此登入</div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 會員註冊 -->
+
+    <div class="nav">
+        <div class="div">
+            <div class="text">
+                <a href="/" class="title">台北一日遊</a>
+                <div class="frame2">
+                    <div>
+                        <a href="#">預定行程</a>
+                    </div>
+                    <div class="btn-nav" id="loginId">
+                        <div><a href="#" id="logintext">登入/註冊</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="header">
+        <div>
+            您好，<span id="username_booking"></span>，待預訂的行程如下：
+        </div>
+    </div>
+    <div class="frame_scene" id="frame_scene">
+        <div class="section">
+
+            <img class="del" id="del" src="/static/css/icon_delete.png" alt="">
+            <div class="pic">
+                <div class="pic-frame">
+                    <img class="attracion-pic" id="attracion-pic" src="#" alt="pic">
+                </div>
+            </div>
+
+            <div class="booking">
+                <div class="booking-frame" id="booking-frame">
+                    <h2 class="booking-title">台北一日遊：<span id="b-t-name" class="booking-title">平安鐘</span></h2>
+                    <div class="booking-content" id="booking-content">
+                        <div class="b-c-title">日期：
+                            <span class="b-c-content" id="b-c-date">2021-04-23</span>
+                        </div>
+                        <div class="b-c-title">時間：
+                            <span class="b-c-content" id="b-c-time">早上 9 點到下午 4 點</span>
+                        </div>
+                        <div class="b-c-title">費用：
+                            <span class="b-c-content">新台幣 <span id="b-c-price">2000</span>元
+                        </div>
+                        <div class="b-c-title">地點：
+                            <span class="b-c-content" id="b-c-ads">臺北市 大安區忠孝東路4段</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="hr-2" />
+
+        <div class="info">
+            <div class="header">您的聯絡資訊</div>
+
+            <div class="field">
+                <form action="/api/orders" method="POST">
+                    <h2 class="field-h">聯絡姓名：
+                        <span>
+                            <input autocomplete="off" class="tpfield" type="text" id="f-name" placeholder="姓名" required />
+                        </span>
+                    </h2>
+                    <h2 class="field-h">連絡信箱：
+                        <span>
+                            <input autocomplete="off" class="tpfield" type="email" id="f-email" placeholder="信箱" required />
+                        </span>
+                    </h2>
+                    <h2 class="field-h">手機號碼：
+                        <span>
+                            <input autocomplete="off" class="tpfield" type="tel" id="f-tel" placeholder="手機號碼" required />
+                        </span>
+                    </h2>
+                </form>
+                <div class="field-msg" id="field-msg2"></div>
+                <div class="info-msg">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
+            </div>
+        </div>
+        <hr class="hr-2" />
+
+        <!-- 信用卡 -->
+
+        <div class="info">
+            <div class="header">信用卡付款資訊</div>
+            <form class="ui form">
+                <div class="field">
+                    <div id="tappay-iframe">
+                        <form action="/api/orders" method="POST">
+                            <h2 class="field-h">卡片號碼：
+                                <div class="tpfield" id="card-number"></div><span class="msg-error"
+                                    id="number-msg"></span>
+                            </h2>
+                            <h2 class="field-h">過期時間：
+                                <div class="tpfield" id="card-expiration-date"></div><span class="msg-error"
+                                    id="expir-msg"></span>
+                            </h2>
+                            <h2 class="field-h">驗證密碼：
+                                <div class="tpfield" id="card-ccv"></div><span class="msg-error" id="ccv-msg"></span>
+                            </h2>
+                        </form>
+
+                        <div class="field-msg" id="field-msg"></div>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+        <hr class="hr-2" />
+    </div>
+
+    <!-- 信用卡 -->
+
+
+    <div class="sum" id="sum">
+        <div class="sum-price">總價：新台幣<span id="sum-price"> 2000 </span>元</div>
+        <button type="button" id="submit">
+            <div class="btn-text"></div>確認訂購並付款
+    </div>
+    </button>
+
+    </div>
+
+    </div>
+    <footer class="footer" id="footer">
+        <div class="text">
+            COPYRIGHT © 2021 台北一日遊
+        </div>
+    </footer>
+    <div id="footer_frame"></div>
+
+</body>
+
+<!-- 引入 SKD 並且進行初始化 -->
+<script src="https://js.tappaysdk.com/tpdirect/v5.7.0"></script>
+<script>
+    TPDirect.setupSDK(20433, 'app_cbLWK8UChw4TtPo28sbIYEBKG8jq93gFOz6EzwwZj0tQf6C9lOHvBW8wntJ7', 'sandbox')
+</script>
+<script src="../static/js/booking.js"></script>
+<link rel="stylesheet" href="../static/css/booking.css">
+
+</html>

@@ -1,0 +1,917 @@
+/* loading img=================================== */
+.load-layer {
+    background-image: url(https://media.giphy.com/media/TvLuZ00OIADoQ/giphy.gif);
+    opacity: .5;
+    z-index: 5;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    padding: 0 auto;
+    margin: 0 auto;
+    /* background-color: rgba(0, 0, 0, .6); */
+    height: 100%;
+    width: 100%;
+    position: fixed;
+  }
+/* 會員登入================================== */
+.loginPage {
+    display: none;
+}
+
+.signupPage {
+    display: none;
+}
+
+.bg-loginPage {
+    background: rgba(0, 0, 0, .2);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    border: 1px solid;
+    display: flex;
+    justify-content: center;
+    z-index: 15;
+}
+
+.bg-signupPage {
+    background: rgba(0, 0, 0, .2);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    border: 1px solid;
+    display: flex;
+    justify-content: center;
+    z-index: 15;
+
+}
+
+.loginPage-frame {
+    z-index: 1;
+    width: 340px;
+    position: absolute;
+    z-index: 1;
+    top: 80px;
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 1);
+    ;
+}
+
+.signupPage-frame {
+    z-index: 1;
+    width: 340px;
+    position: absolute;
+    z-index: 1;
+    top: 80px;
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 1);
+    ;
+}
+
+.bar {
+    width: 100%;
+    height: 10px;
+    background: linear-gradient(270deg, #337788 0%, #66AABB 100%);
+
+}
+
+.header-text {
+    font-family: Noto Sans TC;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: center;
+    margin: 5px;
+    position: relative;
+    color: rgba(102, 102, 102, 1);
+    padding: 10px;
+
+
+}
+
+.close {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 20px;
+    right: 0px;
+    right: 20px;
+}
+
+.div-email {
+    display: flex;
+    justify-content: center;
+}
+
+.username {
+    width: 310px;
+    height: 47px;
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(204, 204, 204, 1);
+    margin: 5px;
+    background: #FFFFFF;
+    /* Gray 500 */
+
+    border: 1px solid #CCCCCC;
+    box-sizing: border-box;
+    border-radius: 5px;
+
+}
+
+.div-username {
+    display: flex;
+    justify-content: center;
+}
+
+
+.email {
+    width: 310px;
+    height: 47px;
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(204, 204, 204, 1);
+    margin: 5px;
+    background: #FFFFFF;
+    /* Gray 500 */
+
+    border: 1px solid #CCCCCC;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.div-psd {
+    display: flex;
+    justify-content: center;
+}
+
+.psd {
+    width: 310px;
+    height: 47px;
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(204, 204, 204, 1);
+    margin: 5px;
+    background: #FFFFFF;
+    /* Gray 500 */
+
+    border: 1px solid #CCCCCC;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.div-btn-login {
+    display: flex;
+    justify-content: center;
+}
+
+.signup-msg {
+    display: flex;
+    justify-content: center;
+}
+
+.signin-msg {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-login {
+    width: 310px;
+    /* Cyan 800 */
+    background: #448899;
+    border-radius: 5px;
+    font-family: Noto Sans TC;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: rgba(255, 255, 255, 1);
+    margin: 5px;
+    padding: 10px;
+    border: none;
+
+}
+
+.msg {
+    width: 310px;
+    font-family: Noto Sans TC;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 13px;
+    letter-spacing: 0em;
+    text-align: center;
+    margin: 5px;
+    color: rgba(102, 102, 102, 1);
+    padding: 10px;
+
+}
+
+
+/* 會員登入================================== */
+
+/* 首頁主要頁面切版============================ */
+.field .msg{
+    width: 310px;
+    font-family: Noto Sans TC;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 13px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin: 5px;
+    color: rgba(102, 102, 102, 1);
+    padding: 10px;
+
+}
+/* 初始狀態 */
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+/* 導覽列 */
+.nav {
+    width: 100%;
+    display: flex;
+    width: 100%;
+    height: 54px;
+    align-items: center;
+    position: fixed;
+    z-index: 10;
+    top: 0px;
+    border-bottom: 1px solid rgba(232, 232, 232, 1);
+
+    /* White */
+    background: #FFFFFF;
+
+}
+
+.nav .div {
+    width: 100%;
+    margin: auto;
+    height: 54px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+}
+
+.nav .text {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin:auto;
+}
+
+
+.nav .div .title {
+    font-family: Noto Sans;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 34px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: rgba(68, 136, 153, 1);
+    padding: 10px;
+    text-decoration: none;
+
+
+}
+
+.hr-2 {
+    border: 1px solid rgba(232, 232, 232, 1);
+    margin-top: 3px;
+}
+
+.frame2 {
+    width: 175px;
+    display: flex;
+    justify-content: space-evenly;
+
+}
+
+.frame2 a {
+    margin: 10px;
+    font-family: Noto Sans TC;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 13px;
+    letter-spacing: 0em;
+    text-align: left;
+    text-decoration: none;
+    color: rgba(102, 102, 102, 1);
+}
+
+
+
+
+/* 頁尾 */
+
+
+
+.footer .text {
+    /* Body - Bold 16(13.3) */
+    font-family: Noto Sans TC;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 13px;
+    /* identical to box height, or 83% */
+    display: flex;
+    align-items: center;
+    /* White */
+    color: #FFFFFF;
+}
+
+
+
+
+.date {
+    padding-left: 30px;
+    width: 193px;
+    height: 35px;
+    border: none;
+}
+.date:hover{
+    cursor: pointer;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+    width: 24px;
+    height: 24px;
+
+
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+input[type="radio"]+label span {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    margin: 0px;
+    vertical-align: middle;
+    cursor: pointer;
+    background: url(/static/css/Ellipse\ 1.png) top no-repeat;
+    position: relative;
+    top: -2px;
+    margin-right: 20px;
+
+    /* background-color: #FFFFFF; */
+}
+
+input[type="radio"]:checked+label span {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    margin: 0px;
+    vertical-align: middle;
+    cursor: pointer;
+    position: relative;
+    background: url(/static/css/Ellipse\ 1.png) top no-repeat;
+    margin-right: 20px;
+
+}
+
+input[type="radio"]:checked+label span span {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin: 0px;
+    vertical-align: middle;
+    cursor: pointer;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    background: url(/static/css/Ellipse\ 2.png) top no-repeat;
+
+}
+
+input[type="radio"] {
+    background-color: #FFFFFF;
+    background-color: #448899;
+
+}
+
+input{
+    font-family: Noto Sans TC;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0em;
+    text-align: left;
+
+}
+
+.radio {
+    margin: 10px;
+
+}
+
+.radio-text {
+    background-color: blueviolet;
+
+}
+
+
+
+/* 裝置1200px以上 */
+@media screen and (min-width:1200px) {
+   /* 頁尾 */
+    .footer {
+        /* Auto Layout */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 104px;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        /* Gray 700 */
+        background: #757575;
+    }
+    .nav .div {
+        position: fixed;
+        display: flex;
+        justify-content: space-between;
+        margin: auto;
+        align-items: center;
+        height: auto;
+    }
+
+
+
+    /* 段落section */
+    .section {
+        width: 1200px;
+        margin: 80px auto;
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    /* 段落-簡介 */
+    .profile {
+        position: absolute;
+        right: 0px;
+        width: 600px;
+        height: 400px;
+        justify-content: end;
+    }
+
+    .profile-title {
+        font-family: Noto Sans TC;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 24px;
+        letter-spacing: 0em;
+        text-align: left;
+        color: rgba(102, 102, 102, 1);
+
+    }
+
+    .profile-content {
+        font-family: Noto Sans TC;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 13px;
+        padding: 10px 0px;
+        margin: 0px;
+        color: rgba(102, 102, 102, 1);
+
+
+    }
+
+    .booking {
+        width: 600px;
+        height: 302px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        background: rgba(232, 232, 232, 1);
+        border-radius: 5px;
+        color: rgba(102, 102, 102, 1);
+    }
+
+    .booking-frame {
+        width: 560px;
+
+    }
+
+    h2 {
+        font-weight: bold;
+        font-family: Noto Sans TC;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 30px;
+        letter-spacing: 0em;
+        text-align: left;
+
+    }
+
+    .content {
+        font-family: Noto Sans TC;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 13px;
+        letter-spacing: 0em;
+        text-align: left;
+
+    }
+
+    button {
+        background-color: rgba(68, 136, 153, 1);
+        width: 154px;
+        height: 36px;
+        border-radius: 5px;
+        border: none
+    }
+
+    .btn-text {
+        font-family: Noto Sans TC;
+        font-size: 19px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 16px;
+        letter-spacing: 0em;
+        text-align: center;
+        color: rgba(255, 255, 255, 1);
+        text-align: center;
+
+    }
+    .btn-text:hover{
+        cursor: pointer;
+    }
+    .btn-right:hover{
+        cursor: pointer;
+    }
+    .btn-left:hover{
+        cursor: pointer;
+    }
+
+    .date-img {
+        width: 24px;
+        height: 24px;
+    }
+
+
+    /* 段落-圖片 */
+    .pic {
+        position: absolute;
+        left: 0px;
+        width: 540px;
+        height: 406px;
+        justify-content: end;
+        /* margin-right: 1500px; */
+
+
+    }
+
+    .pic-frame {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .attracion-pic {
+        width: 540px;
+        height: 406px;
+        z-index: 0px;
+
+    }
+
+    .btn-arrow {
+        width: 520px;
+        display: flex;
+        justify-content: space-between;
+        z-index: 1px;
+        position: absolute;
+        top: 190px;
+
+    }
+
+    .btn-arrow img {
+        width: 36px;
+        height: 36px;
+
+    }
+
+    .btn-circle {
+        width: 72px;
+        height: 12px;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        position: absolute;
+        bottom: 10px;
+        margin: auto;
+        opacity: .7;
+    }
+
+    .btn-circle img {
+        margin: 10px;
+    }
+
+    /* 文字資訊 */
+    .hr-2 {
+        margin: 450px auto 0px;
+        width: 1200px;
+        border: 1px solid rgba(232, 232, 232, 1);
+    }
+
+    .info {
+        width: 1200px;
+        height: auto;
+        margin: 50px auto;
+        color: rgba(102, 102, 102, 1);
+
+    }
+
+    p {
+        padding: 10px 0px;
+        font-family: Noto Sans TC;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 23px;
+        letter-spacing: 0em;
+        text-align: left;
+        color: rgba(102, 102, 102, 1);
+
+    }
+
+    .ads p {
+        padding-left: 0px;
+    }
+
+    .trf p {
+        padding-left: 0px;
+    }
+
+
+}
+
+/* 裝置360px-1200px */
+@media screen and (min-width:360px) and (max-width:1200px) {
+    .footer {
+        /* Auto Layout */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 104px;
+        position: relative;
+        width: 100%;
+        /* Gray 700 */
+        background: #757575;
+    }
+    .nav .div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .frame2 {
+        width: 175px;
+        display: flex;
+        justify-content: space-between;
+
+
+    }
+
+
+    /* 段落section */
+    .section {
+        width: 100%;
+        height: auto;
+        margin: 60px auto 100px;
+        display: flex;
+        justify-content: center;
+        position: relative;
+        flex-wrap: wrap;
+
+    }
+
+    /* 段落-簡介 */
+    .profile {
+        width: 100%;
+        height: 400px;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .profile-title {
+        font-family: Noto Sans TC;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 24px;
+        letter-spacing: 0em;
+        text-align: left;
+        color: rgba(102, 102, 102, 1);
+        padding-left: 20px;
+        margin-top: 40px;
+
+    }
+
+    .profile-content {
+        font-family: Noto Sans TC;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 20px;
+        padding: 10px 0px;
+        margin-bottom: 10px;
+        color: rgba(102, 102, 102, 1);
+        text-align: start;
+        padding-left: 20px;
+
+    }
+
+    .field {
+        text-align: start;
+    }
+
+    .booking {
+        width: 95%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        background: rgba(232, 232, 232, 1);
+        border-radius: 5px;
+        color: rgba(102, 102, 102, 1);
+        margin: auto;
+    }
+
+    .booking-frame {
+        width: 100%;
+        padding: 20px;
+    }
+
+    h2 {
+        font-weight: bold;
+        font-family: Noto Sans TC;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 30px;
+        letter-spacing: 0em;
+        text-align: left;
+
+    }
+
+    .content {
+        font-family: Noto Sans TC;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 25px;
+        letter-spacing: 0em;
+        text-align: left;
+
+    }
+
+    button {
+        background-color: rgba(68, 136, 153, 1);
+        width: 154px;
+        height: 36px;
+        border-radius: 5px;
+        border: none
+    }
+
+    .btn-text {
+        font-family: Noto Sans TC;
+        font-size: 19px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 16px;
+        letter-spacing: 0em;
+        text-align: center;
+        color: rgba(255, 255, 255, 1);
+        text-align: center;
+
+    }
+
+    .date-img {
+        width: 24px;
+        height: 24px;
+    }
+
+
+    /* 段落-圖片 */
+    .pic {
+        justify-content: center;
+        width: 100%;
+        height: 400px;
+        margin-top: 40px;
+
+
+    }
+
+    .pic-frame {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+
+    }
+
+    .attracion-pic {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+
+
+    }
+
+    .btn-arrow {
+        width: 90%;
+        display: flex;
+        justify-content: space-between;
+        z-index: 1px;
+        position: absolute;
+        height: 36px;
+        top: 200px;
+
+    }
+
+    .btn-arrow img {
+        width: 36px;
+        height: 36px;
+        opacity: .8;
+
+    }
+
+    .btn-circle {
+        width: 72px;
+        height: 12px;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        position: absolute;
+        opacity: .7;
+        top: 400px;
+    }
+
+    .btn-circle img {
+        margin: 10px;
+    }
+
+    /* 文字資訊 */
+    .hr-2 {
+        width: 95%;
+        border: 1px solid rgba(232, 232, 232, 1);
+    }
+
+    .info {
+        width: 100%;
+        height: auto;
+        margin: 50px auto;
+        color: rgba(102, 102, 102, 1);
+
+    }
+
+    p {
+        padding-left: 5%;
+        padding-right: 5%;
+        font-family: Noto Sans TC;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 23px;
+        letter-spacing: 0em;
+        text-align: left;
+        color: rgba(102, 102, 102, 1);
+
+    }
+
+    .ads p {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .ads-title {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+
+    .trf-title {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+
+}
+

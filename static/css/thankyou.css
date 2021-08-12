@@ -1,0 +1,483 @@
+/* loading img=================================== */
+.load-layer {
+    background-image: url(https://media.giphy.com/media/TvLuZ00OIADoQ/giphy.gif);
+    opacity: .5;
+    z-index: 5;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    padding: 0 auto;
+    margin: 0 auto;
+    /* background-color: rgba(0, 0, 0, .6); */
+    height: 100%;
+    width: 100%;
+  }
+/* 會員登入================================== */
+.loginPage {
+    display: none;
+}
+
+.signupPage {
+    display: none;
+}
+
+.bg-loginPage {
+    background: rgba(0, 0, 0, .2);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    /* border: 1px solid; */
+    display: flex;
+    justify-content: center;
+    z-index: 15;
+}
+
+.bg-signupPage {
+    background: rgba(0, 0, 0, .2);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    /* border: 1px solid; */
+    display: flex;
+    justify-content: center;
+    z-index: 15;
+
+}
+
+.loginPage-frame {
+    z-index: 1;
+    width: 340px;
+    position: absolute;
+    z-index: 1;
+    top: 80px;
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 1);
+    ;
+}
+
+.signupPage-frame {
+    z-index: 1;
+    width: 340px;
+    position: absolute;
+    z-index: 1;
+    top: 80px;
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 1);
+    ;
+}
+
+.bar {
+    width: 100%;
+    height: 10px;
+    background: linear-gradient(270deg, #337788 0%, #66AABB 100%);
+
+}
+
+.header-text {
+    font-family: Noto Sans TC;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: center;
+    margin: 5px;
+    position: relative;
+    color: rgba(102, 102, 102, 1);
+    padding: 10px;
+
+    
+
+
+}
+
+.close {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 20px;
+    right: 0px;
+    right: 20px;
+}
+
+.div-email {
+    display: flex;
+    justify-content: center;
+}
+
+.username {
+    width: 310px;
+    height: 47px;
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(204, 204, 204, 1);
+    margin: 5px;
+    background: #FFFFFF;
+    /* Gray 500 */
+
+    border: 1px solid #CCCCCC;
+    box-sizing: border-box;
+    border-radius: 5px;
+
+}
+
+.div-username {
+    display: flex;
+    justify-content: center;
+}
+
+
+.email {
+    width: 310px;
+    height: 47px;
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(204, 204, 204, 1);
+    margin: 5px;
+    background: #FFFFFF;
+    /* Gray 500 */
+
+    border: 1px solid #CCCCCC;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.div-psd {
+    display: flex;
+    justify-content: center;
+}
+
+.psd {
+    width: 310px;
+    height: 47px;
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(204, 204, 204, 1);
+    margin: 5px;
+    background: #FFFFFF;
+    /* Gray 500 */
+
+    border: 1px solid #CCCCCC;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.div-btn-login {
+    display: flex;
+    justify-content: center;
+}
+
+.signup-msg {
+    display: flex;
+    justify-content: center;
+}
+
+.signin-msg {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-login {
+    width: 310px;
+    /* Cyan 800 */
+    background: #448899;
+    border-radius: 5px;
+    font-family: Noto Sans TC;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: rgba(255, 255, 255, 1);
+    margin: 5px;
+    padding: 10px;
+    border: none;
+
+}
+
+.msg {
+    width: 310px;
+    font-family: Noto Sans TC;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 13px;
+    letter-spacing: 0em;
+    text-align: center;
+    margin: 5px;
+    color: rgba(102, 102, 102, 1);
+    padding: 10px;
+
+}
+
+/* 會員登入================================== */
+
+
+
+
+/* 導覽列 */
+.nav {
+    width: 100%;
+    display: flex;
+    width: 100%;
+    height: 54px;
+    align-items: center;
+    position: fixed;
+    z-index: 10;
+    top: 0px;
+    border-bottom: 1px solid rgba(232, 232, 232, 1);
+
+    /* White */
+    background: #FFFFFF;
+
+}
+
+.nav .div {
+    width: 100%;
+    margin: auto;
+    height: 54px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+}
+
+.nav .text {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 1200px;
+    margin:auto;
+}
+
+
+.nav .div .title {
+    font-family: Noto Sans;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 34px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: rgba(68, 136, 153, 1);
+    padding: 10px;
+    text-decoration: none;
+
+
+}
+
+
+
+.frame2 {
+    width: 175px;
+    display: flex;
+    justify-content: space-evenly;
+
+}
+
+.frame2 a {
+    margin: 10px;
+    font-family: Noto Sans TC;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 13px;
+    letter-spacing: 0em;
+    text-align: left;
+    text-decoration: none;
+    color: rgba(102, 102, 102, 1);
+}
+
+
+
+
+
+/* 頁尾 */
+.footer {
+    /* Auto Layout */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 104px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    /* Gray 700 */
+    background: #757575;
+}
+
+.footer .text {
+    /* Body - Bold 16(13.3) */
+    font-family: Noto Sans TC;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 13px;
+    /* identical to box height, or 83% */
+    display: flex;
+    align-items: center;
+    /* White */
+    color: #FFFFFF;
+}
+.footer_del {
+    /* Auto Layout */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 200px;
+    /* Gray 700 */
+    background: #757575;
+}
+
+.footer_del_text {
+    /* Body - Bold 16(13.3) */
+    font-family: Noto Sans TC;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 13px;
+    /* identical to box height, or 83% */
+    display: flex;
+    align-items: center;
+    /* White */
+    color: #FFFFFF;
+}
+
+
+
+
+
+/* 裝置1200px以上 */
+@media screen and (min-width:1200px) {
+    
+    .header_order{
+        font-family: Noto Sans TC;
+        font-size: 25px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 50px;
+        letter-spacing: 0em;
+        text-align: left;
+        color: rgba(102, 102, 102, 1);
+        margin: 180px auto;
+        width: 980px;
+        
+    
+    }
+    .icon1 {
+        background-size: cover;
+        -webkit-mask: url(/static/css/topo.png) no-repeat center center;
+        width: 500px;
+        height: 500px;
+        margin-left: 500px;
+        -webkit-mask-size: 400px;
+      }
+    
+
+    .header div{
+        width: 80%;
+        position: relative;
+        top: 150px;
+        text-align: start;
+        margin:20px;
+    }
+    body {
+        margin: 0px;
+        padding: 0px;
+        background: url('/static/css/Sky.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+
+    }
+
+
+}
+
+/* 裝置360px-1200px */
+@media screen and (min-width:360px) and (max-width:1200px) {
+    /* 初始狀態 */
+    body {
+        margin: 0px;
+        padding: 0px;
+        background: url('/static/css/Sky.png');
+        background-size: cover 10px;
+        background-repeat: no-repeat;
+
+    }
+    .header{
+        font-family: Noto Sans TC;
+        font-size: 19px;
+        font-style: normal;
+        font-weight: 700;
+        letter-spacing: 0em;
+        text-align: left;
+        color: rgba(102, 102, 102, 1);
+    
+    }
+    .frame_scene{
+        color: rgba(102, 102, 102, 1);
+        font-family: Noto Sans TC;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 13px;
+        letter-spacing: 0em;
+        text-align: left;
+        margin: 20px auto;
+        width: 95%;
+    }
+    .header div{
+        width: 95%;
+        margin: 90px auto 0px;
+    }
+    .icon1 {
+        background-size: cover;
+        -webkit-mask: url(/static/css/topo.png) no-repeat center center;
+        width: 300px;
+        height: 500px;
+        -webkit-mask-size: 200px;
+      }
+    .header_order{
+        font-family: Noto Sans TC;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+        letter-spacing: 0em;
+        text-align: left;
+        color: rgba(102, 102, 102, 1);
+        margin:40px auto;
+        line-height: 2;
+    
+    }
+
+    .header_order div{
+        width: 80%;
+        position: relative;
+        top: 80px;
+        text-align: start;
+        margin: auto;
+        text-align: center;
+    }
+
+    .nav .div {
+        width: 98%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .frame2 {
+        width: 175px;
+        display: flex;
+        justify-content: space-between;
+
+
+    }
+
+
+}
+
