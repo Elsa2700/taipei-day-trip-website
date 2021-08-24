@@ -66,7 +66,7 @@ function queryImg(page, url) {
 
                 let url_img = dataobj.data[i]["images"][0];
                 let image = new Image();
-                image.src = url_img
+                image.src = url_img.substring(0, 4)+'s'+url_img.substring(4,url_img.length)
                 image.className = "img";
                 item_group.appendChild(item).appendChild(image);
 

@@ -219,9 +219,7 @@ def signup():
         mycursor=mydb3.cursor()
         #資料庫帳號username 設為UNIQUE:決定帳號名稱是否重複
         # 操作SQL:建立新資料表----------------
-        # mycursor.execute("DROP TABLE signup")
-        # sql="CREATE TABLE signup (Id INT NOT NULL AUTO_INCREMENT, username VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL, UNIQUE (email), PRIMARY KEY(Id))"
-        # mycursor.execute(sql)
+
 
         if name == "" and email == "" and password == "":
             #註冊失敗
@@ -441,9 +439,6 @@ def booked():
             mycursor=mydb6.cursor()
             if mydb6.is_connected():
                 #建立booking資料----------------------------
-                # mycursor.execute("DROP TABLE signup")
-                # sql="CREATE TABLE booking (Id INT NOT NULL AUTO_INCREMENT, attractionId VARCHAR(255) NOT NULL, date DATE NOT NULL, time VARCHAR(255) NOT NULL, price VARCHAR(255) NOT NULL, PRIMARY KEY(Id))"
-                # mycursor.execute(sql)
                 #操作SQL:資料表booking中新增資料
                 if date == "" or datenow > date:
                     #未選擇日期
