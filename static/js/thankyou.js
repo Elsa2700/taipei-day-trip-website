@@ -56,15 +56,15 @@ function querybookingState() {
 
                 }
             }
-            })
-// 結束畫面
-window.onload = function () {
-    let load = document.getElementById("load");
-    load.style.display = "none"
-};
+        })
+    // 結束畫面
+    window.onload = function () {
+        let load = document.getElementById("load");
+        load.style.display = "none"
+    };
 
 
-    }
+}
 
 //預定行程=========================================
 let booking = document.getElementById("booking");
@@ -108,7 +108,6 @@ function queryBooking() {
 
 let url = location.href;
 let orderNum = url.split('number=')[1]
-console.log(orderNum);
 //歡迎會員標頭說明
 let orderNum_text = document.getElementById("orderNum_thank");
 orderNum_text.textContent = orderNum;

@@ -319,13 +319,11 @@ function queryId(url) {
                                     };
                                     fetch('/api/user', options)
                                         .then(res => {
-                                            console.log(res);
                                             return res.json();
                                         })
                                         .then(result => {
                                             let dataobj = result;
                                             if (dataobj["ok"] == true) {
-                                                //重新載入頁面
                                                 window.document.location.reload();
                                             }
                                         })
