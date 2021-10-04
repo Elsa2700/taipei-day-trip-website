@@ -14,16 +14,12 @@ if (keyword != "") {
     const url = `/api/attractions?page=${page}&keyword=${keyword}`;
     if (page != null) {
         queryAttraction(page, keyword, url);
-    } else {
-        console.log("無資料");
     }
 
 } else {
     let url = `/api/attractions?page=${page}`;
     if (page != null) {
         queryImg(page, url);
-    } else {
-        console.log("無資料");
     }
 }
 
@@ -66,7 +62,7 @@ function queryImg(page, url) {
 
                 let url_img = dataobj.data[i]["images"][0];
                 let image = new Image();
-                image.src = url_img
+                image.src = url_img.substring(0, 4) + 's' + url_img.substring(4, url_img.length)
                 image.className = "img";
                 item_group.appendChild(item).appendChild(image);
 
@@ -119,7 +115,7 @@ function queryImg(page, url) {
                         clearTimeout(timeout);
                         timeout = setTimeout(function () {
                             if (nextpage == null) {
-                                console.log("stop");
+                                return
                             } else {
                                 const url = `/api/attractions?page=${nextpage}`;
                                 queryImg(nextpage, url);
@@ -160,12 +156,8 @@ function clickButton(e) {
 
     if (page != null) {
         queryAttraction(page, keyword, url);
-    } else {
-        console.log("無資料");
     }
 
-
-    //執行函式
 
     function queryAttraction(page, keyword, url) {
         // 載入畫面
@@ -388,7 +380,6 @@ function submitSignin(e) {
         },
         body: JSON.stringify(data)
     };
-    console.log(options);
 
     e.preventDefault();
 
@@ -485,7 +476,6 @@ function queryState() {
                     function signoutReq() {
                         fetch('/api/user', options)
                             .then(res => {
-                                console.log(res);
                                 return res.json();
                             })
                             .then(result => {

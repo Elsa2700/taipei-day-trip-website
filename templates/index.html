@@ -6,8 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Index</title>
-
-
+    <link rel="stylesheet" href="../static/css/index.css">
 </head>
 
 
@@ -116,15 +115,14 @@
 
                         <div class="search">
                             <div class="search-desktop">
-                                    <div class="input-text"><input type="text" id="keyword" placeholder="輸入景點名稱查詢"
-                                            autocomplete="off">
+                                <div class="input-text"><input type="text" id="keyword" placeholder="輸入景點名稱查詢"
+                                        autocomplete="off">
+                                </div>
+                                <button id="buttonId" class="buttonId">
+                                    <div class="icon">
+                                        <img src="{{url_for('static', filename='css/icon_search.png')}}" alt="search">
                                     </div>
-                                    <button id="buttonId" class="buttonId">
-                                        <div class="icon">
-                                            <img src="{{url_for('static', filename='css/icon_search.png')}}"
-                                                alt="search">
-                                        </div>
-                                    </button>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -155,6 +153,6 @@
 </body>
 
 <script src="../static/js/index.js"></script>
-<link rel="stylesheet" href="../static/css/index.css">
+
 
 </html>

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attraction</title>
-
+    <link rel="stylesheet" href="../static/css/attraction.css">
 </head>
 
 <body>
@@ -18,7 +18,8 @@
                 <div class="bar"></div>
                 <div class="header">
                     <div class="header-text">登入會員帳號</div>
-                    <img class="close" id="close-login" src="{{url_for('static', filename='css/icon_close.png')}}" alt="">
+                    <img class="close" id="close-login" src="{{url_for('static', filename='css/icon_close.png')}}"
+                        alt="">
                 </div>
 
                 <form action="/api/user" method="POST">
@@ -53,7 +54,8 @@
                 <div class="bar"></div>
                 <div class="header">
                     <div class="header-text">註冊會員帳號</div>
-                    <img class="close" id="close-signup" src="{{url_for('static', filename='css/icon_close.png')}}" alt="">
+                    <img class="close" id="close-signup" src="{{url_for('static', filename='css/icon_close.png')}}"
+                        alt="">
                 </div>
 
                 <form action="/api/user" method="POST">
@@ -78,7 +80,7 @@
                 </form>
             </div>
         </div>
-        
+
     </div>
     <!-- 會員註冊 -->
 
@@ -98,7 +100,7 @@
                 </div>
             </div>
         </div>
-    
+
     </div>
 
 
@@ -152,7 +154,7 @@
 
                         </h2>
                         <button type="button" id="start-booking">
-                            <div class="btn-text" >開始預訂行程</div>
+                            <div class="btn-text">開始預訂行程</div>
                         </button>
                         <div class="msg" id="msg"></div>
                     </div>
@@ -182,6 +184,6 @@
 </body>
 
 <script src="../static/js/attraction.js"></script>
-<link rel="stylesheet" href="../static/css/attraction.css">
+
 
 </html>

@@ -49,7 +49,6 @@ function querybookingState() {
                         };
                         fetch('/api/user', options)
                             .then(res => {
-                                console.log(res);
                                 return res.json();
                             })
                             .then(result => {
@@ -267,7 +266,6 @@ function querybookingState() {
                                                 } else {
                                                     let ordernumber = result["data"]["number"]
                                                     let status = result["data"]["payment"]["status"]
-                                                    console.log(result["data"]["payment"]["status"])
                                                     if (status == 0) {
                                                         window.location.href = `/thankyou?number=${ordernumber}`;
                                                     } else {
@@ -319,7 +317,6 @@ function querybookingState() {
                     };
                     fetch('/api/booking', options)
                         .then(res => {
-                            console.log(res);
                             return res.json();
                         })
                         .then(result => {

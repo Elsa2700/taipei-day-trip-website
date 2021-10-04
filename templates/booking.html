@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attraction</title>
-
+    <link rel="stylesheet" href="../static/css/booking.css">
 </head>
 
 <body>
@@ -25,14 +25,14 @@
                 <form action="/api/user" method="POST">
                     <!-- 信箱 -->
                     <div class="div-email">
-                        <input class="email" type="email" id="signin-email" name="signin-email" autocomplete="off" placeholder="輸入電子信箱"
-                            required />
+                        <input class="email" type="email" id="signin-email" name="signin-email" autocomplete="off"
+                            placeholder="輸入電子信箱" required />
                     </div>
 
                     <!-- 密碼 -->
                     <div class="div-psd">
-                        <input class="psd" type="password" id="signin-psd" name="signin-password" autocomplete="off" placeholder="輸入密碼"
-                            required />
+                        <input class="psd" type="password" id="signin-psd" name="signin-password" autocomplete="off"
+                            placeholder="輸入密碼" required />
                     </div>
                 </form>
 
@@ -62,17 +62,17 @@
                     <!-- 姓名 -->
                     <div class="div-username">
                         <input class="username" type="text" id="signup-username" name="username" placeholder="輸入姓名"
-                        autocomplete="off" required />
+                            autocomplete="off" required />
                     </div>
                     <!-- 信箱 -->
                     <div class="div-email">
                         <input class="email" type="email" id="signup-email" name="email" placeholder="輸入電子信箱"
-                        autocomplete="off" required />
+                            autocomplete="off" required />
                     </div>
                     <!-- 密碼 -->
                     <div class="div-psd">
                         <input class="psd" type="password" id="signup-psd" name="password" placeholder="輸入密碼"
-                        autocomplete="off" required />
+                            autocomplete="off" required />
                     </div>
                     <div class="div-btn-login">
                         <button class="btn-login" id="signup-btn">註冊新帳戶</button>
@@ -146,17 +146,20 @@
                 <form action="/api/orders" method="POST">
                     <h2 class="field-h">聯絡姓名：
                         <span>
-                            <input autocomplete="off" class="tpfield" type="text" id="f-name" placeholder="姓名" required />
+                            <input autocomplete="off" class="tpfield" type="text" id="f-name" placeholder="姓名"
+                                required />
                         </span>
                     </h2>
                     <h2 class="field-h">連絡信箱：
                         <span>
-                            <input autocomplete="off" class="tpfield" type="email" id="f-email" placeholder="信箱" required />
+                            <input autocomplete="off" class="tpfield" type="email" id="f-email" placeholder="信箱"
+                                required />
                         </span>
                     </h2>
                     <h2 class="field-h">手機號碼：
                         <span>
-                            <input autocomplete="off" class="tpfield" type="tel" id="f-tel" placeholder="手機號碼" required />
+                            <input autocomplete="off" class="tpfield" type="tel" id="f-tel" placeholder="手機號碼"
+                                required />
                         </span>
                     </h2>
                 </form>
@@ -227,6 +230,6 @@
     TPDirect.setupSDK(20433, 'app_cbLWK8UChw4TtPo28sbIYEBKG8jq93gFOz6EzwwZj0tQf6C9lOHvBW8wntJ7', 'sandbox')
 </script>
 <script src="../static/js/booking.js"></script>
-<link rel="stylesheet" href="../static/css/booking.css">
+
 
 </html>
